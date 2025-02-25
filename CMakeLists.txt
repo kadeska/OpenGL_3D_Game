@@ -1,47 +1,43 @@
 cmake_minimum_required(VERSION 3.16)
+cmake_policy(SET CMP0144 NEW)
 
 project(simpleCPP LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Detect the platform and configure accordingly.
+# --- Platform-Specific Configuration ---
 if(WIN32)
-    message(STATUS "Configuring for Windows with vcpkg")
+    message(STATUS "Configuring for Windows (using vcpkg)")
 
-    # Define vcpkg root (adjust this if your installation is elsewhere)
+    # Define vcpkg root (adjust if needed)
     set(VCPKG_ROOT "C:/vcpkg/installed/x64-windows")
 
-    # Specify include and library directories for vcpkg dependencies
-    set(Boost_INCLUDE_DIR "${VCPKG_ROOT}/include")
-    set(Boost_LIBRARY_DIR "${VCPKG_ROOT}/lib")
-    set(VCPKG_INCLUDE_DIR "${VCPKG_ROOT}/include")
-    set(VCPKG_LIB_DIR "${VCPKG_ROOT}/lib")
+    # Tell CMake where to find Boost (vcpkg installation)
+    set(BOOST_ROOT "${VCPKG_ROOT}")
+    set(BOOST_INCLUDEDIR "${VCPKG_ROOT}/include")
+    set(BOOST_LIBRARYDIR "${VCPKG_ROOT}/lib")
 
-    # Set directories for glfw3 and GLEW configuration files
+    # Specify where to find the package configuration files for GLFW and GLEW
     set(glfw3_DIR "${VCPKG_ROOT}/share/glfw3")
     set(GLEW_DIR "${VCPKG_ROOT}/share/glew")
 
-    # Find packages using the vcpkg config files
+    # Find packages using the vcpkg config files (CONFIG mode)
     find_package(glfw3 CONFIG REQUIRED)
     find_package(GLEW CONFIG REQUIRED)
 else()
     message(STATUS "Configuring for Linux (using system libraries)")
 
-    # On Linux, assume the packages are installed via your distribution’s package manager.
+    # Assume system-installed packages; ensure required development packages are installed.
     find_package(glfw3 REQUIRED)
     find_package(GLEW REQUIRED)
-
-    # (Optionally, you can specify Boost paths here if needed. Most Linux systems find Boost automatically.)
-    # set(Boost_INCLUDE_DIR "/usr/include")
-    # set(Boost_LIBRARY_DIR "/usr/lib")
 endif()
 
-# Find OpenGL and Boost (both platforms)
+# Find common packages on both platforms.
 find_package(OpenGL REQUIRED)
 find_package(Boost REQUIRED COMPONENTS system filesystem)
 
-# Create the executable with your source files
+# --- Define the Executable ---
 add_executable(simpleCPP
     src/main.cpp
     include/helper.hpp
@@ -49,34 +45,28 @@ add_executable(simpleCPP
     src/mywindowmanager.cpp
 )
 
-# Set include directories.
-# On Windows the vcpkg paths are added; on Linux these variables will be empty/unset.
-target_include_directories(simpleCPP PRIVATE
-    ${CMAKE_SOURCE_DIR}/include
-    ${Boost_INCLUDE_DIR}
-    ${VCPKG_INCLUDE_DIR}
-    ${OPENGL_INCLUDE_DIRS}
-    ${GLEW_INCLUDE_DIRS}
-    ${glfw3_INCLUDE_DIRS}
-)
+# Include your project's own headers.
+target_include_directories(simpleCPP PRIVATE ${CMAKE_SOURCE_DIR}/include)
 
-# On Windows, explicitly add the library directories from vcpkg
-if(WIN32)
-    target_link_directories(simpleCPP PRIVATE
-        ${Boost_LIBRARY_DIR}
-        ${VCPKG_LIB_DIR}
-    )
+# --- Determine the Correct GLFW Target ---
+# Depending on your installation, GLFW might provide its target as either "glfw3::glfw3" or "glfw".
+if(TARGET glfw3::glfw3)
+    set(GLFW_TARGET glfw3::glfw3)
+elseif(TARGET glfw)
+    set(GLFW_TARGET glfw)
+else()
+    message(FATAL_ERROR "No suitable GLFW target found. Make sure GLFW is installed correctly.")
 endif()
 
-# Link the libraries (both platforms)
+# --- Link Libraries ---
 target_link_libraries(simpleCPP PRIVATE
     OpenGL::GL
-    glfw
+    ${GLFW_TARGET}
     GLEW::GLEW
     ${Boost_LIBRARIES}
 )
 
-# Installation settings
+# --- Installation Settings ---
 include(GNUInstallDirs)
 install(TARGETS simpleCPP
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
