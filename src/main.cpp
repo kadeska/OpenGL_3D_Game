@@ -1,5 +1,5 @@
 #include "../include/helper.hpp"
-#include "mywindowmanager.hpp"
+#include "../include/mywindowmanager.hpp"
 
 // using namespace std;
 
