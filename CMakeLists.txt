@@ -41,7 +41,7 @@ else()
 
     FetchContent_MakeAvailable(glad)
 
-    target_link_libraries(simpleCPP PRIVATE glad)
+
 
 
 endif()
@@ -76,6 +76,7 @@ target_link_libraries(simpleCPP PRIVATE
     OpenGL::GL
     ${GLFW_TARGET}
     GLEW::GLEW
+    glad
     ${Boost_LIBRARIES}
 )
 
