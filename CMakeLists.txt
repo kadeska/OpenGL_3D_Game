@@ -31,6 +31,19 @@ else()
     # Assume system-installed packages; ensure required development packages are installed.
     find_package(glfw3 REQUIRED)
     find_package(GLEW REQUIRED)
+    include(FetchContent)
+
+    FetchContent_Declare(
+      glad
+      GIT_REPOSITORY https://github.com/Dav1dde/glad.git
+      GIT_TAG        v0.1.36  # You can choose a specific release tag
+    )
+
+    FetchContent_MakeAvailable(glad)
+
+    target_link_libraries(simpleCPP PRIVATE glad)
+
+
 endif()
 
 # Find common packages on both platforms.
