@@ -56,6 +56,9 @@ add_executable(simpleCPP
     include/helper.hpp
     include/mywindowmanager.hpp
     src/mywindowmanager.cpp
+    src/mycore.cpp
+    include/mycore.hpp
+    src/mycore.cpp
 )
 
 # Include your project's own headers.

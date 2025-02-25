@@ -20,8 +20,9 @@ bool MyWindowManager::createWindow(const std::string &label, int width, int heig
         return false;
     }
 
+    glfwWindowHint(GLFW_SAMPLES, 4);
     // Set OpenGL version (if needed)
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
@@ -44,6 +45,23 @@ bool MyWindowManager::createWindow(const std::string &label, int width, int heig
     }
 
     helper.log(3, "Successfully created window: " + label);
+
+    glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
+    // Hide the mouse and enable unlimited movement
+    //glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
+    pollEvents();
+    // Dark blue background
+    glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
+
+    // Enable depth test
+    glEnable(GL_DEPTH_TEST);
+    // Accept fragment if it is closer to the camera than the former one
+    glDepthFunc(GL_LESS);
+
+    // Cull triangles which normal is not towards the camera
+    glEnable(GL_CULL_FACE);
+
     return true;
 }
 

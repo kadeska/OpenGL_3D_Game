@@ -12,6 +12,15 @@ UsefulFunctions::StdOutput stdOut;
 int Helper::progLogLevel = 2;    // Default log level
 int Helper::skippedLogCount = 0; // Initialize skipped log count
 
+/**
+ * @brief main 
+ * This program is compatable with both Windows and Linux systems. You can pass a custom log level if desired.
+ * @param argc 
+ * @param argv 
+ * Arguments prefixed with '*' are optional
+ * <*arg1> must be of type 'int' for 'user_defined_log_level'
+ * @return 
+ */
 int main(int argc, char *argv[])
 {
     // initialize
