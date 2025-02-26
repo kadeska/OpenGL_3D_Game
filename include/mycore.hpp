@@ -18,7 +18,17 @@ class MyCore
 public:
     MyCore();
 
+    /**
+     * @brief fileManager
+     * This class will handle game data files
+     */
     FileManager* fileManager;
+
+    // window manager
+
+    // game manager
+
+    // game loop manager
 };
 
 #endif // MYCORE_HPP
