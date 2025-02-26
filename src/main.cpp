@@ -1,104 +1,95 @@
 #include "../include/helper.hpp"
 #include "../include/mywindowmanager.hpp"
-
 #include "mycore.hpp"
 
-// using namespace std;
+#include <iostream>
+#include <sstream>
+#include <memory> // For smart pointers
 
-// Defines
-bool isValidInt(const std::string &str, int &result);
-void start();
-
-UsefulFunctions::StdOutput stdOut;
-MyCore* myCore;
-
+// Global static initialization for Helper variables can be placed in a dedicated source file,
+// but here we leave them as-is for simplicity.
 int Helper::progLogLevel = 3;    // Default log level
 int Helper::skippedLogCount = 0; // Initialize skipped log count
 
-/**
- * @brief main 
- * This program is compatable with both Windows and Linux systems. You can pass a custom log level if desired.
- * @param argc 
- * @param argv 
- * Arguments prefixed with '*' are optional
- * <*arg1> must be of type 'int' for 'user_defined_log_level'
- * @return 
- */
-int main(int argc, char *argv[])
-{
-    // initialize
-    helper.log(3, "Hello World!!");
-    helper.log(3, "Main Function");
-    stdOut.print("Testing standard output");
-    std::string out = "main(argc: " + std::to_string(argc) + ", argv: [";
-    // build a string containing all given arguments.
-    for (int i = 0; i < argc; ++i) {
-        out += "\"" + std::string(argv[i]) + "\"";
-        if (i < argc - 1)
-            out += ", "; // Add a comma between arguments
-    }
-    out += "])";
-    // print the prebuilt string defining all arguments passed to program.
-    helper.log(2, out);
+// Anonymous namespace to limit the scope of internal helper functions.
+namespace {
 
-    // gather user defind log level if any.
-    int user_defined_log_level;
-    if (argc > 1) {
-        if (isValidInt(argv[1], user_defined_log_level)) {
-            helper.log(2, "Valid argument: " + std::to_string(user_defined_log_level));
-            helper.log(3,
-                       "Setting 'user_defined_log_level' as: "
-                           + std::to_string(user_defined_log_level));
-            helper.progLogLevel = user_defined_log_level;
-            // Do Stuff using user_defined_log_level.
-            start();
-        } else {
-            helper.log(2, "Invalid argument: " + std::string(argv[1]));
-            helper.log(2, "Usage: <arg1> must be of type 'int' for 'user_defined_log_level' ");
-            // Try Again
-            return 1;
-        }
-    } else {
-        helper.log(1, "Usage: <*arg1>");
-        helper.log(1, "Arguments prefixed with '*' are optional");
-        // Do stuff using default log level.
-        start();
-    }
-
-    return 0;
-}
-
-bool isValidInt(const std::string &str, int &result)
-{
+// Validate if the given string represents a valid integer.
+bool isValidInt(const std::string &str, int &result) {
     try {
         size_t pos;
         result = std::stoi(str, &pos);
-
-        // Ensure the entire string was consumed (no extra characters)
         return pos == str.length();
-    } catch (const std::invalid_argument &e) {
-        return false; // Not a valid integer
-    } catch (const std::out_of_range &e) {
-        return false; // Integer out of range
+    } catch (const std::exception &) {
+        return false;
     }
 }
 
-void start()
-{
-    // do core set up first
+// Print command line arguments in a formatted string.
+void printCommandLineArguments(int argc, char *argv[]) {
+    std::ostringstream out;
+    out << "main(argc: " << argc << ", argv: [";
+    for (int i = 0; i < argc; ++i) {
+        out << "\"" << argv[i] << "\"";
+        if (i < argc - 1)
+            out << ", ";
+    }
+    out << "])";
+    helper.log(2, out.str());
+}
 
-    myCore = new MyCore();
+// Parse the optional user-defined log level from command line arguments.
+// Exits the program if the argument is invalid.
+int parseLogLevel(int argc, char *argv[]) {
+    if (argc > 1) {
+        int logLevel;
+        if (isValidInt(argv[1], logLevel)) {
+            helper.log(2, "Valid argument: " + std::to_string(logLevel));
+            helper.log(3, "Setting 'user_defined_log_level' as: " + std::to_string(logLevel));
+            return logLevel;
+        } else {
+            helper.log(2, "Invalid argument: " + std::string(argv[1]));
+            helper.log(2, "Usage: <arg1> must be of type 'int' for 'user_defined_log_level'");
+            std::exit(EXIT_FAILURE);
+        }
+    }
+    return Helper::progLogLevel; // Use default if not provided.
+}
 
-    // then render the window
+// Function to encapsulate core initialization and the main loop.
+void start() {
+    // Use a smart pointer for automatic memory management.
+    auto myCore = std::make_unique<MyCore>();
 
     MyWindowManager windowManager;
-
     if (!windowManager.createWindow("My OpenGL App", 1280, 720)) {
-        return; // -1; // Exit if window creation fails
+        return;
     }
 
     while (!windowManager.shouldClose()) {
         windowManager.pollEvents();
-        windowManager.swapBuffers(); // Render (add OpenGL code here)
+        windowManager.swapBuffers();
     }
+}
+
+} // end of anonymous namespace
+
+int main(int argc, char *argv[]) {
+    // Log some startup messages.
+    helper.log(3, "Hello World!!");
+    helper.log(3, "Main Function");
+
+    UsefulFunctions::StdOutput stdOut;
+    stdOut.print("Testing standard output");
+
+    // Log the command line arguments.
+    printCommandLineArguments(argc, argv);
+
+    // Set the log level based on user input or use the default.
+    Helper::progLogLevel = parseLogLevel(argc, argv);
+
+    // Start the core application.
+    start();
+
+    return 0;
 }
