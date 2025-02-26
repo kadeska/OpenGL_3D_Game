@@ -14,6 +14,7 @@ FileManager::FileManager(){
 
 void FileManager::saveAsBinary(const std::vector<GameEntity>* entities, const std::string& file_name)
 {
+    helper.log(3, std::string("Saving as Binary: " + file_name));
     filename = file_name;
 
     // Save a list of game entities to a binary file.
@@ -26,10 +27,13 @@ void FileManager::saveAsBinary(const std::vector<GameEntity>* entities, const st
     out.write(reinterpret_cast<const char*>(&count), sizeof(count));
     // Write the actual entity data.
     out.write(reinterpret_cast<const char*>(entities->data()), count * sizeof(GameEntity));
+    helper.log(3, std::string("File saved: " + file_name));
 }
 
 // Load a list of game entities from a binary file.
 std::vector<GameEntity> FileManager::loadBinaryData(const std::string& file_name) {
+    helper.log(3, std::string("Loading file: " + file_name));
+
     std::ifstream in(file_name, std::ios::binary);
     if (!in) {
         throw std::runtime_error("Could not open file for reading");
@@ -38,6 +42,7 @@ std::vector<GameEntity> FileManager::loadBinaryData(const std::string& file_name
     in.read(reinterpret_cast<char*>(&count), sizeof(count));
     std::vector<GameEntity> entities(count);
     in.read(reinterpret_cast<char*>(entities.data()), count * sizeof(GameEntity));
+    helper.log(3, std::string("File loaded succesfuly: " + file_name));
     return entities;
 }
 
@@ -66,6 +71,7 @@ std::vector<GameEntity> FileManager::loadBinaryData(const std::string& file_name
 
 void FileManager::saveAsText(const std::string& data, const std::string& file_name)
 {
+    helper.log(3, std::string("Saving as Text: " + file_name));
     filename = file_name;
 
     // Save game data as a text string.
@@ -74,6 +80,7 @@ void FileManager::saveAsText(const std::string& data, const std::string& file_na
         throw std::runtime_error("Could not open file for writing");
     }
     outFile.write(data.c_str(), data.size());
+    helper.log(3, std::string("File saved: " + file_name));
 
     // int main() {
     //     try {
