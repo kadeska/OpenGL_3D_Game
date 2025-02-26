@@ -1,6 +1,9 @@
 #ifndef MYCORE_HPP
 #define MYCORE_HPP
 
+#include "filemanager.hpp"
+
+
 /**
  * @brief The MyCore class
  * This class is for core functionality, this class will contain, 
@@ -14,6 +17,8 @@ class MyCore
 {
 public:
     MyCore();
+
+    FileManager* fileManager;
 };
 
 #endif // MYCORE_HPP

@@ -1,3 +1,5 @@
 #include "mycore.hpp"
 
-MyCore::MyCore() {}
+MyCore::MyCore() {
+    fileManager = new FileManager();
+}

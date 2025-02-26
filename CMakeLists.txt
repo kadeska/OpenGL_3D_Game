@@ -59,6 +59,8 @@ add_executable(simpleCPP
     src/mycore.cpp
     include/mycore.hpp
     src/mycore.cpp
+    src/filemanager.cpp
+    include/filemanager.hpp
 )
 
 # Include your project's own headers.
