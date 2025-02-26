@@ -1,6 +1,8 @@
 #include "../include/helper.hpp"
 #include "../include/mywindowmanager.hpp"
 
+#include "mycore.hpp"
+
 // using namespace std;
 
 // Defines
@@ -8,8 +10,9 @@ bool isValidInt(const std::string &str, int &result);
 void start();
 
 UsefulFunctions::StdOutput stdOut;
+MyCore* myCore;
 
-int Helper::progLogLevel = 2;    // Default log level
+int Helper::progLogLevel = 3;    // Default log level
 int Helper::skippedLogCount = 0; // Initialize skipped log count
 
 /**
@@ -82,6 +85,12 @@ bool isValidInt(const std::string &str, int &result)
 
 void start()
 {
+    // do core set up first
+
+    myCore = new MyCore();
+
+    // then render the window
+
     MyWindowManager windowManager;
 
     if (!windowManager.createWindow("My OpenGL App", 1280, 720)) {
