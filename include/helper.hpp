@@ -69,10 +69,7 @@ public:
     };
     config_key_code hashit(std::string const &inString)
     {
-        if (inString[0] == '#') {
-            return config_key_code::eNull;
-        }
-        // log(3, inString);
+        //log(3, inString);
         if (inString == "WIDTH") {
             return config_key_code::eWidth;
         }

@@ -146,10 +146,10 @@ bool FileManager::loadConfig(std::string file_path)
     while (std::getline(inFile, line)) { // this doesnt work right
         // while (inFile.is_open() & (currentLineNumber < numLines)) {
 
-        if ((currentLineNumber < numLines)) {
-            if (line[0] == '#') {
-                continue;
-            }
+        // if (line[currentLineNumber] == '#') {
+        //     break;
+        // }
+        if ((currentLineNumber < numLines) & (line[currentLineNumber] != '#')) {
             currentLineNumber++;
             inFile >> key;
             inFile >> value;
@@ -159,7 +159,7 @@ bool FileManager::loadConfig(std::string file_path)
             * local scope usage
             * for debug set this to 3 or lower if initial LogLevel is set to 3
             */
-            int loglevel = 4;
+            int loglevel = 3;
             // key check
             switch (helper.hashit(key)) {
             case helper.config_key_code::eHeight:
