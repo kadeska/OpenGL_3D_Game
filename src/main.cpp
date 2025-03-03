@@ -4,7 +4,7 @@
 
 #include <iostream>
 #include <sstream>
-#include <memory> // For smart pointers
+// #include <memory> // For smart pointers
 
 // Global static initialization for Helper variables can be placed in a dedicated source file,
 // but here we leave them as-is for simplicity.
@@ -66,9 +66,14 @@ void start() {
     //myCore->fileManager->loadBinaryData("save");
 
     // Load the entities back from file.
-    std::vector<GameEntity> loadedEntities = myCore->fileManager->loadBinaryData("save");
-    for (const auto& entity : loadedEntities) {
-        std::cout << "Entity " << entity.id << ": (" << entity.x << ", " << entity.y << ")\n";
+    // std::vector<GameEntity> loadedEntities = myCore->fileManager->loadBinaryData("save");
+    // for (const auto& entity : loadedEntities) {
+    //     std::cout << "Entity " << entity.id << ": (" << entity.x << ", " << entity.y << ")\n";
+    // }
+
+    if (!myCore->fileManager->loadConfig("save.text")) {
+        helper.log(1, "oops... something went wrong, shutting down!!");
+        return;
     }
 
     MyWindowManager windowManager;

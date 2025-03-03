@@ -7,9 +7,9 @@ FileManager::FileManager(){
     helper.log(3, "FileManager constructor");
     filename = "";
 
-    std::vector<GameEntity>* array = new std::vector<GameEntity>;
-    saveAsBinary(array, "save");
-    saveAsText("Hello world!", "save.text");
+    // std::vector<GameEntity>* array = new std::vector<GameEntity>;
+    // saveAsBinary(array, "save");
+    // saveAsText("Hello world!", "save.text");
 }
 
 void FileManager::saveAsBinary(const std::vector<GameEntity>* entities, const std::string& file_name)
@@ -103,12 +103,92 @@ void FileManager::saveAsText(const std::string& data, const std::string& file_na
 }
 
 // Load game data from file.
-std::string loadGameData(const std::string& file_name) {
-std::ifstream inFile(file_name, std::ios::in | std::ios::binary);
+std::string FileManager::loadGameData(const std::string &file_name)
+{
+    std::ifstream inFile(file_name, std::ios::in | std::ios::binary);
     if (!inFile) {
         throw std::runtime_error("Could not open file for reading");
     }
     std::string data((std::istreambuf_iterator<char>(inFile)),
                      std::istreambuf_iterator<char>());
     return data;
+}
+
+bool FileManager::loadConfig(std::string file_path)
+{
+    std::ifstream inFile(file_path, std::ios::in);
+    if (!inFile.is_open()) {
+        // error
+        helper.log(1, std::string("Error opening file: " + file_path));
+        return false;
+    }
+    helper.log(3, std::to_string(countLines(file_path)));
+    std::string line;
+    while (std::getline(inFile, line)) {
+        std::cout << line << std::endl;
+    }
+    // close then re-open the file to refresh the stream. For some reason if I dont do this,
+    // then the folowing while loop doesnt get excecuted.
+    inFile.close();
+    inFile.clear();
+    inFile.open(file_path, std::ios::in);
+
+    std::string key;
+    std::string value;
+
+    // Read the file and output the config values.
+    while (!inFile.eof()) { // this is the way
+                            // while (std::getline(inFile, line)) { // this doesnt work right
+                            // while (inFile.is_open()) {  // dont do this
+        inFile >> key;
+        inFile >> value;
+
+        /**
+        * @brief loglevel
+        * local scope usage
+        * for debug set this to 3 or lower if initial LogLevel is set to 3
+        */
+        int loglevel = 4;
+        // key check
+        switch (helper.hashit(key)) {
+        case helper.config_key_code::eHeight:
+            helper.log(loglevel, std::string("Key: " + key));
+            helper.log(loglevel, std::string("Value: " + value));
+
+            break;
+
+        case helper.config_key_code::eWidth:
+            helper.log(loglevel, std::string("Key: " + key));
+            helper.log(loglevel, std::string("Value: " + value));
+
+            break;
+
+        case helper.config_key_code::eNull:
+            helper.log(loglevel, std::string("Key: Null"));
+            helper.log(loglevel, std::string("Value: Null"));
+
+            break;
+
+        default:
+            helper.log(1, std::string("Invalid key"));
+            break;
+        }
+    }
+    return true;
+}
+
+int FileManager::countLines(const std::string &filename)
+{
+    std::ifstream file(filename);
+    if (!file.is_open()) {
+        std::cerr << "Error: Cannot open file " << filename << std::endl;
+        return -1;
+    }
+
+    int count = 0;
+    std::string line;
+    while (std::getline(file, line)) {
+        ++count;
+    }
+    return count;
 }

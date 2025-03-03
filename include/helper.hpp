@@ -17,6 +17,7 @@ public:
     std::string string;
     // This bool is a flag to determin if we should use QT framework
     bool enable_QT;
+
     // logLevel is used to set the programs log level.
     // 0 = no logging
 
@@ -60,12 +61,27 @@ public:
             skippedLogCount++;
         }
     }
+
+    enum config_key_code { eNull, eWidth, eHeight };
+    config_key_code hashit(std::string const &inString)
+    {
+        // log(3, inString);
+        if (inString == "WIDTH") {
+            return config_key_code::eWidth;
+        }
+        if (inString == "HEIGHT") {
+            return config_key_code::eHeight;
+        }
+
+        return config_key_code::eNull;
+    }
 };
 // int Helper::progLogLevel = 1; // Default log level
 // int Helper::skippedLogCount = 0; // Initialize skipped log count
 
 // Declare the global helper instance
-extern Helper helper;
+// extern Helper helper;
+inline Helper helper;
 
 /**
  * @brief The foobar struct template

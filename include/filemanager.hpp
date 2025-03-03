@@ -24,6 +24,9 @@ public:
     void saveAsText(const std::string& data, const std::string& file_name);
     std::vector<GameEntity> loadBinaryData(const std::string& file_name);
     std::string loadGameData(const std::string& file_name);
+
+    bool loadConfig(std::string file_path);
+    int countLines(const std::string &filename);
 };
 
 #endif

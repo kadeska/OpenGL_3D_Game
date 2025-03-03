@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-# cmake_policy(SET CMP0144 NEW)
+#  cmake_policy(SET CMP0144 NEW)
 
 project(simpleCPP LANGUAGES CXX)
 
@@ -9,6 +9,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # --- Platform-Specific Configuration ---
 if(WIN32)
     message(STATUS "Configuring for Windows (using vcpkg)")
+    #  set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+
 
     # Define vcpkg root (adjust if needed)
     set(VCPKG_ROOT "C:/vcpkg/installed/x64-windows")
