@@ -122,58 +122,76 @@ bool FileManager::loadConfig(std::string file_path)
         helper.log(1, std::string("Error opening file: " + file_path));
         return false;
     }
-    helper.log(3, std::to_string(countLines(file_path)));
+    helper.log(3, std::string("Config file line count: " + std::to_string(countLines(file_path))));
     std::string line;
     while (std::getline(inFile, line)) {
+        if (line[0] == '#') {
+            continue;
+        }
         std::cout << line << std::endl;
     }
     // close then re-open the file to refresh the stream. For some reason if I dont do this,
     // then the folowing while loop doesnt get excecuted.
-    inFile.close();
     inFile.clear();
+    inFile.close();
     inFile.open(file_path, std::ios::in);
 
     std::string key;
     std::string value;
+    int numLines = countLines(file_path);
+    int currentLineNumber = 0;
 
     // Read the file and output the config values.
-    while (!inFile.eof()) { // this is the way
-                            // while (std::getline(inFile, line)) { // this doesnt work right
-                            // while (inFile.is_open()) {  // dont do this
-        inFile >> key;
-        inFile >> value;
+    // while (!inFile.eof()) { // this is the way
+    while (std::getline(inFile, line)) { // this doesnt work right
+        // while (inFile.is_open() & (currentLineNumber < numLines)) {
 
-        /**
-        * @brief loglevel
-        * local scope usage
-        * for debug set this to 3 or lower if initial LogLevel is set to 3
-        */
-        int loglevel = 4;
-        // key check
-        switch (helper.hashit(key)) {
-        case helper.config_key_code::eHeight:
-            helper.log(loglevel, std::string("Key: " + key));
-            helper.log(loglevel, std::string("Value: " + value));
+        if ((currentLineNumber < numLines)) {
+            if (line[0] == '#') {
+                continue;
+            }
+            currentLineNumber++;
+            inFile >> key;
+            inFile >> value;
 
-            break;
+            /**
+            * @brief loglevel
+            * local scope usage
+            * for debug set this to 3 or lower if initial LogLevel is set to 3
+            */
+            int loglevel = 4;
+            // key check
+            switch (helper.hashit(key)) {
+            case helper.config_key_code::eHeight:
+                helper.log(loglevel, std::string("Key: " + key));
+                helper.log(loglevel, std::string("Value: " + value));
+                // set screen height
 
-        case helper.config_key_code::eWidth:
-            helper.log(loglevel, std::string("Key: " + key));
-            helper.log(loglevel, std::string("Value: " + value));
+                break;
 
-            break;
+            case helper.config_key_code::eWidth:
+                helper.log(loglevel, std::string("Key: " + key));
+                helper.log(loglevel, std::string("Value: " + value));
+                // set screen width
 
-        case helper.config_key_code::eNull:
-            helper.log(loglevel, std::string("Key: Null"));
-            helper.log(loglevel, std::string("Value: Null"));
+                break;
 
-            break;
+            case helper.config_key_code::eNull:
+                helper.log(loglevel, std::string("Key: Null"));
+                helper.log(loglevel, std::string("Value: Null"));
+                //helper.log(3, value);
+                // error out with 'invalid hash'
 
-        default:
-            helper.log(1, std::string("Invalid key"));
-            break;
+                break;
+
+            default:
+                helper.log(1, std::string("Invalid key")); // would this ever run?
+
+                break;
+            }
         }
     }
+    inFile.close();
     return true;
 }
 

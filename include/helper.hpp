@@ -62,9 +62,16 @@ public:
         }
     }
 
-    enum config_key_code { eNull, eWidth, eHeight };
+    enum config_key_code {
+        eNull,  // invalid hash
+        eWidth, // screen width
+        eHeight // screen height
+    };
     config_key_code hashit(std::string const &inString)
     {
+        if (inString[0] == '#') {
+            return config_key_code::eNull;
+        }
         // log(3, inString);
         if (inString == "WIDTH") {
             return config_key_code::eWidth;
