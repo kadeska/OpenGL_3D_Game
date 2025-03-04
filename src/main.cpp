@@ -65,6 +65,7 @@ void start() {
     MyCore* myCore = new MyCore();
     //myCore->fileManager->loadBinaryData("save");
 
+    // testing, remove this
     // Load the entities back from file.
     // std::vector<GameEntity> loadedEntities = myCore->fileManager->loadBinaryData("save");
     // for (const auto& entity : loadedEntities) {
