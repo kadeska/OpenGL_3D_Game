@@ -17,6 +17,9 @@ public:
     std::string string;
     // This bool is a flag to determin if we should use QT framework
     bool enable_QT;
+    // screen width and height
+    int screen_width;
+    int screen_height;
 
     // logLevel is used to set the programs log level.
     // 0 = no logging
@@ -79,7 +82,20 @@ public:
 
         return config_key_code::eNull;
     }
+    int getScreen_width();
+    void setScreen_width(int newScreen_width);
+    int getScreen_height();
+    void setScreen_height(int newScreen_height);
 };
+
+inline int Helper::getScreen_width() {return screen_width;}
+
+inline void Helper::setScreen_width(int newScreen_width){screen_width=newScreen_width;}
+
+inline int Helper::getScreen_height() {return screen_height;}
+
+inline void Helper::setScreen_height(int newScreen_height){screen_height=newScreen_height;}
+
 // int Helper::progLogLevel = 1; // Default log level
 // int Helper::skippedLogCount = 0; // Initialize skipped log count
 

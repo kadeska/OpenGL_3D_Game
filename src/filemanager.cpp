@@ -1,6 +1,7 @@
 #include "../include/filemanager.hpp"
 
 #include "../include/helper.hpp"
+#include <cstdio>
 
 
 FileManager::FileManager(){
@@ -114,6 +115,13 @@ std::string FileManager::loadGameData(const std::string &file_name)
     return data;
 }
 
+
+/**
+ * @brief FileManager::loadConfig
+ * Loads the given config file
+ * @param file_path path to config file
+ * @return true/false if file is loaded
+ */
 bool FileManager::loadConfig(std::string file_path)
 {
     std::ifstream inFile(file_path, std::ios::in);
@@ -126,7 +134,7 @@ bool FileManager::loadConfig(std::string file_path)
     std::string line;
     while (std::getline(inFile, line)) {
         if (line[0] == '#') {
-            continue;
+            break; // skip this line, its a comment
         }
         std::cout << line << std::endl;
     }
@@ -142,14 +150,15 @@ bool FileManager::loadConfig(std::string file_path)
     int currentLineNumber = 0;
 
     // Read the file and output the config values.
-    // while (!inFile.eof()) { // this is the way
-    while (std::getline(inFile, line)) { // this doesnt work right
+    while (!inFile.eof()) { // this is the way
+    // while (std::getline(inFile, line)) { // this doesnt work right
         // while (inFile.is_open() & (currentLineNumber < numLines)) {
 
         // if (line[currentLineNumber] == '#') {
         //     break;
         // }
-        if ((currentLineNumber < numLines) & (line[currentLineNumber] != '#')) {
+        // (currentLineNumber < numLines) causes infinint loop
+        if ((currentLineNumber <= numLines) & (line[currentLineNumber] != '#')) {
             currentLineNumber++;
             inFile >> key;
             inFile >> value;
@@ -166,6 +175,7 @@ bool FileManager::loadConfig(std::string file_path)
                 helper.log(loglevel, std::string("Key: " + key));
                 helper.log(loglevel, std::string("Value: " + value));
                 // set screen height
+                helper.setScreen_height(std::stoi(value));
 
                 break;
 
@@ -173,6 +183,7 @@ bool FileManager::loadConfig(std::string file_path)
                 helper.log(loglevel, std::string("Key: " + key));
                 helper.log(loglevel, std::string("Value: " + value));
                 // set screen width
+                helper.setScreen_width(std::stoi(value));
 
                 break;
 
