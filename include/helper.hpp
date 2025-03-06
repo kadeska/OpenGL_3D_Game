@@ -188,6 +188,7 @@ inline float A = 1.0f;
 
 void setColor(float red, float green, float blue, float alpha);
 void getColor(float &red, float &green, float &blue, float &alpha);
+
 } // namespace BackgroundColor
 
 // Namespace for organizing various utilities

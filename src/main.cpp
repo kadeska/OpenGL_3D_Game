@@ -12,6 +12,7 @@ int Helper::progLogLevel = 3;    // Default log level
 int Helper::skippedLogCount = 0; // Initialize skipped log count
 
 MyCore* myCore;
+// MyWindowManager windowManager;
 
 // Anonymous namespace to limit the scope of internal helper functions.
 namespace {
@@ -61,8 +62,10 @@ int parseLogLevel(int argc, char *argv[]) {
 // Function to encapsulate core initialization and the main loop.
 void start() {
     // Use a smart pointer for automatic memory management.
-    //auto myCore = std::make_unique<MyCore>();
-    MyCore* myCore = new MyCore();
+    // myCore = std::make_unique<MyCore>();
+
+    // program core
+    myCore = new MyCore("save.text");
     //myCore->fileManager->loadBinaryData("save");
 
     // testing, remove this
@@ -71,21 +74,6 @@ void start() {
     // for (const auto& entity : loadedEntities) {
     //     std::cout << "Entity " << entity.id << ": (" << entity.x << ", " << entity.y << ")\n";
     // }
-
-    if (!myCore->fileManager->loadConfig("save.text")) {
-        helper.log(1, "oops... something went wrong, shutting down!!");
-        return;
-    }
-
-    MyWindowManager windowManager;
-    if (!windowManager.createWindow("My OpenGL App", 1280, 720)) {
-        return;
-    }
-
-    while (!windowManager.shouldClose()) {
-        windowManager.pollEvents();
-        windowManager.swapBuffers();
-    }
 }
 
 } // end of anonymous namespace

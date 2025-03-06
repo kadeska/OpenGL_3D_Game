@@ -2,6 +2,7 @@
 
 #include "../include/helper.hpp"
 #include <cstdio>
+#include <algorithm>
 
 
 FileManager::FileManager(){
@@ -132,78 +133,98 @@ bool FileManager::loadConfig(std::string file_path)
     }
     helper.log(3, std::string("Config file line count: " + std::to_string(countLines(file_path))));
     std::string line;
-    while (std::getline(inFile, line)) {
-        if (line[0] == '#') {
-            break; // skip this line, its a comment
-        }
-        std::cout << line << std::endl;
-    }
-    // close then re-open the file to refresh the stream. For some reason if I dont do this,
-    // then the folowing while loop doesnt get excecuted.
-    inFile.clear();
-    inFile.close();
-    inFile.open(file_path, std::ios::in);
+    // while (std::getline(inFile, line)) {
+    //     if (line[0] == '#') {
+    //         break; // skip this line, its a comment
+    //     }
+    //     std::cout << line << std::endl;
+    // }
+    // // close then re-open the file to refresh the stream. For some reason if I dont do this,
+    // // then the folowing while loop doesnt get excecuted.
+    // inFile.clear();
+    // inFile.close();
+    // inFile.open(file_path, std::ios::in);
 
-    std::string key;
-    std::string value;
     int numLines = countLines(file_path);
     int currentLineNumber = 0;
 
-    // Read the file and output the config values.
-    while (!inFile.eof()) { // this is the way
-    // while (std::getline(inFile, line)) { // this doesnt work right
-        // while (inFile.is_open() & (currentLineNumber < numLines)) {
+    // Read the file line by line
+    while (std::getline(inFile, line)) {
+        // Skip empty lines or comments (lines starting with '#')
+        if (line.empty() || line[0] == '#') {
+            continue;
+        }
 
-        // if (line[currentLineNumber] == '#') {
-        //     break;
-        // }
-        // (currentLineNumber < numLines) causes infinint loop
-        if ((currentLineNumber <= numLines) & (line[currentLineNumber] != '#')) {
-            currentLineNumber++;
-            inFile >> key;
-            inFile >> value;
+        // Find the position of the '=' character
+        size_t pos = line.find('=');
+        if (pos == std::string::npos) {
+            continue;  // Skip lines that don't contain '='
+        }
 
-            /**
+        // Extract key and value, then trim any extra whitespace
+        std::string key = trim(line.substr(0, pos));
+        std::string value = trim(line.substr(pos + 1));
+
+        helper.log(3, std::string(key + " = " + value));
+        keyCheck(key, value);
+
+        // Store the key-value pair in the map
+        config[key] = value;
+
+    }
+    inFile.close();
+    return true;
+}
+
+bool FileManager::keyCheck(std::string key, std::string value){
+    /**
             * @brief loglevel
             * local scope usage
             * for debug set this to 3 or lower if initial LogLevel is set to 3
             */
-            int loglevel = 3;
-            // key check
-            switch (helper.hashit(key)) {
-            case helper.config_key_code::eHeight:
-                helper.log(loglevel, std::string("Key: " + key));
-                helper.log(loglevel, std::string("Value: " + value));
-                // set screen height
-                helper.setScreen_height(std::stoi(value));
+    int loglevel = 4;
+    // key check
+    switch (helper.hashit(key)) {
+    case helper.config_key_code::eHeight:
+        helper.log(loglevel, std::string("Key: " + key));
+        helper.log(loglevel, std::string("Value: " + value));
+        // set screen height
+        helper.setScreen_height(std::stoi(value));
 
-                break;
+        break;
 
-            case helper.config_key_code::eWidth:
-                helper.log(loglevel, std::string("Key: " + key));
-                helper.log(loglevel, std::string("Value: " + value));
-                // set screen width
-                helper.setScreen_width(std::stoi(value));
+    case helper.config_key_code::eWidth:
+        helper.log(loglevel, std::string("Key: " + key));
+        helper.log(loglevel, std::string("Value: " + value));
+        // set screen width
+        helper.setScreen_width(std::stoi(value));
 
-                break;
+        break;
 
-            case helper.config_key_code::eNull:
-                helper.log(loglevel, std::string("Key: Null"));
-                helper.log(loglevel, std::string("Value: Null"));
-                //helper.log(3, value);
-                // error out with 'invalid hash'
+    case helper.config_key_code::eNull:
+        helper.log(loglevel, std::string("Key: Null"));
+        helper.log(loglevel, std::string("Value: Null"));
+        //helper.log(3, value);
+        // error out with 'invalid hash'
 
-                break;
+        break;
 
-            default:
-                helper.log(1, std::string("Invalid key")); // would this ever run?
+    default:
+        helper.log(1, std::string("Invalid key")); // would this ever run?
 
-                break;
-            }
-        }
+        //return false;
+        break;
     }
-    inFile.close();
     return true;
+}
+
+std::string FileManager::trim(const std::string &str) {
+    const std::string whitespace = " \t";
+    size_t start = str.find_first_not_of(whitespace);
+    if (start == std::string::npos)
+        return ""; // no content
+    size_t end = str.find_last_not_of(whitespace);
+    return str.substr(start, end - start + 1);
 }
 
 int FileManager::countLines(const std::string &filename)

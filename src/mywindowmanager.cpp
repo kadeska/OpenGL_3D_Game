@@ -52,7 +52,7 @@ bool MyWindowManager::createWindow(const std::string &label, int width, int heig
 
     pollEvents();
     // Dark blue background
-    glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
+    glClearColor(0.0f, 0.0f, 0.4f, 0.0f); // use config values
 
     // Enable depth test
     glEnable(GL_DEPTH_TEST);
@@ -84,16 +84,24 @@ void MyWindowManager::swapBuffers()
 // Check if the window should close
 bool MyWindowManager::shouldClose()
 {
-    return window && glfwWindowShouldClose(window);
+    // Check for Esc key press
+    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+        helper.log(3, "Closing window");
+        glfwSetWindowShouldClose(window, GLFW_TRUE);
+        terminate();
+        // return glfwWindowShouldClose(window);
+        return true;
+    }
+    return glfwWindowShouldClose(window);
 }
 
 // Cleanup and terminate GLFW
 void MyWindowManager::terminate()
 {
-    if (window) {
-        glfwDestroyWindow(window);
-        window = nullptr;
-    }
+    // if (window) {
+    //     glfwDestroyWindow(window);
+    //     //window = nullptr;
+    // }
     glfwTerminate();
     helper.log(3, "Window terminated.");
 }

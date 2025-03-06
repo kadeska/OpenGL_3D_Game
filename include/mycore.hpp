@@ -2,6 +2,7 @@
 #define MYCORE_HPP
 
 #include "filemanager.hpp"
+#include "mywindowmanager.hpp"
 
 
 /**
@@ -16,7 +17,10 @@
 class MyCore
 {
 public:
-    MyCore();
+    MyCore(std::string config_file_name);
+    void initWindow();
+
+    std::string configFileName;
 
     /**
      * @brief fileManager
@@ -25,10 +29,12 @@ public:
     FileManager* fileManager;
 
     // window manager
+    MyWindowManager myWindowManager;
 
     // game manager
 
     // game loop manager
+
 };
 
 #endif // MYCORE_HPP
