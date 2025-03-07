@@ -18,7 +18,7 @@ class MyCore
 {
 public:
     MyCore(std::string config_file_name);
-    void initWindow();
+    void initWindow(const char* title, int width, int height);
 
     std::string configFileName;
 

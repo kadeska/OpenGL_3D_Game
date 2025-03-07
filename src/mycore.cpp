@@ -10,17 +10,11 @@ MyCore::MyCore(std::string config_file_name) {
         helper.log(1, "oops... something went wrong, shutting down!!");
         return;
     }
-    initWindow();
-    // main loop. This will be moved into a threaded thread manager
-    while (!myWindowManager.shouldClose()) {
-        myWindowManager.pollEvents();
-        myWindowManager.swapBuffers();
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    }
+    initWindow("window", helper.getScreen_width(), helper.getScreen_height());
 }
 
-void MyCore::initWindow(){
-    if (!myWindowManager.createWindow("My OpenGL App", helper.getScreen_width(), helper.getScreen_height())) {
+void MyCore::initWindow(const char* title, int width, int height){
+    if (!myWindowManager.createWindow(title, width, height)) {
         return;
     }
 }

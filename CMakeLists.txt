@@ -64,6 +64,7 @@ add_executable(simpleCPP
     src/mycore.cpp
     src/filemanager.cpp
     include/filemanager.hpp
+    include/myglwindow.hpp src/gl/window/myglwindow.cpp
 )
 
 # Include your project's own headers.

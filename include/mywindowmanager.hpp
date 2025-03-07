@@ -1,6 +1,8 @@
 #ifndef MYWINDOWMANAGER_HPP
 #define MYWINDOWMANAGER_HPP
 
+#include "../include/myglwindow.hpp"
+
 #include <stdio.h>
 #include <string>
 
@@ -14,16 +16,13 @@ class MyWindowManager
 {
 private:
     GLFWwindow *window;
+    myGLwindow *glWindow;
 
 public:
     MyWindowManager();  // Constructor
     ~MyWindowManager(); // Destructor
 
-    bool createWindow(const std::string &label, int width, int height);
-    void pollEvents();
-    void swapBuffers();
-    bool shouldClose();
-    void terminate();
+    bool createWindow(const char* title, int width, int height);
 };
 
 #endif // MYWINDOWMANAGER_HPP
