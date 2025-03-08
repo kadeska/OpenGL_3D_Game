@@ -72,6 +72,8 @@ add_executable(simpleCPP
     include/shaders/vertex_texture.vs
     include/shaders/fragment_texture.fs
     include/std_image.hpp
+    include/shaders/vertex_transform.vs
+    include/shaders/fragment_transform.fs
 )
 
 # Include your project's own headers.

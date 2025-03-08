@@ -20,8 +20,8 @@ public:
     // screen width and height
     int screen_width;
     int screen_height;
-    const char* vertex_shader_path = "../include/shaders/vertex_texture.vs";
-    const char* fragment_shader_path = "../include/shaders/fragment_texture.fs";
+    const char* vertex_shader_path = "../include/shaders/vertex.shader";
+    const char* fragment_shader_path = "../include/shaders/fragment.shader";
 
     // logLevel is used to set the programs log level.
     // 0 = no logging
