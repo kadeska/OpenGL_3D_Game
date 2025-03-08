@@ -20,6 +20,8 @@ public:
     // screen width and height
     int screen_width;
     int screen_height;
+    const char* vertex_shader_path = "../include/shaders/vertex_texture.vs";
+    const char* fragment_shader_path = "../include/shaders/fragment_texture.fs";
 
     // logLevel is used to set the programs log level.
     // 0 = no logging
@@ -235,5 +237,7 @@ public:
 };
 
 } // namespace UsefulFunctions
+
+
 
 #endif // HELPER_HPP

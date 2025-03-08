@@ -65,6 +65,13 @@ add_executable(simpleCPP
     src/filemanager.cpp
     include/filemanager.hpp
     include/myglwindow.hpp src/gl/window/myglwindow.cpp
+    include/shadersource.hpp
+    include/shader.hpp
+    include/shaders/vertex_basic.vs
+    include/shaders/fragment_basic.fs
+    include/shaders/vertex_texture.vs
+    include/shaders/fragment_texture.fs
+    include/std_image.hpp
 )
 
 # Include your project's own headers.
