@@ -24,7 +24,7 @@ const unsigned int SCR_WIDTH = helper.getScreen_width();
 const unsigned int SCR_HEIGHT = helper.getScreen_height();
 
 // camera
-Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
+Camera camera(glm::vec3(0.0f, 1.0f, 0.0f));
 float lastX = helper.getScreen_width() / 2.0f;
 float lastY = helper.getScreen_height() / 2.0f;
 bool firstMouse = true;
@@ -136,17 +136,28 @@ int myGLwindow::initWindow(const char* title, int width, int height)
     };
     // world space positions of our cubes
     glm::vec3 cubePositions[] = {
+        // row 1
         glm::vec3( 0.0f,  0.0f,  0.0f),
-        glm::vec3( 2.0f,  5.0f, -15.0f),
-        glm::vec3(-1.5f, -2.2f, -2.5f),
-        glm::vec3(-3.8f, -2.0f, -12.3f),
-        glm::vec3( 2.4f, -0.4f, -3.5f),
-        glm::vec3(-1.7f,  3.0f, -7.5f),
-        glm::vec3( 1.3f, -2.0f, -2.5f),
-        glm::vec3( 1.5f,  2.0f, -2.5f),
-        glm::vec3( 1.5f,  0.2f, -1.5f),
-        glm::vec3(-1.3f,  1.0f, -1.5f)
+        glm::vec3( 1.0f,  0.0f,  0.0f),
+        glm::vec3( 2.0f,  0.0f,  0.0f),
+        glm::vec3( 3.0f,  0.0f,  0.0f),
+        // row 2
+        glm::vec3( 0.0f,  0.0f,  1.0f),
+        glm::vec3( 1.0f,  0.0f,  1.0f),
+        glm::vec3( 2.0f,  0.0f,  1.0f),
+        glm::vec3( 3.0f,  0.0f,  1.0f),
+        // row 3
+        glm::vec3( 0.0f,  0.0f,  2.0f),
+        glm::vec3( 1.0f,  0.0f,  2.0f),
+        glm::vec3( 2.0f,  0.0f,  2.0f),
+        glm::vec3( 3.0f,  0.0f,  2.0f),
+        // row 4
+        glm::vec3( 0.0f,  0.0f,  3.0f),
+        glm::vec3( 1.0f,  0.0f,  3.0f),
+        glm::vec3( 2.0f,  0.0f,  3.0f),
+        glm::vec3( 3.0f,  0.0f,  3.0f)
     };
+    int numCubes = std::size(cubePositions);
     unsigned int VBO, VAO;
 
     helper.log(3, "generating beffer data and generating atributes...");
@@ -269,12 +280,13 @@ int myGLwindow::initWindow(const char* title, int width, int height)
         helper.log(logLevel, "render boxes...");
         // render boxes
         glBindVertexArray(VAO);
-        for (unsigned int i = 0; i < 10; i++)
+        // for every item
+        for (unsigned int i = 0; i < numCubes; i++)
         {
             // calculate the model matrix for each object and pass it to shader before drawing
             glm::mat4 model = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
             model = glm::translate(model, cubePositions[i]);
-            float angle = 20.0f * i;
+            float angle = 0.0f * i;
             model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
             ourShader.setMat4("model", model);
 
@@ -286,6 +298,8 @@ int myGLwindow::initWindow(const char* title, int width, int height)
         // -------------------------------------------------------------------------------
         glfwSwapBuffers(window);
         glfwPollEvents();
+
+        helper.log(4, std::string("Frame time: " + std::to_string(deltaTime)));
     }
 
     // optional: de-allocate all resources once they've outlived their purpose:
