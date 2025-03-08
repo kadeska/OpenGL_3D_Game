@@ -67,13 +67,11 @@ add_executable(simpleCPP
     include/myglwindow.hpp src/gl/window/myglwindow.cpp
     include/shadersource.hpp
     include/shader.hpp
-    include/shaders/vertex_basic.vs
-    include/shaders/fragment_basic.fs
-    include/shaders/vertex_texture.vs
-    include/shaders/fragment_texture.fs
     include/std_image.hpp
-    include/shaders/vertex_transform.vs
-    include/shaders/fragment_transform.fs
+    include/shaders/vertex.shader
+    include/shaders/fragment.shader
+    include/camera.hpp
+    include/shader_m.hpp
 )
 
 # Include your project's own headers.
