@@ -10,7 +10,7 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
-#include "std_image.hpp"
+#include "stb_image.hpp"
 #include "mesh.hpp"
 #include "shader.hpp"
 
