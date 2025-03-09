@@ -68,6 +68,8 @@ add_executable(simpleCPP
     include/shaders/fragment.shader
     include/camera.hpp
     include/shader_m.hpp
+    include/model.hpp
+    include/mesh.hpp
 )
 
 # Include your project's own headers.
