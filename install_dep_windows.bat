@@ -13,8 +13,8 @@ if not exist "%VCPKG_DIR%\vcpkg.exe" (
     cd ..
 )
 
-:: Check and install dependencies
-for %%L in (glfw3 glew boost) do (
+:: Check and install dependencies (including assimp)
+for %%L in (glfw3 glew boost assimp) do (
     "%VCPKG_DIR%\vcpkg.exe" list | findstr /C:"%%L" > nul
     if errorlevel 1 (
         echo Installing %%L...

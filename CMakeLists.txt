@@ -1,6 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
 
-
 project(simpleCPP LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
@@ -9,9 +8,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # --- Platform-Specific Configuration ---
 if(WIN32)
     message(STATUS "Configuring for Windows (using vcpkg)")
-    #  set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
     cmake_policy(SET CMP0144 NEW)
-
 
     # Define vcpkg root (adjust if needed)
     set(VCPKG_ROOT "C:/vcpkg/installed/x64-windows")
@@ -21,21 +18,24 @@ if(WIN32)
     set(BOOST_INCLUDEDIR "${VCPKG_ROOT}/include")
     set(BOOST_LIBRARYDIR "${VCPKG_ROOT}/lib")
 
-    # Specify where to find the package configuration files for GLFW and GLEW
+    # Specify where to find the package configuration files
     set(glfw3_DIR "${VCPKG_ROOT}/share/glfw3")
     set(GLEW_DIR "${VCPKG_ROOT}/share/glew")
+    set(assimp_DIR "${VCPKG_ROOT}/share/assimp")
 
     # Find packages using the vcpkg config files (CONFIG mode)
     find_package(glfw3 CONFIG REQUIRED)
     find_package(GLEW CONFIG REQUIRED)
+    find_package(assimp CONFIG REQUIRED)
 else()
     message(STATUS "Configuring for Linux (using system libraries)")
 
     # Assume system-installed packages; ensure required development packages are installed.
     find_package(glfw3 REQUIRED)
     find_package(GLEW REQUIRED)
-    include(FetchContent)
+    find_package(assimp REQUIRED)
 
+    include(FetchContent)
     FetchContent_Declare(
       glad
       GIT_REPOSITORY https://github.com/Dav1dde/glad.git
@@ -43,10 +43,6 @@ else()
     )
 
     FetchContent_MakeAvailable(glad)
-
-
-
-
 endif()
 
 # Find common packages on both platforms.
@@ -78,7 +74,6 @@ add_executable(simpleCPP
 target_include_directories(simpleCPP PRIVATE ${CMAKE_SOURCE_DIR}/include)
 
 # --- Determine the Correct GLFW Target ---
-# Depending on your installation, GLFW might provide its target as either "glfw3::glfw3" or "glfw".
 if(TARGET glfw3::glfw3)
     set(GLFW_TARGET glfw3::glfw3)
 elseif(TARGET glfw)
@@ -94,6 +89,7 @@ target_link_libraries(simpleCPP PRIVATE
     GLEW::GLEW
     glad
     ${Boost_LIBRARIES}
+    assimp::assimp
 )
 
 # --- Installation Settings ---

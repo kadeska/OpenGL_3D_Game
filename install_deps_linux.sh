@@ -6,16 +6,17 @@ echo "Checking for required dependencies..."
 if command -v apt >/dev/null; then
     PKG_MANAGER="apt"
     INSTALL_CMD="sudo apt install -y"
+    # Debian/Ubuntu dependency names
+    DEPENDENCIES=("libglfw3-dev" "libglew-dev" "libboost-all-dev" "libassimp-dev")
 elif command -v dnf >/dev/null; then
     PKG_MANAGER="dnf"
     INSTALL_CMD="sudo dnf install -y"
+    # Fedora dependency names (adjust if necessary)
+    DEPENDENCIES=("glfw-devel" "glew-devel" "boost-devel" "assimp-devel")
 else
     echo "Unsupported Linux distribution. Please install dependencies manually."
     exit 1
 fi
-
-# List of required packages
-DEPENDENCIES=("libglfw3-dev" "libglew-dev" "libboost-all-dev")
 
 for package in "${DEPENDENCIES[@]}"; do
     if dpkg -s $package &>/dev/null || rpm -q $package &>/dev/null; then
