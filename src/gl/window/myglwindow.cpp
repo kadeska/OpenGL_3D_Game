@@ -89,6 +89,7 @@ int myGLwindow::initWindow(const char* title, int width, int height)
     // build and compile our shader zprogram
     // ------------------------------------
     Shader ourShader(helper.vertex_shader_path, helper.fragment_shader_path);
+    //Shader modelShader(helper.model_vertex_shader_path, helper.model_fragment_shader_path);
 
     // load models
     // -----------
@@ -98,151 +99,153 @@ int myGLwindow::initWindow(const char* title, int width, int height)
     // draw in wireframe
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-    // // set up vertex data (and buffer(s)) and configure vertex attributes
-    // // ------------------------------------------------------------------
-    // float vertices[] = {
-    //     -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-    //     0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
-    //     0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-    //     0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-    //     -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-    //     -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+    // set up vertex data (and buffer(s)) and configure vertex attributes
+    // ------------------------------------------------------------------
+    float vertices[] = {
+        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+        0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
+        0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+        0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
 
-    //     -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-    //     0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-    //     0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-    //     0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-    //     -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
-    //     -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+        0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+        0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+        0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+        -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
+        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
 
-    //     -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-    //     -0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-    //     -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-    //     -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-    //     -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-    //     -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+        -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+        -0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+        -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
 
-    //     0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-    //     0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-    //     0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-    //     0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-    //     0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-    //     0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+        0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+        0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+        0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+        0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+        0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+        0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
 
-    //     -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-    //     0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
-    //     0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-    //     0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-    //     -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-    //     -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+        0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
+        0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+        0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
 
-    //     -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-    //     0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-    //     0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-    //     0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-    //     -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
-    //     -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
-    // };
-    // // world space positions of our cubes
-    // glm::vec3 cubePositions[] = {
-    //     // row 1
-    //     glm::vec3( 0.0f,  0.0f,  0.0f),
-    //     glm::vec3( 1.0f,  0.0f,  0.0f),
-    //     glm::vec3( 2.0f,  0.0f,  0.0f),
-    //     glm::vec3( 3.0f,  0.0f,  0.0f),
-    //     // row 2
-    //     glm::vec3( 0.0f,  0.0f,  1.0f),
-    //     glm::vec3( 1.0f,  0.0f,  1.0f),
-    //     glm::vec3( 2.0f,  0.0f,  1.0f),
-    //     glm::vec3( 3.0f,  0.0f,  1.0f),
-    //     // row 3
-    //     glm::vec3( 0.0f,  0.0f,  2.0f),
-    //     glm::vec3( 1.0f,  0.0f,  2.0f),
-    //     glm::vec3( 2.0f,  0.0f,  2.0f),
-    //     glm::vec3( 3.0f,  0.0f,  2.0f),
-    //     // row 4
-    //     glm::vec3( 0.0f,  0.0f,  3.0f),
-    //     glm::vec3( 1.0f,  0.0f,  3.0f),
-    //     glm::vec3( 2.0f,  0.0f,  3.0f),
-    //     glm::vec3( 3.0f,  0.0f,  3.0f)
-    // };
-    // int numCubes = std::size(cubePositions);
-    // unsigned int VBO, VAO;
+        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+        0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+        0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+        0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+        -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
+        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
+    };
+    // world space positions of our cubes
+    glm::vec3 cubePositions[] = {
+        // row 1
+        glm::vec3( 0.0f,  0.0f,  0.0f),
+        glm::vec3( 1.0f,  0.0f,  0.0f),
+        glm::vec3( 2.0f,  0.0f,  0.0f),
+        glm::vec3( 3.0f,  0.0f,  0.0f),
+        // row 2
+        glm::vec3( 0.0f,  0.0f,  1.0f),
+        glm::vec3( 1.0f,  0.0f,  1.0f),
+        glm::vec3( 2.0f,  0.0f,  1.0f),
+        glm::vec3( 3.0f,  0.0f,  1.0f),
+        // row 3
+        glm::vec3( 0.0f,  0.0f,  2.0f),
+        glm::vec3( 1.0f,  0.0f,  2.0f),
+        glm::vec3( 2.0f,  0.0f,  2.0f),
+        glm::vec3( 3.0f,  0.0f,  2.0f),
+        // row 4
+        glm::vec3( 0.0f,  0.0f,  3.0f),
+        glm::vec3( 1.0f,  0.0f,  3.0f),
+        glm::vec3( 2.0f,  0.0f,  3.0f),
+        glm::vec3( 3.0f,  0.0f,  3.0f)
+    };
+    int numCubes = std::size(cubePositions);
+    unsigned int VBO, VAO;
 
-    // helper.log(3, "generating beffer data and generating atributes...");
-    // glGenVertexArrays(1, &VAO);
-    // glGenBuffers(1, &VBO);
+    helper.log(3, "generating beffer data and generating atributes...");
+    glGenVertexArrays(1, &VAO);
+    glGenBuffers(1, &VBO);
 
-    // glBindVertexArray(VAO);
+    glBindVertexArray(VAO);
 
-    // glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    // glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-    // // position attribute
-    // glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
-    // glEnableVertexAttribArray(0);
-    // // texture coord attribute
-    // glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
-    // glEnableVertexAttribArray(1);
+    // position attribute
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+    // texture coord attribute
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+    glEnableVertexAttribArray(1);
 
 
-    // helper.log(3, "loading textures...");
-    // // load and create a texture
-    // // -------------------------
-    // unsigned int texture1, texture2;
-    // // texture 1
-    // // ---------
-    // glGenTextures(1, &texture1);
-    // glBindTexture(GL_TEXTURE_2D, texture1);
-    // // set the texture wrapping parameters
-    // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    // // set texture filtering parameters
-    // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    // // load image, create texture and generate mipmaps
-    // int texture_width, texture_height, nrChannels;
-    // stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis.
-    // unsigned char *data = stbi_load("../res/container.jpg", &texture_width, &texture_height, &nrChannels, 0);
-    // if (data)
-    // {
-    //     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texture_width, texture_height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-    //     glGenerateMipmap(GL_TEXTURE_2D);
-    // }
-    // else
-    // {
-    //     helper.log(1, "Failed to load texture 1");
-    // }
-    // stbi_image_free(data);
-    // // texture 2
-    // // ---------
-    // glGenTextures(1, &texture2);
-    // glBindTexture(GL_TEXTURE_2D, texture2);
-    // // set the texture wrapping parameters
-    // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    // // set texture filtering parameters
-    // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    // // load image, create texture and generate mipmaps
-    // data = stbi_load("../res/awesomeface.png", &texture_width, &texture_height, &nrChannels, 0);
-    // if (data)
-    // {
-    //     // note that the awesomeface.png has transparency and thus an alpha channel, so make sure to tell OpenGL the data type is of GL_RGBA
-    //     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texture_width, texture_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-    //     glGenerateMipmap(GL_TEXTURE_2D);
-    // }
-    // else
-    // {
-    //     helper.log(1, "Failed to load texture 2");
-    // }
-    // stbi_image_free(data);
+    helper.log(3, "loading textures...");
+    // load and create a texture
+    // -------------------------
+    unsigned int texture1, texture2;
+    // texture 1
+    // ---------
+    glGenTextures(1, &texture1);
+    glBindTexture(GL_TEXTURE_2D, texture1);
+    // set the texture wrapping parameters
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    // set texture filtering parameters
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    // load image, create texture and generate mipmaps
+    int texture_width, texture_height, nrChannels;
+    stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis.
+    unsigned char *data = stbi_load("../res/container.jpg", &texture_width, &texture_height, &nrChannels, 0);
+    if (data)
+    {
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texture_width, texture_height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+        glGenerateMipmap(GL_TEXTURE_2D);
+    }
+    else
+    {
+        helper.log(1, "Failed to load texture 1");
+    }
+    stbi_image_free(data);
+    // texture 2
+    // ---------
+    glGenTextures(1, &texture2);
+    glBindTexture(GL_TEXTURE_2D, texture2);
+    // set the texture wrapping parameters
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    // set texture filtering parameters
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    // load image, create texture and generate mipmaps
+    data = stbi_load("../res/awesomeface.png", &texture_width, &texture_height, &nrChannels, 0);
+    if (data)
+    {
+        // note that the awesomeface.png has transparency and thus an alpha channel, so make sure to tell OpenGL the data type is of GL_RGBA
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texture_width, texture_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+        glGenerateMipmap(GL_TEXTURE_2D);
+    }
+    else
+    {
+        helper.log(1, "Failed to load texture 2");
+    }
+    stbi_image_free(data);
 
-    // // tell opengl for each sampler to which texture unit it belongs to (only has to be done once)
-    // // -------------------------------------------------------------------------------------------
-    // ourShader.use();
-    // ourShader.setInt("texture1", 0);
-    // ourShader.setInt("texture2", 1);
+    // tell opengl for each sampler to which texture unit it belongs to (only has to be done once)
+    // -------------------------------------------------------------------------------------------
+    ourShader.use();
+    ourShader.setInt("texture1", 0);
+    ourShader.setInt("texture2", 1);
+
+    // modelShader.use();
 
 
     helper.log(3, "entering render loop------");
@@ -266,11 +269,11 @@ int myGLwindow::initWindow(const char* title, int width, int height)
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        // // bind textures on corresponding texture units
-        // glActiveTexture(GL_TEXTURE0);
-        // glBindTexture(GL_TEXTURE_2D, texture1);
-        // glActiveTexture(GL_TEXTURE1);
-        // glBindTexture(GL_TEXTURE_2D, texture2);
+        // bind textures on corresponding texture units
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, texture1);
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture(GL_TEXTURE_2D, texture2);
 
         helper.log(logLevel, "activating shader...");
         // activate shader
@@ -287,29 +290,31 @@ int myGLwindow::initWindow(const char* title, int width, int height)
         ourShader.setMat4("view", view);
 
 
+        //modelShader.use();
         // render the loaded model
         glm::mat4 model = glm::mat4(1.0f);
         model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
         model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
-        ourShader.setMat4("model", model);
+        //modelShader.setMat4("model", model);
         ourModel.Draw(ourShader);
 
 
-        // helper.log(logLevel, "render boxes...");
-        // // render boxes
-        // glBindVertexArray(VAO);
-        // // for every item
-        // for (unsigned int i = 0; i < numCubes; i++)
-        // {
-        //     // calculate the model matrix for each object and pass it to shader before drawing
-        //     glm::mat4 model = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
-        //     model = glm::translate(model, cubePositions[i]);
-        //     float angle = 0.0f * i;
-        //     model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
-        //     ourShader.setMat4("model", model);
+        helper.log(logLevel, "render boxes...");
+        // ourShader.use();
+        // render boxes
+        glBindVertexArray(VAO);
+        // for every object/cube
+        for (unsigned int i = 0; i < numCubes; i++)
+        {
+            // calculate the model matrix for each object and pass it to shader before drawing
+            glm::mat4 model = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
+            model = glm::translate(model, cubePositions[i]);
+            float angle = 0.0f * i;
+            model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
+            ourShader.setMat4("model", model);
 
-        //     glDrawArrays(GL_TRIANGLES, 0, 36);
-        // }
+            glDrawArrays(GL_TRIANGLES, 0, 36);
+        }
 
         helper.log(logLevel, "swap buffers...");
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
@@ -322,8 +327,8 @@ int myGLwindow::initWindow(const char* title, int width, int height)
 
     // optional: de-allocate all resources once they've outlived their purpose:
     // ------------------------------------------------------------------------
-    // glDeleteVertexArrays(1, &VAO);
-    // glDeleteBuffers(1, &VBO);
+    glDeleteVertexArrays(1, &VAO);
+    glDeleteBuffers(1, &VBO);
 
     // glfw: terminate, clearing all previously allocated GLFW resources.
     // ------------------------------------------------------------------

@@ -133,17 +133,6 @@ bool FileManager::loadConfig(std::string file_path)
     }
     helper.log(3, std::string("Config file line count: " + std::to_string(countLines(file_path))));
     std::string line;
-    // while (std::getline(inFile, line)) {
-    //     if (line[0] == '#') {
-    //         break; // skip this line, its a comment
-    //     }
-    //     std::cout << line << std::endl;
-    // }
-    // // close then re-open the file to refresh the stream. For some reason if I dont do this,
-    // // then the folowing while loop doesnt get excecuted.
-    // inFile.clear();
-    // inFile.close();
-    // inFile.open(file_path, std::ios::in);
 
     int numLines = countLines(file_path);
     int currentLineNumber = 0;

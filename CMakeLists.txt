@@ -65,11 +65,13 @@ add_executable(simpleCPP
     include/shader.hpp
     include/std_image.hpp
     include/shaders/vertex.shader
-    include/shaders/fragment.shader
+
     include/camera.hpp
     include/shader_m.hpp
     include/model.hpp
     include/mesh.hpp
+
+    include/shaders/fragment.shader
 )
 
 # Include your project's own headers.
