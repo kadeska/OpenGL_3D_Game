@@ -86,6 +86,11 @@ public:
         if (inString == "HEIGHT") {
             return config_key_code::eHeight;
         }
+        if (inString == "BACKGROUND_R"){}
+        if (inString == "BACKGROUND_G"){}
+        if (inString == "BACKGROUND_B"){}
+        if (inString == "BACKGROUND_A"){}
+        if (inString == ""){}
 
         return config_key_code::eNull;
     }
