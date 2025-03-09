@@ -161,16 +161,8 @@ int myGLwindow::initWindow(const char* title, int width, int height)
         // -----
         processInput(window);
 
-        // render
-        // ------
-        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-
         // Bind textures
         cube->bindTextures();
-
-
 
         // activate shader
         helper.log(logLevel, "activating shader...");
@@ -197,11 +189,13 @@ int myGLwindow::initWindow(const char* title, int width, int height)
         // ourModel.Draw(ourShader);
 
 
+        // render
+        // ------
         cube->render();
 
-        helper.log(logLevel, "swap buffers...");
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
+        helper.log(logLevel, "swap buffers...");
         glfwSwapBuffers(window);
         glfwPollEvents();
 
