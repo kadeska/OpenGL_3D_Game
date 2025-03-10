@@ -1,6 +1,12 @@
 #include "../include/myglwindow.hpp"
 
-// #define STB_IMAGE_IMPLEMENTATION
+#include "../include/helper.hpp"
+#include "../include/shadersource.hpp"
+#include "../include/shader.hpp"
+#include "../include/camera.hpp"
+#include "../include/model.hpp"
+
+#include "../include/cube.hpp"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -8,17 +14,6 @@
 
 #include <iostream>
 // #include <cmath>
-
-#include "../include/helper.hpp"
-#include "../include/shadersource.hpp"
-#include "../include/shader.hpp"
-// #include "../include/stb_image.hpp"
-#include "../include/camera.hpp"
-#include "../include/model.hpp"
-
-#include "../include/cube.hpp"
-
-
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
@@ -109,14 +104,25 @@ int myGLwindow::initWindow(const char* title, int width, int height)
     // build and compile our shader zprogram
     // --------------------------------------------------------------------------------------
     helper.log(3, "making shaders...");
-    Shader ourShader(helper.vertex_shader_path, helper.fragment_shader_path);
+    // Shader* ourShader(helper.vertex_shader_path, helper.fragment_shader_path);
+    Shader* ourShader = new Shader(helper.vertex_shader_path, helper.fragment_shader_path);
     //Shader modelShader(helper.model_vertex_shader_path, helper.model_fragment_shader_path);
 
-    // load cubes
-    Cube* cube = new Cube(0, "", ourShader);
+
+    renderManager = new RenderManager(ourShader);
+
+    // Load cubes
+    // preferably load from a level data file, or procidrally generate a world.
+    // #### ---------------------------------------------------------------------------------
+    // ####
+    // ####
+    // load cubes to memory
+    //Cube* cube = new Cube(0, "", ourShader);
 
     // load models
-    // -----------
+    // #### ---------------------------------------------------------------------------------
+    // ####
+    // ####
     // Model ourModel("../res/objects/backpack/backpack.obj");
 
 
@@ -128,30 +134,12 @@ int myGLwindow::initWindow(const char* title, int width, int height)
     // Basicaly this is a list of all objects
     // in the world, or at least this is just a list of objects,
     // there may be more than one list.
-    glm::vec3 cubePositions[] = {
-        // row 1
-        glm::vec3( 0.0f,  0.0f,  0.0f),
-        glm::vec3( 1.0f,  0.0f,  0.0f),
-        glm::vec3( 2.0f,  0.0f,  0.0f),
-        glm::vec3( 3.0f,  0.0f,  0.0f),
-        // row 2
-        glm::vec3( 0.0f,  0.0f,  1.0f),
-        glm::vec3( 1.0f,  0.0f,  1.0f),
-        glm::vec3( 2.0f,  0.0f,  1.0f),
-        glm::vec3( 3.0f,  0.0f,  1.0f),
-        // row 3
-        glm::vec3( 0.0f,  0.0f,  2.0f),
-        glm::vec3( 1.0f,  0.0f,  2.0f),
-        glm::vec3( 2.0f,  0.0f,  2.0f),
-        glm::vec3( 3.0f,  0.0f,  2.0f),
-        // row 4
-        glm::vec3( 0.0f,  0.0f,  3.0f),
-        glm::vec3( 1.0f,  0.0f,  3.0f),
-        glm::vec3( 2.0f,  0.0f,  3.0f),
-        glm::vec3( 3.0f,  0.0f,  3.0f)
-    };
-    int numCubes = std::size(cubePositions);
 
+    // Render loop
+    // Move this to its own threaded render loop manager
+    // #### ---------------------------------------------------------------------------------
+    // ####
+    // ####
     helper.log(3, "entering render loop------");
     // render loop
     // -----------
@@ -169,23 +157,24 @@ int myGLwindow::initWindow(const char* title, int width, int height)
         processInput(window);
 
         // Bind textures
-        cube->bindTextures();
+        //cube->bindTextures();
 
         // activate shader
         helper.log(logLevel, "activating shader...");
-        ourShader.use();
+        ourShader->use();
 
         // camera stuff
+        // move this to its own class
         // ------------------------------------------------
         helper.log(logLevel, "projection matrix step 1");
         // pass projection matrix to shader (note that in this case it could change every frame)
         glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)helper.getScreen_width() / (float)helper.getScreen_height(), 0.1f, 100.0f);
         helper.log(logLevel, "projection matrix step 2");
-        ourShader.setMat4("projection", projection);
+        ourShader->setMat4("projection", projection);
 
         // camera/view transformation
         glm::mat4 view = camera.GetViewMatrix();
-        ourShader.setMat4("view", view);
+        ourShader->setMat4("view", view);
         // ---------------------------------------------------
 
         // render the loaded model
@@ -198,7 +187,9 @@ int myGLwindow::initWindow(const char* title, int width, int height)
 
         // render
         // ------
-        cube->render();
+        //cube->render();
+        renderManager->renderScene();
+
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------

@@ -19,12 +19,9 @@ public:
      * @param str
      * not sure what ill use this for yet.
      */
-    Cube(const int* ID, const char* str, Shader shader);
-    void bindTextures();
+    Cube(const int* ID, const char* str);
     void render();
 
 private:
-    Shader cube_shader;
-    unsigned int cube_texture1, cube_texture2;
-    unsigned int cube_VBO, cube_VAO;
+
 };

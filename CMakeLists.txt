@@ -49,33 +49,14 @@ endif()
 find_package(OpenGL REQUIRED)
 find_package(Boost REQUIRED COMPONENTS system filesystem)
 
-# --- Define the Executable ---
-add_executable(simpleCPP
-    src/main.cpp
-    include/helper.hpp
-    include/mywindowmanager.hpp
-    src/mywindowmanager.cpp
-    src/mycore.cpp
-    include/mycore.hpp
-    src/mycore.cpp
-    src/filemanager.cpp
-    include/filemanager.hpp
-    include/myglwindow.hpp src/gl/window/myglwindow.cpp
-    include/shadersource.hpp
-    include/shader.hpp
-    include/shaders/vertex.shader
-    include/stb_image.hpp
-    include/camera.hpp
-    include/shader_m.hpp
-    include/model.hpp
-    include/mesh.hpp
-
-    include/shaders/fragment.shader
-    include/shaders/fragment_A.shader
-    include/shaders/vertex_A.shader
-    src/gl/3d/cube.cpp
-    include/cube.hpp
+# Recursively search for all .cpp and .hpp files in the src and include directories.
+file(GLOB_RECURSE PROJECT_SOURCES
+    "${CMAKE_SOURCE_DIR}/src/*.cpp"
+    "${CMAKE_SOURCE_DIR}/include/*.hpp"
 )
+
+# --- Define the Executable ---
+add_executable(simpleCPP ${PROJECT_SOURCES})
 
 # Include your project's own headers.
 target_include_directories(simpleCPP PRIVATE ${CMAKE_SOURCE_DIR}/include)

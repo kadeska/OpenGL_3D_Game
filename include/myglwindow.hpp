@@ -4,6 +4,8 @@
 #include <GLFW/glfw3.h>
 #include <string>
 
+#include "../include/rendermanager.hpp"
+
 class myGLwindow
 {
 public:
@@ -12,4 +14,5 @@ public:
     void processInput(GLFWwindow *window);
 
 private:
+    RenderManager* renderManager;
 };
