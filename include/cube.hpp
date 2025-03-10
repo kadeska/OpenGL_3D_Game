@@ -8,8 +8,10 @@
 
 class Cube {
 public:
-    const int* cube_ID;
+    const int cube_ID;
     const char* cube_str;
+    glm::mat4 cube_model;
+    float cube_angle;
 
     /**
      * @brief Cube
@@ -19,7 +21,7 @@ public:
      * @param str
      * not sure what ill use this for yet.
      */
-    Cube(const int* ID, const char* str);
+    Cube(const int ID, const char* str, glm::mat4 model, float angle);
     void render();
 
 private:

@@ -6,6 +6,7 @@ class RenderManager
 {
 public:
     RenderManager(Shader* shader);
+    ~RenderManager();
     void renderScene();
     void init();
     void bindTextures();

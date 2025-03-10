@@ -5,9 +5,11 @@
 
 
 
-Cube::Cube(const int* ID, const char* str)
+Cube::Cube(const int ID, const char* str, glm::mat4 model, float angle)
     : cube_ID(ID),
-    cube_str(str)
+    cube_str(str),
+    cube_model(model),
+    cube_angle(angle)
 {
     helper.log(3, "Hello from cube");
 }

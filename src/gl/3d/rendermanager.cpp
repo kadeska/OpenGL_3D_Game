@@ -12,6 +12,11 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
+#include <random>
+
+#include <ctime>  // Include this for time()
+
+
 
 // Shader* myShader;
 // unsigned int cube_texture1, cube_texture2;
@@ -38,7 +43,9 @@ glm::vec3 cubePositions[] = {
     glm::vec3( 0.0f,  0.0f,  3.0f),
     glm::vec3( 1.0f,  0.0f,  3.0f),
     glm::vec3( 2.0f,  0.0f,  3.0f),
-    glm::vec3( 3.0f,  0.0f,  3.0f)
+    glm::vec3( 3.0f,  0.0f,  3.0f),
+
+    glm::vec3( 3.0f,  1.0f,  4.0f)
 };
 int numCubes = std::size(cubePositions);
 
@@ -50,8 +57,37 @@ RenderManager::RenderManager(Shader* shader)
 {
     helper.log(3, "Hello from RenderManager");
     // Dynamically allocate a Cube and push its pointer into the vector
-    Cube* cube = new Cube(0, "");
-    cubeArray.push_back(cube);
+    Cube* cube;// = new Cube(0, "");
+    //cubeArray.push_back(cube);
+    // calculate the model matrix for each object and pass it to shader before drawing
+    for (unsigned int i = 0; i < numCubes; i++){
+        glm::mat4 model = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
+        model = glm::translate(model, cubePositions[i]);
+        float angle = 0.0f * i;
+        model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
+
+        //srand(time(0));
+        cube = new Cube(i + 1, "cube", model, angle);
+        //cube->cube_ID = rand();
+        myShader->setMat4("model", model);
+        cubeArray.push_back(cube);
+    }
+    for (size_t i = 0; i < cubeArray.size(); i++) {
+        if (cubeArray[i]) {  // Ensure cubeArray[i] is valid
+            if (cubeArray[i]->cube_ID) {  // Ensure cube_ID is valid
+                helper.log(3, "Cube ID: " + std::to_string(cubeArray[i]->cube_ID));
+            } else {
+                helper.log(3, "Cube ID is null!");
+            }
+
+            if (cubeArray[i]->cube_str) {  // Ensure cube_str is valid
+                helper.log(3, "Cube str: " + std::string(cubeArray[i]->cube_str));
+            } else {
+                helper.log(3, "Cube str is null!");
+            }
+        }
+    }
+
     init();
 }
 
@@ -65,15 +101,9 @@ void RenderManager::renderScene()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     // render boxes
     // for every object/cube
-    for (unsigned int i = 0; i < numCubes; i++)
+    for (Cube* cube : cubeArray)
     {
-        // calculate the model matrix for each object and pass it to shader before drawing
-        glm::mat4 model = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
-        model = glm::translate(model, cubePositions[i]);
-        float angle = 0.0f * i;
-        model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
-        myShader->setMat4("model", model);
-
+        myShader->setMat4("model", cube->cube_model);
         glDrawArrays(GL_TRIANGLES, 0, 36);
     }
 }
@@ -212,4 +242,9 @@ void RenderManager::bindTextures()
 
     // bind vertex array
     glBindVertexArray(cube_VAO);
+}
+RenderManager::~RenderManager() {
+    for (Cube* cube : cubeArray) {
+        delete cube;
+    }
 }
