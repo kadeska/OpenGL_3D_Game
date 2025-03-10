@@ -127,8 +127,20 @@ int myGLwindow::initWindow(const char* title, int width, int height)
 
 
     // draw in wireframe
-    //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
+    // glEnable(GL_CULL_FACE);
+    // Enable depth testing
+    // glEnable(GL_DEPTH_TEST);
+
+    // Set depth function to GL_LESS
+    // This means "render the fragment if its depth is less than the current depth"
+    //glDepthFunc(GL_LESS);  // Other options: GL_EQUAL, GL_LEQUAL, GL_GREATER, etc.
+
+    // Enable face culling (optional, depending on whether you need it)
+    //glEnable(GL_CULL_FACE);
+    //glCullFace(GL_BACK);  // Cull back faces, or GL_FRONT for front faces
+    //glFrontFace(GL_CW);  // Default is counter-clockwise winding
 
     // world space positions of our cubes
     // Basicaly this is a list of all objects

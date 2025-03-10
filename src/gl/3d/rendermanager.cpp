@@ -67,7 +67,7 @@ RenderManager::RenderManager(Shader* shader)
         model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
 
         //srand(time(0));
-        cube = new Cube(i + 1, "cube", model, angle);
+        cube = new Cube(i + 1, "cube", model, angle, &cubePositions[i]);
         //cube->cube_ID = rand();
         myShader->setMat4("model", model);
         cubeArray.push_back(cube);

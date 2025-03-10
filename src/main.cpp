@@ -6,6 +6,8 @@
 #include <sstream>
 // #include <memory> // For smart pointers
 
+#include "examplewindow.hpp"
+
 // Global static initialization for Helper variables can be placed in a dedicated source file,
 // but here we leave them as-is for simplicity.
 int Helper::progLogLevel = 3;    // Default log level
@@ -91,6 +93,9 @@ int main(int argc, char *argv[]) {
 
     // Set the log level based on user input or use the default.
     Helper::progLogLevel = parseLogLevel(argc, argv);
+
+    //ExampleWindow* exampleWindow = new ExampleWindow();
+    //exampleWindow->show();
 
     // Start the core application.
     start();
