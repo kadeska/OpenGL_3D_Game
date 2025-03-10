@@ -48,6 +48,15 @@ myGLwindow::myGLwindow(const char *title, int width, int height)
 
 int myGLwindow::initWindow(const char* title, int width, int height)
 {
+    // Initialize GL window
+    // Render loop should be managed by a threaded manager
+    // #### ---------------------------------------------------------------------------------
+    // ####
+    // ####
+    // ####
+    // ####
+    // ####
+    // ####
     helper.log(3, "initWindow(...)");
     // glfw: initialize and configure
     // ------------------------------
@@ -90,16 +99,16 @@ int myGLwindow::initWindow(const char* title, int width, int height)
     // -----------------------------
     glEnable(GL_DEPTH_TEST);
     // This is the end of window initial set up. The following is extra to the window
-    // ---------------------------------------------------------------------------------
-
-
-
-
-
-
-    helper.log(3, "making shaders...");
+    // #### ---------------------------------------------------------------------------------
+    // ####
+    // ####
+    // ####
+    // ####
+    // ####
+    // ####
     // build and compile our shader zprogram
-    // ------------------------------------
+    // --------------------------------------------------------------------------------------
+    helper.log(3, "making shaders...");
     Shader ourShader(helper.vertex_shader_path, helper.fragment_shader_path);
     //Shader modelShader(helper.model_vertex_shader_path, helper.model_fragment_shader_path);
 
@@ -142,8 +151,6 @@ int myGLwindow::initWindow(const char* title, int width, int height)
         glm::vec3( 3.0f,  0.0f,  3.0f)
     };
     int numCubes = std::size(cubePositions);
-
-
 
     helper.log(3, "entering render loop------");
     // render loop
@@ -212,6 +219,7 @@ int myGLwindow::initWindow(const char* title, int width, int height)
     glfwTerminate();
     return 0;
 }
+
 
 // process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
 // ---------------------------------------------------------------------------------------------------------
