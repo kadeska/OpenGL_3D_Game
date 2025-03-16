@@ -3,7 +3,7 @@
 
 // Constructor: Initialize window pointer to nullptr
 MyWindowManager::MyWindowManager()
-    : window(nullptr)
+    // : window(nullptr)
 {}
 
 // Destructor: Ensure cleanup

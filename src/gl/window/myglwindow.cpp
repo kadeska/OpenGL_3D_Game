@@ -41,6 +41,15 @@ myGLwindow::myGLwindow(const char *title, int width, int height)
     initWindow(title, width, height);
 }
 
+
+/**
+ * @brief myGLwindow::initWindow
+ * This is where most of the magic happens. initialize a GL window, set context, prepare resources, and enter render loop.
+ * @param title
+ * @param width
+ * @param height
+ * @return
+ */
 int myGLwindow::initWindow(const char* title, int width, int height)
 {
     // Initialize GL window

@@ -12,10 +12,13 @@
 
 #include <GL/gl.h>
 
+/**
+ * @brief The MyWindowManager class
+ */
 class MyWindowManager
 {
 private:
-    GLFWwindow *window;
+    // GLFWwindow *window;
     myGLwindow *glWindow;
 
 public:

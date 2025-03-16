@@ -12,10 +12,12 @@ MyCore::MyCore(std::string config_file_name) {
         helper.log(1, "oops... something went wrong, shutting down!!");
         return;
     }
-    // config file has been loaded succesfully, now initialize the window.
-    initWindow("window", helper.getScreen_width(), helper.getScreen_height());
-    //Inventory inv = Inventory();
     InventoryManager invMan = InventoryManager();
+
+    // At this point everything should be initialized and loaded into memory,
+    // Enter render loop after initializing the window.
+    // config file has been loaded succesfully, now initialize the window and enter game loop.
+    initWindow("window", helper.getScreen_width(), helper.getScreen_height());
 }
 
 void MyCore::initWindow(const char* title, int width, int height){

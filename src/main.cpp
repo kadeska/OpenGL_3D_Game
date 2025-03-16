@@ -109,18 +109,18 @@ void start() {
 } // end of anonymous namespace
 
 int main(int argc, char *argv[]) {
-    // Log some startup messages.
-    helper.log(3, "Hello World!!");
-    helper.log(3, "Main Function");
-
     UsefulFunctions::StdOutput stdOut;
-    stdOut.print("Testing standard output");
+    // stdOut.print("Testing standard output");
 
     // Log the command line arguments.
     printCommandLineArguments(argc, argv);
 
     // Set the log level based on user input or use the default.
     Helper::progLogLevel = parseLogLevel(argc, argv);
+
+    // Log some startup messages.
+    helper.log(3, "Hello World!!");
+    helper.log(3, "Main Function");
 
     //ExampleWindow* exampleWindow = new ExampleWindow();
     //exampleWindow->show();

@@ -6,6 +6,9 @@
 
 #include "../include/rendermanager.hpp"
 
+/**
+ * @brief The myGLwindow class
+ */
 class myGLwindow
 {
 public:
