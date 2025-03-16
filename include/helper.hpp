@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include "filemanager.hpp"
 
 /**
  * @brief The Helper class
@@ -15,6 +16,8 @@ public:
 
     // This string is for contructing a compound string, used anywhere that helper.hpp is included.
     std::string string;
+    // This is for making a logfile
+    std::string logfile;
     // This bool is a flag to determin if we should use QT framework
     bool enable_QT;
     // screen width and height
@@ -65,8 +68,10 @@ public:
      */
     static void log(int logLevel, const std::string &message)
     {
+        // FileManager fm;
         if (logLevel <= progLogLevel) {
             std::cout << "[" << logLevel << "]" << "[LOG]: " << message << std::endl;
+            //fm.saveAsText(message, "logfile.log");
         } else {
             skippedLogCount++;
         }

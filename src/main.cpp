@@ -1,3 +1,31 @@
+/**
+ *    Welcome to my 3D/2D Open GL game development project.
+ *    My goal is to make a 3D adventure survival game, where
+ *    the goal of the game will be to explore, craft, and survive.
+ *
+ *    I might make my own game engine for my own use, for the learning
+ *    experiance and also just for the fun of having my own engine.
+ *
+ *
+ *    Can you discover all the ruins?
+ *    Can you fight your way to survival?
+ *    Will you discorver the source of the nighcrawlers?
+ *
+ *    You will be able to craft items, fight monsters, and build
+ *    your base to protect yourself from the creatures of the night.
+ *
+ *    Features that will be part of the core game idea;
+ *    - adventure
+ *    - survival
+ *    - battle
+ *    - crafting
+ *    - building
+ *    - animals
+ *
+ *
+ */
+
+
 #include "../include/helper.hpp"
 #include "../include/mywindowmanager.hpp"
 #include "mycore.hpp"
@@ -8,7 +36,7 @@
 
 #include "examplewindow.hpp"
 
-// Global static initialization for Helper variables can be placed in a dedicated source file,
+// Global initialization for Helper variables can be placed in a dedicated source file,
 // but here we leave them as-is for simplicity.
 int Helper::progLogLevel = 3;    // Default log level
 int Helper::skippedLogCount = 0; // Initialize skipped log count
@@ -100,5 +128,6 @@ int main(int argc, char *argv[]) {
     // Start the core application.
     start();
 
+    helper.log(3, "Program end----");
     return 0;
 }

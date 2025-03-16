@@ -15,6 +15,10 @@ struct GameEntity {
     float x, y;
 };
 
+/**
+ * @brief The FileManager class
+ * This class is for managing files such as config files.
+ */
 class FileManager 
 {
 public:

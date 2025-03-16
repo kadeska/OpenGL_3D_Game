@@ -17,9 +17,25 @@
 class MyCore
 {
 public:
+    /**
+     * @brief MyCore
+     * Program core loads the config file and starts the window
+     * @param config_file_name
+     */
     MyCore(std::string config_file_name);
+    /**
+     * @brief initWindow
+     * initialize a window
+     *
+     * @param title
+     * @param width
+     * @param height
+     */
     void initWindow(const char* title, int width, int height);
 
+    /**
+     * @brief configFileName
+     */
     std::string configFileName;
 
     /**
@@ -29,6 +45,10 @@ public:
     FileManager* fileManager;
 
     // window manager
+    /**
+     * @brief myWindowManager
+     * Manages windows
+     */
     MyWindowManager myWindowManager;
 
     // game manager
