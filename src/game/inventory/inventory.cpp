@@ -18,6 +18,16 @@ void Inventory::setBaseItem(const Item &newBaseItem)
     baseItem = newBaseItem;
 }
 
+void Inventory::addItem(Item item)
+{
+    inventory.push_back(item);
+}
+
+void Inventory::addNewItem(std::string itemName, int itemID)
+{
+    inventory.push_back(Item(itemID, itemName));
+}
+
 Item Inventory::getItemByID(int id)
 {
     helper.log(3, "test1");

@@ -19,6 +19,9 @@ public:
     Item getBaseItem() const;
     void setBaseItem(const Item &newBaseItem);
 
+    void addItem(Item item);
+    void addNewItem(std::string itemName, int itemID);
+
     Item getItemByID(int id);
 
 };
