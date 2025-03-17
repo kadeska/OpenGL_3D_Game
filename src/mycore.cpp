@@ -2,6 +2,7 @@
 #include "../include/helper.hpp"
 #include "game/inventory/inventory.hpp"
 #include "game/inventory/inventorymanager.hpp"
+#include "game/world/generator/worldgenerator_a.hpp"
 
 MyCore::MyCore(std::string config_file_name) {
     configFileName = config_file_name;
@@ -13,6 +14,11 @@ MyCore::MyCore(std::string config_file_name) {
         return;
     }
     InventoryManager invMan = InventoryManager();
+
+    WorldGenerator_A worldGen = WorldGenerator_A();
+    std::vector<Cube> world = std::vector<Cube>(worldGen.WORLD_SIZE*3);
+    worldGen.generateWorld(world);
+
 
     // At this point everything should be initialized and loaded into memory,
     // Enter render loop after initializing the window.

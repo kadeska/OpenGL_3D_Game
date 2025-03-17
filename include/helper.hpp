@@ -254,5 +254,22 @@ public:
 } // namespace UsefulFunctions
 
 
+namespace BlockType {
+
+enum class BlockTypes { EMPTY, DIRT, GRASS, WATER };
+
+inline const char* blockTypeToString(BlockTypes type) {
+    switch (type) {
+    case BlockTypes::EMPTY: return "EMPTY";
+    case BlockTypes::DIRT:  return "DIRT";
+    case BlockTypes::GRASS: return "GRASS";
+    case BlockTypes::WATER: return "WATER";
+    }
+    return "UNKNOWN";
+}
+
+} // namespace BlockType
+
+
 
 #endif // HELPER_HPP
