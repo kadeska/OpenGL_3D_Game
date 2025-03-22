@@ -4,8 +4,9 @@
 #include <string>
 #include <memory>
 
-#include "shader.hpp"
 #include "helper.hpp"
+#include "shader.hpp"
+
 
 class Cube {
 public:

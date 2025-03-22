@@ -1,7 +1,11 @@
 #pragma once
 #include <vector>
 #include "../include/helper.hpp"
-#include "../include/cube.hpp"
+//#include "../include/cube.hpp"
+
+#include "../world.hpp"
+//#include "../include/filemanager.hpp"
+#include <iostream>
 
 /**
  * @brief The WorldGenerator_A class
@@ -20,5 +24,5 @@ public:
     void generateWorld(std::vector<Cube>& world);
 
     // The world dimensions (non-static, per-instance constant).
-    const int WORLD_SIZE = 20;
+    const int WORLD_SIZE = 5;
 };

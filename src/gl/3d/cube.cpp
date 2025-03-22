@@ -1,5 +1,5 @@
 #include "../include/cube.hpp"
-#include "../include/helper.hpp"
+//#include "../include/helper.hpp"
 
 
 #include <glm/glm.hpp>
