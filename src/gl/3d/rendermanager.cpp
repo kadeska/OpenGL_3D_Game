@@ -22,7 +22,10 @@
 // unsigned int cube_texture1, cube_texture2;
 // unsigned int cube_VBO, cube_VAO;
 
-
+/**
+ * @brief cubePositions
+ * List of cube positions
+ */
 glm::vec3 cubePositions[] = {
     // row 1
     glm::vec3( 0.0f,  0.0f,  0.0f),    // some position in 3d space. Can be repesented by a position object that will store the vec3 position and any relative data for that position, such as is this position occupide by a physical object? if so, what is that data? Point to object data.

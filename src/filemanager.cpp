@@ -29,7 +29,7 @@ void FileManager::saveAsBinary(const std::vector<GameEntity>* entities, const st
     helper.log(3, std::string("File saved: " + file_name));
 }
 
-void FileManager::saveAsBinary(std::vector<Cube> world, std::string &file_name)
+void FileManager::saveAsBinary(std::vector<Cube> world, std::string file_name)
 {
     helper.log(3, std::string("Saving as Binary: " + file_name));
     filename = file_name;

@@ -95,7 +95,7 @@ void start() {
     // myCore = std::make_unique<MyCore>();
 
     // program core
-    myCore = new MyCore("save.text");
+    myCore = new MyCore("config.text");
     //myCore->fileManager->loadBinaryData("save");
 
     // testing, remove this

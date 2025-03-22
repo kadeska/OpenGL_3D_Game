@@ -21,8 +21,8 @@ public:
     int index(int x, int y, int z);
 
     // Populates the world vector with Cube objects.
-    void generateWorld(std::vector<Cube>& world);
+    void generateWorld(std::vector<Cube> world);
 
     // The world dimensions (non-static, per-instance constant).
-    const int WORLD_SIZE = 5;
+    const int WORLD_SIZE = 2;
 };

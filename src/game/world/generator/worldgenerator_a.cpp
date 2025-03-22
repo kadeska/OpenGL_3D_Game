@@ -1,4 +1,5 @@
 #include "worldgenerator_a.hpp"
+#include "../include/filemanager.hpp"
 
 WorldGenerator_A::WorldGenerator_A() {
     helper.log(3, "World Generator_A constructor");
@@ -30,7 +31,7 @@ int WorldGenerator_A::index(int x, int y, int z) {
     return x + WORLD_SIZE * (y + WORLD_SIZE * z);
 }
 
-void WorldGenerator_A::generateWorld(std::vector<Cube>& world) {
+void WorldGenerator_A::generateWorld(std::vector<Cube> world) {
     helper.log(3, "generating world");
     // Iterate over every coordinate in the 3D space.
     for (int z = 0; z < WORLD_SIZE; ++z) {
@@ -48,6 +49,6 @@ void WorldGenerator_A::generateWorld(std::vector<Cube>& world) {
             }
         }
     }
-    //FileManager fm = FileManager();
-    // fm.saveAsBinary();
+    FileManager fm = FileManager();
+    fm.saveAsBinary(world, "world.save");  // Change this to be saving an actual World object instead of the vector.
 }

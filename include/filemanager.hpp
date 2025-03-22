@@ -36,7 +36,7 @@ public:
 
     FileManager();
     void saveAsBinary(const std::vector<GameEntity>* entities, const std::string& file_name);
-    void saveAsBinary(std::vector<Cube> world, std::string& file_name);
+    void saveAsBinary(std::vector<Cube> world, std::string file_name);
     void saveAsText(const std::string& data, const std::string& file_name);
     std::vector<GameEntity> loadBinaryData(const std::string& file_name);
     std::string loadGameData(const std::string& file_name);
