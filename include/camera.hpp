@@ -6,6 +6,8 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+#include "../include/helper.hpp"
+
 // Defines several possible options for camera movement. Used as abstraction to stay away from window-system specific input methods
 enum Camera_Movement {
     FORWARD,
@@ -69,14 +71,18 @@ public:
     void ProcessKeyboard(Camera_Movement direction, float deltaTime)
     {
         float velocity = MovementSpeed * deltaTime;
-        if (direction == FORWARD)
+        if (direction == FORWARD){
             Position += Front * velocity;
-        if (direction == BACKWARD)
+        }
+        if (direction == BACKWARD){
             Position -= Front * velocity;
-        if (direction == LEFT)
+        }
+        if (direction == LEFT){
             Position -= Right * velocity;
-        if (direction == RIGHT)
+        }
+        if (direction == RIGHT){
             Position += Right * velocity;
+        }
     }
 
     // processes input received from a mouse input system. Expects the offset value in both the x and y direction.
