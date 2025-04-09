@@ -15,13 +15,13 @@ public:
     const char* cube_str;
     glm::mat4 cube_model;
     float cube_angle;
-    glm::vec3* position;
+    glm::vec3 position;
 
     // Default constructor
     Cube();
 
     // Custom constructor
-    Cube(const int ID, const char* str, glm::mat4 model, float angle, glm::vec3* pos);
+    Cube(const int ID, const char* str, glm::mat4 model, float angle, glm::vec3 pos);
 
     void render();
     void translate(glm::mat3 translation);

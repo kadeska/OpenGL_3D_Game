@@ -236,7 +236,10 @@ int myGLwindow::initWindow(const char* title, int width, int height)
     return 0;
 }
 
-// Player player = Player(Cube(12, "",,0.0f,), "player", glm::vec3(0,0,0));
+// create a sample player object here for an example of how to use the player object.
+// This could be moved into a game initialization function.
+// Game initialization should consist of loading the game config into memory, and loading the world(s) into memory.
+ Player player = Player(Cube(), "player", glm::vec3(0,0,0));
 
 // process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
 // ---------------------------------------------------------------------------------------------------------
@@ -248,7 +251,7 @@ void myGLwindow::processInput(GLFWwindow *window)
 
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS){
         camera.ProcessKeyboard(FORWARD, deltaTime);
-        // player.move(glm::vec3(1,1,1));
+        player.move(glm::vec3(1,0,0));
     }
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS){
         camera.ProcessKeyboard(BACKWARD, deltaTime);

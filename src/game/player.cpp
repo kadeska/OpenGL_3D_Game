@@ -17,6 +17,7 @@ void Player::setPlayerName(std::string newPlayerName)
 bool Player::move(glm::vec3 direction)
 {
     playerPosition += direction;
+    playerModel.position += direction;
     return true;
 }
 

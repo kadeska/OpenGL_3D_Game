@@ -24,8 +24,8 @@ public:
     int screen_width;
     int screen_height;
 
-    const char* vertex_shader_path = "../include/shaders/vertex_A.shader";
-    const char* fragment_shader_path = "../include/shaders/fragment_A.shader";
+    const char* vertex_shader_path = "../simpleCPP/include/shaders/vertex_A.shader";
+    const char* fragment_shader_path = "../simpleCPP/include/shaders/fragment_A.shader";
 
     //const char* model_vertex_shader_path = "../include/shaders/vertex_model.shader";
     //const char* model_fragment_shader_path = "../include/shaders/fragment_model.shader";

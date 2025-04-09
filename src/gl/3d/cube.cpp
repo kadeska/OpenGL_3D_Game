@@ -28,13 +28,13 @@ Cube::Cube()
     cube_str("DEFAULT"),
     cube_model(glm::mat4(1.0f)),
     cube_angle(0.0f),
-    position(new glm::vec3(0.0f))
+    position(glm::vec3(0.0f))
 {
     helper.log(3, "Default cube created");
     blockType = BlockType::BlockTypes::EMPTY;
 }
 
-Cube::Cube(const int ID, const char* str, glm::mat4 model, float angle, glm::vec3 *pos)
+Cube::Cube(const int ID, const char* str, glm::mat4 model, float angle, glm::vec3 pos)
     : cube_ID(ID),
     cube_str(str),
     cube_model(model),
