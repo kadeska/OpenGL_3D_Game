@@ -80,6 +80,6 @@ CMakeLists.txt.user*
 .rcc/
 .uic/
 /build*/
-.vscode/launch.json
+.vscode/*
 .vs/*
 /out/
