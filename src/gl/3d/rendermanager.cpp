@@ -191,7 +191,10 @@ void RenderManager::init()
     // load image, create texture and generate mipmaps
     int texture_width, texture_height, nrChannels;
     stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis.
-    unsigned char *data = stbi_load("../simpleCPP/res/container.jpg", &texture_width, &texture_height, &nrChannels, 0);
+    
+    // Move to config file
+    unsigned char *data = stbi_load("../OpenGL_3D_Game/res/container.jpg", &texture_width, &texture_height, &nrChannels, 0);
+    
     if (data)
     {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texture_width, texture_height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
@@ -213,7 +216,10 @@ void RenderManager::init()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     // load image, create texture and generate mipmaps
-    data = stbi_load("../simpleCPP/res/awesomeface.png", &texture_width, &texture_height, &nrChannels, 0);
+    
+    // Move to config file
+    data = stbi_load("../OpenGL_3D_Game/res/awesomeface.png", &texture_width, &texture_height, &nrChannels, 0);
+    
     if (data)
     {
         // note that the awesomeface.png has transparency and thus an alpha channel, so make sure to tell OpenGL the data type is of GL_RGBA
