@@ -27,6 +27,7 @@ MyCore::MyCore(std::string config_file_name) {
 }
 
 void MyCore::initWindow(const char* title, int width, int height){
+    helper.log(3, std::string("Init Screen width and height: " + std::to_string(width) + " " + std::to_string(height)));
     if (!myWindowManager.createWindow(title, width, height)) {
         return;
     }
