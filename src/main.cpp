@@ -34,7 +34,7 @@
 #include <sstream>
 // #include <memory> // For smart pointers
 
-#include "examplewindow.hpp"
+// #include "examplewindow.hpp"
 
 // Global initialization for Helper variables can be placed in a dedicated source file,
 // but here we leave them as-is for simplicity.
@@ -95,7 +95,7 @@ void start() {
     // myCore = std::make_unique<MyCore>();
 
     // program core
-    myCore = new MyCore("config.text");
+    myCore = new MyCore("./config.text");
     //myCore->fileManager->loadBinaryData("save");
 
     // testing, remove this
