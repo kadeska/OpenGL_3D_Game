@@ -1,5 +1,5 @@
 #!/bin/bash
-# filepath: /home/joseph/Dev/simpleCPP/simpleCPP/build_and_run.sh
+# filepath: /home/jh/Dev/CPP/OpenGL/OpenGL_3D_Game/build_and_run.sh
 
 # Navigate to the build directory
 BUILD_DIR="../build"
@@ -10,14 +10,14 @@ cd "$BUILD_DIR"
 
 # Run CMake to configure the project
 echo "Configuring the project with CMake..."
-cmake ../simpleCPP
+cmake ../OpenGL_3D_Game
 
 # Build the project
 echo "Building the project..."
 cmake --build . -- -j$(nproc)
 
 # Check if the executable exists
-EXECUTABLE="./simpleCPP"
+EXECUTABLE="./OpenGLgame"
 if [ -f "$EXECUTABLE" ]; then
     echo "Build successful. Running the program..."
     $EXECUTABLE

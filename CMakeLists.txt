@@ -1,9 +1,12 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(simpleCPP LANGUAGES CXX)
+project(OpenGLgame LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# Define the program name
+set(PROGRAM_NAME OpenGLgame)
 
 # --- Platform-Specific Configuration ---
 if(WIN32)
@@ -30,7 +33,7 @@ else()
     find_package(glfw3 REQUIRED)
     find_package(GLEW REQUIRED)
     find_package(assimp REQUIRED)
-    find_package(Qt6 REQUIRED COMPONENTS Widgets)
+    # find_package(Qt6 REQUIRED COMPONENTS Widgets)
 
     include(FetchContent)
     FetchContent_Declare(
@@ -39,6 +42,14 @@ else()
       GIT_TAG        v0.1.36
     )
     FetchContent_MakeAvailable(glad)
+
+    # Fetch glm if not installed
+    FetchContent_Declare(
+      glm
+      GIT_REPOSITORY https://github.com/g-truc/glm.git
+      GIT_TAG        0.9.9.8
+    )
+    FetchContent_MakeAvailable(glm)
 endif()
 
 find_package(OpenGL REQUIRED)
@@ -54,10 +65,10 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
 # Define the Executable
-add_executable(simpleCPP ${PROJECT_SOURCES})
+add_executable(${PROGRAM_NAME} ${PROJECT_SOURCES})
 
 # Include directories
-target_include_directories(simpleCPP PRIVATE ${CMAKE_SOURCE_DIR}/include)
+target_include_directories(${PROGRAM_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/include)
 
 # Determine GLFW Target
 if(TARGET glfw3::glfw3)
@@ -69,25 +80,23 @@ else()
 endif()
 
 # Link Libraries
-target_link_libraries(simpleCPP PRIVATE
+target_link_libraries(${PROGRAM_NAME} PRIVATE
     OpenGL::GL
     ${GLFW_TARGET}
     GLEW::GLEW
     glad
     ${Boost_LIBRARIES}
     assimp::assimp
-    Qt6::Widgets
+    glm
+    # Qt6::Widgets
 )
 
-# --- Add the Preprocessing (-E) Debugging Step ---
-add_custom_target(preprocess
-    COMMAND ${CMAKE_CXX_COMPILER} -E ${CMAKE_SOURCE_DIR}/src/game/world/generator/worldgenerator_a.cpp
-    COMMENT "Running preprocessor (-E) to debug include dependencies..."
-)
+# Copy config.text to the build directory
+configure_file(${CMAKE_SOURCE_DIR}/config.text ${CMAKE_BINARY_DIR}/config.text COPYONLY)
 
 # Installation
 include(GNUInstallDirs)
-install(TARGETS simpleCPP
+install(TARGETS ${PROGRAM_NAME}
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )

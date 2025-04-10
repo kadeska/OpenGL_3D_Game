@@ -8,18 +8,20 @@ if command -v apt >/dev/null; then
     INSTALL_CMD="sudo apt install -y"
     # Debian/Ubuntu dependency names
     DEPENDENCIES=("libglfw3-dev" "libglew-dev" "libboost-all-dev" "libassimp-dev")
+    CHECK_CMD="dpkg -s"
 elif command -v dnf >/dev/null; then
     PKG_MANAGER="dnf"
     INSTALL_CMD="sudo dnf install -y"
     # Fedora dependency names (adjust if necessary)
     DEPENDENCIES=("glfw-devel" "glew-devel" "boost-devel" "assimp-devel")
+    CHECK_CMD="rpm -q"
 else
     echo "Unsupported Linux distribution. Please install dependencies manually."
     exit 1
 fi
 
 for package in "${DEPENDENCIES[@]}"; do
-    if dpkg -s $package &>/dev/null || rpm -q $package &>/dev/null; then
+    if $CHECK_CMD $package &>/dev/null; then
         echo "$package is already installed."
     else
         echo "Installing $package..."
