@@ -12,6 +12,11 @@ World::World(int world_size)
     cubes.resize(size * size * size); // 3D vector of cubes
 }
 
+void World::update()
+{
+    helper.log(3, "World update");
+}
+
 Cube World::getCube(int x, int y, int z)
 {
     // TODO: insert return statement here

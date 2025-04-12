@@ -1,4 +1,5 @@
 #include "../include/worldManager.hpp"
+#include "worldManager.hpp"
 
 WorldManager::WorldManager() {
     // Constructor implementation (if needed)
@@ -24,4 +25,9 @@ void WorldManager::removeWorld(int index) {
 
 int WorldManager::getWorldCount() const {
     return worlds.size();
+}
+
+void WorldManager::updateWorld(World world)
+{
+    // world.update();
 }

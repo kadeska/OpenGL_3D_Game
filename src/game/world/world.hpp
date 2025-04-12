@@ -23,6 +23,16 @@ public:
      */
     explicit World(int size);
 
+
+    /**
+     * @brief update
+     * This function updates the world. This is called every frame.
+     * I may add more functionality to this later, such as updating
+     * the world based on player input, or updating the world based
+     * on time.
+     */
+    void update();
+
     /**
      * @brief getCube
      * @param x

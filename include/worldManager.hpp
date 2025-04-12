@@ -39,6 +39,13 @@ public:
      */
     int getWorldCount() const;
 
+
+    /**
+     * @brief Update the world
+     * @param world The world to update
+     */
+    void updateWorld(World world);
+
 private:
     std::vector<World> worlds; // Vector containing all the worlds
 };
