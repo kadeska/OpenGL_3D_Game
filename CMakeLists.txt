@@ -30,12 +30,14 @@ if(WIN32)
 else()
     message(STATUS "Configuring for Linux (using system libraries)")
 
+    # Ensure dependencies are installed
+    find_package(OpenGL REQUIRED)
     find_package(glfw3 REQUIRED)
     find_package(GLEW REQUIRED)
-    find_package(assimp REQUIRED)
-    # find_package(Qt6 REQUIRED COMPONENTS Widgets)
 
     include(FetchContent)
+
+    # Fetch glad
     FetchContent_Declare(
       glad
       GIT_REPOSITORY https://github.com/Dav1dde/glad.git
@@ -43,7 +45,7 @@ else()
     )
     FetchContent_MakeAvailable(glad)
 
-    # Fetch glm if not installed
+    # Fetch glm
     FetchContent_Declare(
       glm
       GIT_REPOSITORY https://github.com/g-truc/glm.git
@@ -51,9 +53,6 @@ else()
     )
     FetchContent_MakeAvailable(glm)
 endif()
-
-find_package(OpenGL REQUIRED)
-find_package(Boost REQUIRED COMPONENTS system filesystem)
 
 file(GLOB_RECURSE PROJECT_SOURCES
     "${CMAKE_SOURCE_DIR}/src/*.cpp"
@@ -85,10 +84,7 @@ target_link_libraries(${PROGRAM_NAME} PRIVATE
     ${GLFW_TARGET}
     GLEW::GLEW
     glad
-    ${Boost_LIBRARIES}
-    assimp::assimp
     glm
-    # Qt6::Widgets
 )
 
 # Copy config.text to the build directory
