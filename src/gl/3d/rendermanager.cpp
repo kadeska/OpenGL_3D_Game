@@ -53,7 +53,8 @@ glm::vec3 cubePositions[] = {
 int numCubes = std::size(cubePositions);
 
 // Declare the vector of Cube pointers (stack variable)
-std::vector<Cube*> cubeArray;
+std::vector<Cube*> cubeArray; // change this to be the world manager
+// get the cube array from the world manager
 
 RenderManager::RenderManager(Shader* shader)
     : myShader(shader)

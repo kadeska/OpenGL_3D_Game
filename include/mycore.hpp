@@ -8,6 +8,7 @@
 //#include "../src/game/inventory/inventory.hpp"
 #include "../src/game/inventory/inventorymanager.hpp"
 #include "../src/game/world/generator/worldgenerator_a.hpp"
+#include "worldManager.hpp"
 
 
 /**
