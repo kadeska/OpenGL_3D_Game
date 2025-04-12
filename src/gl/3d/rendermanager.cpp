@@ -15,7 +15,6 @@
 #include <random>
 
 #include <ctime>  // Include this for time()
-#include "rendermanager.hpp"
 
 
 
@@ -125,9 +124,9 @@ void RenderManager::renderScene(World world)
     world.update();
     // render boxes
     // for every object/cube
-    for (Cube* cube : world.getWorld())
+    for (Cube cube : world.getWorld())
     {
-        myShader->setMat4("model", cube->cube_model);
+        myShader->setMat4("model", cube.cube_model);
         glDrawArrays(GL_TRIANGLES, 0, 36);
     }
 }

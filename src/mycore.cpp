@@ -3,18 +3,21 @@
 MyCore::MyCore(std::string config_file_name) {
     configFileName = config_file_name;
     helper.log(3, "MyCore constructor");
-    fileManager = new FileManager();
+    // fileManager = new FileManager();
     // load config file if file is valid and loaded correctly
     helper.log(3, "testing");
-    if (!fileManager->loadConfig(configFileName)) {
+    if (!fileManager.loadConfig(configFileName)) {
         helper.log(1, "oops... something went wrong, shutting down!!");
         return;
     }
-    invMan = InventoryManager();
 
-    worldGen = WorldGenerator_A();
+// These all have default constructors so they get initialized at runtime in the header.
 
-    worldManager = WorldManager();
+    // invMan = InventoryManager();
+
+    // worldGen = WorldGenerator_A();
+
+    // worldManager = WorldManager();
 
     // making a world
     helper.log(3, "Making a world... "); 

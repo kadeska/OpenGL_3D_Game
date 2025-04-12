@@ -19,6 +19,8 @@
 //#include "helper.hpp"
 
 
+
+
 struct GameEntity {
     int id;
     float x, y;
@@ -46,5 +48,7 @@ public:
     bool loadConfig(std::string file_path);
     int countLines(const std::string &filename);
 };
+
+inline FileManager fileManager;
 
 #endif

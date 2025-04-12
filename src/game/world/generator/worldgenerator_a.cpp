@@ -45,7 +45,7 @@ World* WorldGenerator_A::generateWorld(int world_size) {
             }
         }
     }
-    FileManager fm = FileManager();
-    fm.saveAsBinary(world->getWorld(), "world.save"); 
+    // FileManager fm = FileManager();
+    fileManager.saveAsBinary(world->getWorld(), "world.save"); 
     return world;
 }

@@ -55,7 +55,7 @@ public:
      * @brief fileManager
      * This class will handle game data files
      */
-    FileManager* fileManager;
+    // FileManager* fileManager;
 
     /**
      * @brief world

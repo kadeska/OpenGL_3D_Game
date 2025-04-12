@@ -3,6 +3,7 @@
 
 WorldManager::WorldManager() {
     // Constructor implementation (if needed)
+    helper.log(3, "WorldManager constructor");
 }
 
 void WorldManager::addWorld(const World& world) {
