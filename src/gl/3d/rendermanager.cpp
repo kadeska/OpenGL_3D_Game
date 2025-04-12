@@ -15,6 +15,7 @@
 #include <random>
 
 #include <ctime>  // Include this for time()
+#include "rendermanager.hpp"
 
 
 
@@ -110,8 +111,26 @@ void RenderManager::renderScene()
         myShader->setMat4("model", cube->cube_model);
         glDrawArrays(GL_TRIANGLES, 0, 36);
     }
+
+    // update world and render cubes
+    // WorldGenerator
+
 }
 
+void RenderManager::renderScene(World world)
+{
+    bindTextures();
+    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    world.update();
+    // render boxes
+    // for every object/cube
+    for (Cube* cube : world.getWorld())
+    {
+        myShader->setMat4("model", cube->cube_model);
+        glDrawArrays(GL_TRIANGLES, 0, 36);
+    }
+}
 void RenderManager::init()
 {
     float vertices[] = {

@@ -76,6 +76,9 @@ public:
      */
     MyWindowManager myWindowManager;
 
+    // World manager
+    WorldManager worldManager;
+
     // game manager
 
     // game loop manager

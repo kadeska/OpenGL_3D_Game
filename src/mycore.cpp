@@ -14,10 +14,10 @@ MyCore::MyCore(std::string config_file_name) {
 
     worldGen = WorldGenerator_A();
 
-    WorldManager worldManager = WorldManager();
+    worldManager = WorldManager();
 
     // making a world
-    helper.log(3, "Making a world... ");
+    helper.log(3, "Making a world... "); 
     // std::vector<Cube> world = std::vector<Cube>(worldGen.WORLD_SIZE*3);
     // worldGen.generateWorld(4); Dont generate world in the constructor.
     // call a game manager class to handle the world generation.

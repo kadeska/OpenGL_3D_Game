@@ -29,5 +29,5 @@ int WorldManager::getWorldCount() const {
 
 void WorldManager::updateWorld(World world)
 {
-    // world.update();
+    world.update();
 }

@@ -4,6 +4,15 @@
 #include <vector>
 #include <string>
 
+
+/**
+ * @brief The WorldManager class
+ * This class manages multiple worlds in the game.
+ * It allows adding, removing, and updating worlds.
+ * It also provides access to individual worlds by index.
+ * The worlds are stored in a vector, and the class provides methods
+ * to manipulate the vector.
+ */
 class WorldManager {
 public:
 
