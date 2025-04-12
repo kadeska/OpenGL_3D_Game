@@ -54,10 +54,17 @@ else()
     FetchContent_MakeAvailable(glm)
 endif()
 
+# Collect all source and header files recursively
 file(GLOB_RECURSE PROJECT_SOURCES
     "${CMAKE_SOURCE_DIR}/src/*.cpp"
     "${CMAKE_SOURCE_DIR}/include/*.hpp"
 )
+
+# Print the collected files for debugging (optional)
+message(STATUS "Collected source files:")
+foreach(SOURCE_FILE ${PROJECT_SOURCES})
+    message(STATUS "  ${SOURCE_FILE}")
+endforeach()
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
@@ -88,7 +95,11 @@ target_link_libraries(${PROGRAM_NAME} PRIVATE
 )
 
 # Copy config.text to the build directory
-configure_file(${CMAKE_SOURCE_DIR}/config.text ${CMAKE_BINARY_DIR}/config.text COPYONLY)
+if(EXISTS ${CMAKE_SOURCE_DIR}/config.text)
+    configure_file(${CMAKE_SOURCE_DIR}/config.text ${CMAKE_BINARY_DIR}/config.text COPYONLY)
+else()
+    message(WARNING "config.text not found. Skipping configuration.")
+endif()
 
 # Installation
 include(GNUInstallDirs)
