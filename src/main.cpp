@@ -71,6 +71,8 @@ void printCommandLineArguments(int argc, char *argv[]) {
     helper.log(2, out.str());
 }
 
+
+
 // Parse the optional user-defined log level from command line arguments.
 // Exits the program if the argument is invalid.
 int parseLogLevel(int argc, char *argv[]) {

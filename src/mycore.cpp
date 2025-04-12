@@ -10,14 +10,17 @@ MyCore::MyCore(std::string config_file_name) {
         helper.log(1, "oops... something went wrong, shutting down!!");
         return;
     }
-    InventoryManager invMan = InventoryManager();
+    invMan = InventoryManager();
 
-    WorldGenerator_A worldGen = WorldGenerator_A();
+    worldGen = WorldGenerator_A();
 
     // making a world
     helper.log(3, "Making a world... ");
-    std::vector<Cube> world = std::vector<Cube>(worldGen.WORLD_SIZE*3);
-    worldGen.generateWorld(world); // here
+    // std::vector<Cube> world = std::vector<Cube>(worldGen.WORLD_SIZE*3);
+    // worldGen.generateWorld(4); Dont generate world in the constructor.
+    // call a game manager class to handle the world generation.
+    // but for now I will call genWorld here
+    genWorld(4);
 
 
     // At this point everything should be initialized and loaded into memory,
@@ -31,4 +34,9 @@ void MyCore::initWindow(const char* title, int width, int height){
     if (!myWindowManager.createWindow(title, width, height)) {
         return;
     }
+}
+
+World MyCore::genWorld(int world_size)
+{
+    return *worldGen.generateWorld(world_size);
 }

@@ -253,10 +253,15 @@ public:
 
 } // namespace UsefulFunctions
 
-
+/**
+ * @brief The BlockType namespace
+ * This namespace contains the block types used in the game.
+ * It defines an enum for different block types and a function to convert
+ * the enum to a string representation.
+ */
 namespace BlockType {
 
-enum class BlockTypes { EMPTY, DIRT, GRASS, WATER };
+enum BlockTypes { EMPTY, DIRT, GRASS, WATER };
 
 inline const char* blockTypeToString(BlockTypes type) {
     switch (type) {
@@ -269,6 +274,27 @@ inline const char* blockTypeToString(BlockTypes type) {
 }
 
 } // namespace BlockType
+
+
+// namespace for the world generator.
+// This is for accessing the world generator and its functions.
+namespace WorldGenerator {
+
+inline int size;
+
+/**
+ * * @brief index
+ * This function converts 3D coordinates (x, y, z) to a 1D index.
+ * @param x
+ * @param y
+ * @param z
+ * @return  x + WORLD_SIZE * (y + WORLD_SIZE * z)
+ */
+inline int index(int x, int y, int z) {
+    return x + size * (y + size * z);
+}
+
+} // namespace WorldGenerator
 
 
 

@@ -39,6 +39,13 @@ public:
     void initWindow(const char* title, int width, int height);
 
     /**
+     * @brief genWorld
+     * @param world_size
+     * This function generates a world of the given size.
+     */
+    World genWorld(int world_size);
+
+    /**
      * @brief configFileName
      */
     std::string configFileName;
@@ -48,6 +55,18 @@ public:
      * This class will handle game data files
      */
     FileManager* fileManager;
+
+    /**
+     * @brief world
+     * This class will handle the world
+     */
+    WorldGenerator_A worldGen;
+
+    /**
+     * @brief invMan
+     * This class will handle the inventory
+     */
+    InventoryManager invMan;
 
     // window manager
     /**

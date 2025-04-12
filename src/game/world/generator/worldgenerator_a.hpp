@@ -1,11 +1,7 @@
 #pragma once
 #include <vector>
-#include "../include/helper.hpp"
-//#include "../include/cube.hpp"
-
-#include "../world.hpp"
-//#include "../include/filemanager.hpp"
 #include <iostream>
+#include "../world.hpp"
 
 /**
  * @brief The WorldGenerator_A class
@@ -17,12 +13,16 @@ class WorldGenerator_A
 public:
     WorldGenerator_A();
 
-    // Converts 3D coordinates (x, y, z) to a 1D index.
-    int index(int x, int y, int z);
+    /**
+     * @brief generateWorld
+     * @param world_size
+     * @return
+     * This function generates a world of the given size.
+     * It creates a 3D array of Cubes and populates it with block types.
+     */
+    World* generateWorld(int world_size);
 
-    // Populates the world vector with Cube objects.
-    void generateWorld(std::vector<Cube> world);
-
-    // The world dimensions (non-static, per-instance constant).
-    const int WORLD_SIZE = 2;
+private:
+int WORLD_SIZE;
+World* world;
 };

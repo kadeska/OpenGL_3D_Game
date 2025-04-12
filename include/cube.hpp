@@ -1,11 +1,8 @@
 #pragma once
 
-#include <iostream>
+#include "helper.hpp" // Ensure this is included
+#include <glm/glm.hpp> // Assuming glm is used for matrix and vector operations
 #include <string>
-#include <memory>
-
-#include "helper.hpp"
-#include "shader.hpp"
 
 
 class Cube {
