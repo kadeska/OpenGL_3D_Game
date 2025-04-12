@@ -98,14 +98,9 @@ void start() {
 
     // program core
     myCore = new MyCore("./config.text");
-    //myCore->fileManager->loadBinaryData("save");
 
-    // testing, remove this
-    // Load the entities back from file.
-    // std::vector<GameEntity> loadedEntities = myCore->fileManager->loadBinaryData("save");
-    // for (const auto& entity : loadedEntities) {
-    //     std::cout << "Entity " << entity.id << ": (" << entity.x << ", " << entity.y << ")\n";
-    // }
+    // game manager
+    // gameManager = new GameManager(myCore);
 }
 
 } // end of anonymous namespace
