@@ -1,4 +1,5 @@
 #include "gameManager.hpp"
+#include "../include/helper.hpp"
 
 GameManager::GameManager()
 {

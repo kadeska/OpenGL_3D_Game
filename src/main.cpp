@@ -97,8 +97,17 @@ void start() {
     // myCore = std::make_unique<MyCore>();
 
     // program core
-    myCore = new MyCore("./config.text");
+    // Core should consist of only core program stuff, such as program config for window size.
+    // The core should not contain any game logic.
+    // The core is the base of the program, and should be used to initialize the program.
+    // The flow should be: main -> core -> window manager -> game manager
+    // Main is the entry point of the program, which will start the Core.
+    // Core will initialize the WindowManager using values from the config file.
+    // The window manager will initialize a window, and then start the game manager.
+    // The game manager will initialize the game, and then start the game loop.
+    // The game loop will handle events, update the game, and render the game.
 
+    myCore = new MyCore("./config.text"); 
     // game manager
     // gameManager = new GameManager(myCore);
 }
