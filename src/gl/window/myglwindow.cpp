@@ -37,7 +37,7 @@ bool firstMouse = true;
 float deltaTime = 0.0f;	// time between current frame and last frame
 float lastFrame = 0.0f;
 
-
+// initialize the window
 myGLwindow::myGLwindow(const char *title, int width, int height)
 {
     helper.log(3, "myGLwindow constructor");
@@ -46,14 +46,7 @@ myGLwindow::myGLwindow(const char *title, int width, int height)
 }
 
 
-/**
- * @brief myGLwindow::initWindow
- * This is where most of the magic happens. initialize a GL window, set context, prepare resources, and enter render loop.
- * @param title
- * @param width
- * @param height
- * @return
- */
+
 int myGLwindow::initWindow(const char* title, int width, int height)
 {
     // Initialize GL window
@@ -66,8 +59,9 @@ int myGLwindow::initWindow(const char* title, int width, int height)
     // ####
     // ####
     helper.log(3, "initWindow(...)");
-    // glfw: initialize and configure
-    // ------------------------------
+
+    // glfw: initialize and configure glfw window stuff
+    // --------------------------------------------------------------------------------------------
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -77,21 +71,25 @@ int myGLwindow::initWindow(const char* title, int width, int height)
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
 
+
     helper.log(3, "creating window...");
     // glfw window creation
     // --------------------
-    GLFWwindow* window = glfwCreateWindow(width, height, title, NULL, NULL);
+    window = glfwCreateWindow(width, height, title, NULL, NULL);
+    
+    // if the window did not create, then exit. something went wrong.
     if (window == NULL)
     {
         helper.log(1, "Failed to create GLFW window");
         glfwTerminate();
         return -1;
     }
+    // set context 
     glfwMakeContextCurrent(window);
+    // set callbacks
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
     glfwSetCursorPosCallback(window, mouse_callback);
     glfwSetScrollCallback(window, scroll_callback);
-
     // tell GLFW to capture our mouse
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
@@ -106,32 +104,23 @@ int myGLwindow::initWindow(const char* title, int width, int height)
     // configure global opengl state
     // -----------------------------
     glEnable(GL_DEPTH_TEST);
-    // This is the end of window initial set up. The following is extra to the window
-    // #### ---------------------------------------------------------------------------------
-    // ####
-    // ####
-    // ####
-    // ####
-    // ####
-    // ####
-    // build and compile our shader zprogram
-    // --------------------------------------------------------------------------------------
+    
+    // This is the end of window initial set up.
     helper.log(3, "making shaders...");
+
+    // make the shader program
     // Shader* ourShader(helper.vertex_shader_path, helper.fragment_shader_path);
-    Shader* ourShader = new Shader(helper.vertex_shader_path, helper.fragment_shader_path);
+    ourShader = new Shader(helper.vertex_shader_path, helper.fragment_shader_path);
     //Shader modelShader(helper.model_vertex_shader_path, helper.model_fragment_shader_path);
 
-
+    // set up the render manager now that we have the shader program
     renderManager = new RenderManager(ourShader);
 
-    // Load cubes
-    // preferably load from a level data file, or procidrally generate a world.
-    // #### ---------------------------------------------------------------------------------
-    // ####
-    // ####
-    // load cubes to memory
-    //Cube* cube = new Cube(0, "", ourShader);
-
+   
+    //
+    // The following commented code is for model loading. 
+    // I will eventually get back to this. I want to load models from a file
+    // 
     // load models
     // #### ---------------------------------------------------------------------------------
     // ####
@@ -160,6 +149,33 @@ int myGLwindow::initWindow(const char* title, int width, int height)
     // in the world, or at least this is just a list of objects,
     // there may be more than one list.
 
+
+    // render loop
+    // ------------------------------------------------------------------------
+    renderloop();
+
+
+    // optional: de-allocate all resources once they've outlived their purpose:
+    // ------------------------------------------------------------------------
+    // glDeleteVertexArrays(1, &VAO);
+    // glDeleteBuffers(1, &VBO);
+
+    // window was closed, end program.
+    // glfw: terminate, clearing all previously allocated GLFW resources.
+    // ------------------------------------------------------------------
+    glfwTerminate();
+    return 0;
+}
+
+// create a sample player object here for an example of how to use the player object.
+// This could be moved into a game initialization function.
+// Game initialization should consist of loading the game config into memory, and loading the world(s) into memory.
+Player player = Player(Cube(), "player", glm::vec3(0,0,0));
+
+
+
+
+void myGLwindow::renderloop(){
     // Render loop
     // Move this to its own threaded render loop manager
     // #### ---------------------------------------------------------------------------------
@@ -224,22 +240,9 @@ int myGLwindow::initWindow(const char* title, int width, int height)
 
         helper.log(4, std::string("Frame time: " + std::to_string(deltaTime)));
     }
-
-    // optional: de-allocate all resources once they've outlived their purpose:
-    // ------------------------------------------------------------------------
-    // glDeleteVertexArrays(1, &VAO);
-    // glDeleteBuffers(1, &VBO);
-
-    // glfw: terminate, clearing all previously allocated GLFW resources.
-    // ------------------------------------------------------------------
-    glfwTerminate();
-    return 0;
 }
 
-// create a sample player object here for an example of how to use the player object.
-// This could be moved into a game initialization function.
-// Game initialization should consist of loading the game config into memory, and loading the world(s) into memory.
- Player player = Player(Cube(), "player", glm::vec3(0,0,0));
+
 
 // process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
 // ---------------------------------------------------------------------------------------------------------

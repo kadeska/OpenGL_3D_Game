@@ -1,5 +1,5 @@
 /**
- *    Welcome to my 3D/2D Open GL game development project.
+ *    Welcome to my 3D Open GL game development project.
  *    My goal is to make a 3D adventure survival game, where
  *    the goal of the game will be to explore, craft, and survive.
  *
@@ -9,7 +9,6 @@
  *
  *    Can you discover all the ruins?
  *    Can you fight your way to survival?
- *    Will you discorver the source of the nighcrawlers?
  *
  *    You will be able to craft items, fight monsters, and build
  *    your base to protect yourself from the creatures of the night.
@@ -27,7 +26,7 @@
 
 
 #include "../include/helper.hpp"
-#include "../include/mywindowmanager.hpp"
+// #include "../include/mywindowmanager.hpp"
 #include "mycore.hpp"
 
 #include <iostream>
@@ -46,17 +45,6 @@ MyCore* myCore;
 
 // Anonymous namespace to limit the scope of internal helper functions.
 namespace {
-
-// Validate if the given string represents a valid integer.
-bool isValidInt(const std::string &str, int &result) {
-    try {
-        size_t pos;
-        result = std::stoi(str, &pos);
-        return pos == str.length();
-    } catch (const std::exception &) {
-        return false;
-    }
-}
 
 // Print command line arguments in a formatted string.
 void printCommandLineArguments(int argc, char *argv[]) {
@@ -78,7 +66,7 @@ void printCommandLineArguments(int argc, char *argv[]) {
 int parseLogLevel(int argc, char *argv[]) {
     if (argc > 1) {
         int logLevel;
-        if (isValidInt(argv[1], logLevel)) {
+        if (helper.isValidInt(argv[1], logLevel)) {
             helper.log(2, "Valid argument: " + std::to_string(logLevel));
             helper.log(3, "Setting 'user_defined_log_level' as: " + std::to_string(logLevel));
             return logLevel;
@@ -91,7 +79,9 @@ int parseLogLevel(int argc, char *argv[]) {
     return Helper::progLogLevel; // Use default if not provided.
 }
 
-// Function to encapsulate core initialization and the main loop.
+
+// Function to initialize the core, and 
+// start game manager after window has succesfully been created. 
 void start() {
     // Use a smart pointer for automatic memory management.
     // myCore = std::make_unique<MyCore>();

@@ -5,44 +5,25 @@ MyCore::MyCore(std::string config_file_name) {
     helper.log(3, "MyCore constructor");
     // fileManager = new FileManager();
     // load config file if file is valid and loaded correctly
-    helper.log(3, "testing");
+    //helper.log(3, "testing");
+
+    // load program config file, and exit if it fails.
     if (!fileManager.loadConfig(configFileName)) {
         helper.log(1, "oops... something went wrong, shutting down!!");
         return;
     }
+    helper.log(2, "Config file loaded successfully");
+    helper.log(2, "Config file name: " + configFileName);
+    helper.log(2, "Initializing the window...");
 
-// These all have default constructors so they get initialized at runtime in the header.
-
-    // invMan = InventoryManager();
-
-    // worldGen = WorldGenerator_A();
-
-    // worldManager = WorldManager();
-
-    // making a world
-    helper.log(3, "Making a world... "); 
-    // std::vector<Cube> world = std::vector<Cube>(worldGen.WORLD_SIZE*3);
-    // worldGen.generateWorld(4); Dont generate world in the constructor.
-    // call a game manager class to handle the world generation.
-    // but for now I will call genWorld here
-    worldManager.addWorld(genWorld(4));
-    // genWorld(4);
-
-
-    // At this point everything should be initialized and loaded into memory,
-    // Enter render loop after initializing the window.
-    // config file has been loaded succesfully, now initialize the window and enter game loop.
+    // config file has been loaded succesfully, now initialize the window.
     initWindow("window", helper.getScreen_width(), helper.getScreen_height());
 }
 
 void MyCore::initWindow(const char* title, int width, int height){
-    helper.log(3, std::string("Init Screen width and height: " + std::to_string(width) + " " + std::to_string(height)));
+    helper.log(3, std::string("Initial screen Width and Height: " + std::to_string(width) + " x " + std::to_string(height)));
+    // create the window, if fail then exit.
     if (!myWindowManager.createWindow(title, width, height)) {
         return;
     }
-}
-
-World MyCore::genWorld(int world_size)
-{
-    return *worldGen.generateWorld(world_size);
 }

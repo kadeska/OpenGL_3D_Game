@@ -48,6 +48,26 @@ public:
     static int progLogLevel;
     static int skippedLogCount;
 
+
+
+
+
+// Validate if the given string represents a valid integer.
+bool isValidInt(const std::string &str, int &result) {
+    try {
+        size_t pos;
+        result = std::stoi(str, &pos);
+        return pos == str.length();
+    } catch (const std::exception &) {
+        return false;
+    }
+}
+
+
+
+
+
+
     // Example utility function: clamps a value between a minimum and maximum
     static float clamp(float value, float min, float max)
     {
@@ -295,6 +315,8 @@ inline int index(int x, int y, int z) {
 }
 
 } // namespace WorldGenerator
+
+
 
 
 
