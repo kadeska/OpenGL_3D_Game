@@ -83,4 +83,4 @@ CMakeLists.txt.user*
 .vscode/*
 .vs/*
 /out/
-OpenGL_3D_Game.code-workspace
+.vscode/OpenGL_3D_Game.code-workspace
