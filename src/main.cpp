@@ -27,7 +27,7 @@
 
 #include "../include/helper.hpp"
 // #include "../include/mywindowmanager.hpp"
-#include "mycore.hpp"
+#include "../include/mycore.hpp"
 
 #include <iostream>
 #include <sstream>
@@ -99,7 +99,7 @@ void start() {
 
     myCore = new MyCore("./config.text"); 
     // game manager
-    // gameManager = new GameManager(myCore);
+    // gameManager = new GameManager();
 }
 
 } // end of anonymous namespace

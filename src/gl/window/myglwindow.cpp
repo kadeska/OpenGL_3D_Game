@@ -152,7 +152,7 @@ int myGLwindow::initWindow(const char* title, int width, int height)
 
     // render loop
     // ------------------------------------------------------------------------
-    renderloop();
+    // renderloop();
 
 
     // optional: de-allocate all resources once they've outlived their purpose:

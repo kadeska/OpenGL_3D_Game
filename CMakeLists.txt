@@ -1,4 +1,23 @@
 cmake_minimum_required(VERSION 3.16)
+cmake_policy(SET CMP0054 NEW) # Suppress warnings about compatibility with CMake < 3.5
+
+# Patch glm CMakeLists.txt
+file(WRITE ${CMAKE_BINARY_DIR}/_deps/glm-src/CMakeLists.txt "
+cmake_minimum_required(VERSION 3.16 FATAL_ERROR)
+cmake_policy(VERSION 3.16)
+
+set(GLM_VERSION \"0.9.9\")
+project(glm VERSION \${GLM_VERSION} LANGUAGES CXX)
+enable_testing()
+
+add_subdirectory(glm)
+add_library(glm::glm ALIAS glm)
+
+if(\${CMAKE_SOURCE_DIR} STREQUAL \${CMAKE_CURRENT_SOURCE_DIR})
+    add_subdirectory(test)
+endif()
+")
+
 
 project(OpenGLgame LANGUAGES CXX)
 
@@ -66,9 +85,9 @@ foreach(SOURCE_FILE ${PROJECT_SOURCES})
     message(STATUS "  ${SOURCE_FILE}")
 endforeach()
 
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTOUIC ON)
-set(CMAKE_AUTORCC ON)
+# set(CMAKE_AUTOMOC ON)
+# set(CMAKE_AUTOUIC ON)
+# set(CMAKE_AUTORCC ON)
 
 # Define the Executable
 add_executable(${PROGRAM_NAME} ${PROJECT_SOURCES})

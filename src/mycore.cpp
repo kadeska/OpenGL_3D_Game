@@ -18,6 +18,15 @@ MyCore::MyCore(std::string config_file_name) {
 
     // config file has been loaded succesfully, now initialize the window.
     initWindow("window", helper.getScreen_width(), helper.getScreen_height());
+    // after the window is finished initializing then start the game manager which 
+    // will contain that game render loop and game managment.
+
+    // initialize the game now that we have a valid window to render in
+    gameManager = new GameManager();
+    gameManager->init();
+    // start the game  render loop
+    gameManager->start();
+
 }
 
 void MyCore::initWindow(const char* title, int width, int height){

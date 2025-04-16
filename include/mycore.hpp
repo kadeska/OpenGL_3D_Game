@@ -1,14 +1,10 @@
 #ifndef MYCORE_HPP
 #define MYCORE_HPP
 
-#include "filemanager.hpp"
+// #include "filemanager.hpp"
 #include "mywindowmanager.hpp"
-
-//#include "../include/helper.hpp"
-//#include "../src/game/inventory/inventory.hpp"
-#include "../src/game/inventory/inventorymanager.hpp"
-#include "../src/game/world/generator/worldgenerator_a.hpp"
-#include "worldManager.hpp"
+#include "../include/helper.hpp"
+#include "gameManager.hpp"
 
 
 /**
@@ -39,35 +35,12 @@ public:
      */
     void initWindow(const char* title, int width, int height);
 
-    /**
-     * @brief genWorld
-     * @param world_size
-     * This function generates a world of the given size.
-     */
-    World genWorld(int world_size);
 
     /**
      * @brief configFileName
      */
     std::string configFileName;
 
-    /**
-     * @brief fileManager
-     * This class will handle game data files
-     */
-    // FileManager* fileManager;
-
-    /**
-     * @brief world
-     * This class will handle the world
-     */
-    WorldGenerator_A worldGen;
-
-    /**
-     * @brief invMan
-     * This class will handle the inventory
-     */
-    InventoryManager invMan;
 
     // window manager
     /**
@@ -76,10 +49,8 @@ public:
      */
     MyWindowManager myWindowManager;
 
-    // World manager
-    WorldManager worldManager;
-
     // game manager
+    GameManager* gameManager;
 
     // game loop manager
 

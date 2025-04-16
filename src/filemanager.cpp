@@ -132,12 +132,6 @@ std::string FileManager::loadGameData(const std::string &file_name)
 }
 
 
-/**
- * @brief FileManager::loadConfig
- * Loads the given config file
- * @param file_path path to config file
- * @return true/false if file is loaded
- */
 bool FileManager::loadConfig(std::string file_path)
 {
     std::ifstream inFile(file_path, std::ios::in);

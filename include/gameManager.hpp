@@ -1,6 +1,9 @@
 #pragma once
 
-#include "mycore.hpp"
+#include "filemanager.hpp"
+#include "worldManager.hpp"
+#include "rendermanager.hpp"
+
 
 class GameManager
 {
@@ -9,9 +12,20 @@ public:
     ~GameManager();
 
     void init();
+    void start();
+
+    void cleanup();
+    
+
+private:
+    
+    // World world;
+    WorldManager worldManager;
+    RenderManager* renderManager;
+    FileManager fileManager;
+
     void update();
     void render();
-    void cleanup();
     void loadConfig();
     void saveConfig();
     // void handleEvents();
@@ -20,8 +34,7 @@ public:
     // void handleAI();
     // void handleAudio();
 
-private:
-MyCore* myCore;
+    // MyCore* myCore;
     // MyWindowManager* myWindowManager;
     // FileManager* fileManager;
     // WorldGenerator_A* worldGen;
