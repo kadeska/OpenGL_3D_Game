@@ -49,3 +49,10 @@ World* WorldGenerator_A::generateWorld(int world_size) {
     fileManager.saveAsBinary(world->getWorld(), "world.save"); 
     return world;
 }
+
+World* WorldGenerator_A::generateWorld(std::string name, int size, int seed)
+{
+    // later on I will use the seed to generate a world.
+    // This is just a placeholder
+    return generateWorld(size);
+}

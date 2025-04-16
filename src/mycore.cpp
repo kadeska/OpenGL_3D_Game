@@ -1,4 +1,4 @@
-#include "mycore.hpp"
+#include "../include/mycore.hpp"
 
 MyCore::MyCore(std::string config_file_name) {
     configFileName = config_file_name;

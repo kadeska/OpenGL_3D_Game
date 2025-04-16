@@ -3,7 +3,7 @@
 
 // #include "filemanager.hpp"
 #include "mywindowmanager.hpp"
-#include "../include/helper.hpp"
+#include "helper.hpp"
 #include "gameManager.hpp"
 
 

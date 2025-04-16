@@ -10,6 +10,10 @@ void WorldManager::addWorld(const World& world) {
     worlds.push_back(world);
 }
 
+void WorldManager::addWorld(std::string name, int size, int seed)
+{
+}
+
 World& WorldManager::getWorld(int index) {
     if (index < 0 || index >= worlds.size()) {
         throw std::out_of_range("Index out of range");

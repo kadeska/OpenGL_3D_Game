@@ -1,6 +1,6 @@
 #include "../include/gameManager.hpp"
 #include "../include/helper.hpp"
-//#include "../include/rendermanager.hpp"
+#include "../include/rendermanager.hpp"
 
 #include "../include/worldManager.hpp"
 
@@ -17,6 +17,8 @@ GameManager::~GameManager()
 void GameManager::init()
 {
     // load config and initialize game resources
+    // If
+    worldManager.addWorld("default name", 50, 1);
     
 }
 

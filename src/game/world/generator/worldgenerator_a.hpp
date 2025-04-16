@@ -22,6 +22,8 @@ public:
      */
     World* generateWorld(int world_size);
 
+    World* generateWorld(std::string name = "default name", int size = 50, int seed = 1);
+
 private:
 int WORLD_SIZE;
 World* world;

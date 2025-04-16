@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../src/game/world/world.hpp"
+#include "../src/game/world/generator/worldgenerator_a.hpp"
 #include <vector>
 #include <string>
 
@@ -23,11 +24,18 @@ public:
     */
     WorldManager();
 
+
     /**
      * @brief Add a new world to the manager
      * @param world The world to add
      */
     void addWorld(const World& world);
+
+    /**
+     * @brief Create and Add a new world with a given nam, size, and seed
+     * @param name The name of the world
+     */
+    void addWorld(std::string name = "default name", int size = 50, int seed = 1);
 
     /**
      * @brief Get a reference to a world by index
