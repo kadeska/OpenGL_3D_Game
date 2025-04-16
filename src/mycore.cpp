@@ -22,10 +22,10 @@ MyCore::MyCore(std::string config_file_name) {
     // will contain that game render loop and game managment.
 
     // initialize the game now that we have a valid window to render in
-    gameManager = new GameManager();
-    gameManager->init();
+    // gameManager = new GameManager();
+    // gameManager->init();
     // start the game  render loop
-    gameManager->start();
+    // gameManager->start();
 
 }
 

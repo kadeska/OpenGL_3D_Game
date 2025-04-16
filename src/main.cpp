@@ -100,6 +100,11 @@ void start() {
     myCore = new MyCore("./config.text"); 
     // game manager
     // gameManager = new GameManager();
+    helper.log(3, "Initializing compleated.");
+    helper.log(3, "Generating world... ");
+    WorldGenerator_A generator;
+    GameManager gameManager(generator);
+    gameManager.init();
 }
 
 } // end of anonymous namespace

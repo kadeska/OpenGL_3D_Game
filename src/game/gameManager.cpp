@@ -5,17 +5,13 @@
 #include "../include/worldManager.hpp"
 
 
-GameManager::GameManager()
-{
-    helper.log(3, "GameManager constructor");
-}
-
 GameManager::~GameManager()
 {
 }
 
 void GameManager::init()
 {
+    helper.log(3, "GameManager init");
     // load config and initialize game resources
     // If
     worldManager.addWorld("default name", 50, 1);
