@@ -26,74 +26,87 @@
  * @brief cubePositions
  * List of cube positions
  */
-glm::vec3 cubePositions[] = {
-    // row 1
-    glm::vec3( 0.0f,  0.0f,  0.0f),    // some position in 3d space. Can be repesented by a position object that will store the vec3 position and any relative data for that position, such as is this position occupide by a physical object? if so, what is that data? Point to object data.
-    glm::vec3( 1.0f,  0.0f,  0.0f),
-    glm::vec3( 2.0f,  0.0f,  0.0f),
-    glm::vec3( 3.0f,  0.0f,  0.0f),
-    // row 2
-    glm::vec3( 0.0f,  0.0f,  1.0f),
-    glm::vec3( 1.0f,  0.0f,  1.0f),
-    glm::vec3( 2.0f,  0.0f,  1.0f),
-    glm::vec3( 3.0f,  0.0f,  1.0f),
-    // row 3
-    glm::vec3( 0.0f,  0.0f,  2.0f),
-    glm::vec3( 1.0f,  0.0f,  2.0f),
-    glm::vec3( 2.0f,  0.0f,  2.0f),
-    glm::vec3( 3.0f,  0.0f,  2.0f),
-    // row 4
-    glm::vec3( 0.0f,  0.0f,  3.0f),
-    glm::vec3( 1.0f,  0.0f,  3.0f),
-    glm::vec3( 2.0f,  0.0f,  3.0f),
-    glm::vec3( 3.0f,  0.0f,  3.0f),
+// glm::vec3 cubePositions[] = {
+//     // row 1
+//     glm::vec3( 0.0f,  0.0f,  0.0f),    // some position in 3d space. Can be repesented by a position object that will store the vec3 position and any relative data for that position, such as is this position occupide by a physical object? if so, what is that data? Point to object data.
+//     glm::vec3( 1.0f,  0.0f,  0.0f),
+//     glm::vec3( 2.0f,  0.0f,  0.0f),
+//     glm::vec3( 3.0f,  0.0f,  0.0f),
+//     // row 2
+//     glm::vec3( 0.0f,  0.0f,  1.0f),
+//     glm::vec3( 1.0f,  0.0f,  1.0f),
+//     glm::vec3( 2.0f,  0.0f,  1.0f),
+//     glm::vec3( 3.0f,  0.0f,  1.0f),
+//     // row 3
+//     glm::vec3( 0.0f,  0.0f,  2.0f),
+//     glm::vec3( 1.0f,  0.0f,  2.0f),
+//     glm::vec3( 2.0f,  0.0f,  2.0f),
+//     glm::vec3( 3.0f,  0.0f,  2.0f),
+//     // row 4
+//     glm::vec3( 0.0f,  0.0f,  3.0f),
+//     glm::vec3( 1.0f,  0.0f,  3.0f),
+//     glm::vec3( 2.0f,  0.0f,  3.0f),
+//     glm::vec3( 3.0f,  0.0f,  3.0f),
 
-    glm::vec3( 3.0f,  1.0f,  4.0f)
-};
-int numCubes = std::size(cubePositions);
+//     glm::vec3( 3.0f,  1.0f,  4.0f)
+// };
+// int numCubes = std::size(cubePositions);
 
 // Declare the vector of Cube pointers (stack variable)
-std::vector<Cube*> cubeArray; // change this to be the world manager
+// std::vector<Cube*> cubeArray; // change this to be the world manager
 // get the cube array from the world manager
 
+
+// RenderManager constructor
+// This should just generate an empty shader object.
+// The cube positions array should be populated by world generator. It should not be in here.
+// The world generator should be passed to the render manager to generate the new shader 
+// object with the generated world.
 RenderManager::RenderManager(Shader* shader)
     : myShader(shader)
 {
     helper.log(3, "Hello from RenderManager");
     // Dynamically allocate a Cube and push its pointer into the vector
-    Cube* cube;// = new Cube(0, "");
+    // Cube* cube;// = new Cube(0, "");
     //cubeArray.push_back(cube);
     // calculate the model matrix for each object and pass it to shader before drawing
-    for (unsigned int i = 0; i < numCubes; i++){
-        glm::mat4 model = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
-        model = glm::translate(model, cubePositions[i]);
-        float angle = 0.0f * i;
-        model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
-
-        //srand(time(0));
-        cube = new Cube(i + 1, "cube", model, angle, cubePositions[i]);
-        //cube->cube_ID = rand();
-        myShader->setMat4("model", model);
-        cubeArray.push_back(cube);
-    }
-    for (size_t i = 0; i < cubeArray.size(); i++) {
-        if (cubeArray[i]) {  // Ensure cubeArray[i] is valid
-            if (cubeArray[i]->cube_ID) {  // Ensure cube_ID is valid
-                helper.log(3, "Cube ID: " + std::to_string(cubeArray[i]->cube_ID));
-            } else {
-                helper.log(3, "Cube ID is null!");
-            }
-
-            if (cubeArray[i]->cube_str) {  // Ensure cube_str is valid
-                helper.log(3, "Cube str: " + std::string(cubeArray[i]->cube_str));
-            } else {
-                helper.log(3, "Cube str is null!");
-            }
-        }
-    }
+    
+    
 
     init();
 }
+
+// foobar(){
+//     // set the matrix and position of each cube.
+//     // this needs to be 
+//     for (unsigned int i = 0; i < numCubes; i++){
+//         glm::mat4 model = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
+//         model = glm::translate(model, cubePositions[i]);
+//         float angle = 0.0f * i;
+//         model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
+
+//         //srand(time(0));
+//         cube = new Cube(i + 1, "cube", model, angle, cubePositions[i]);
+//         //cube->cube_ID = rand();
+//         myShader->setMat4("model", model);
+//         cubeArray.push_back(cube);
+//     }
+//     for (size_t i = 0; i < cubeArray.size(); i++) {
+//         if (cubeArray[i]) {  // Ensure cubeArray[i] is valid
+//             if (cubeArray[i]->cube_ID) {  // Ensure cube_ID is valid
+//                 helper.log(3, "Cube ID: " + std::to_string(cubeArray[i]->cube_ID));
+//             } else {
+//                 helper.log(3, "Cube ID is null!");
+//             }
+
+//             if (cubeArray[i]->cube_str) {  // Ensure cube_str is valid
+//                 helper.log(3, "Cube str: " + std::string(cubeArray[i]->cube_str));
+//             } else {
+//                 helper.log(3, "Cube str is null!");
+//             }
+//         }
+//     }
+// }
 
 // Remember to delete allocated Cubes when they are no longer needed.
 
@@ -116,15 +129,15 @@ void RenderManager::renderScene()
 
 }
 
-void RenderManager::renderScene(World world)
+void RenderManager::renderScene(World* world)
 {
     bindTextures();
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    world.update();
+    world->update();
     // render boxes
     // for every object/cube
-    for (Cube cube : world.getWorld())
+    for (Cube cube : world->getWorld())
     {
         myShader->setMat4("model", cube.cube_model);
         glDrawArrays(GL_TRIANGLES, 0, 36);
@@ -132,49 +145,49 @@ void RenderManager::renderScene(World world)
 }
 void RenderManager::init()
 {
-    float vertices[] = {
-        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-        0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
-        0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-        0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+    // float vertices[] = {
+    //     -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+    //     0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
+    //     0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+    //     0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+    //     -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+    //     -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
 
-        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-        0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-        0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-        0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-        -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
-        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+    //     -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+    //     0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+    //     0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+    //     0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+    //     -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
+    //     -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
 
-        -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-        -0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-        -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+    //     -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+    //     -0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+    //     -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+    //     -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+    //     -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+    //     -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
 
-        0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-        0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-        0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-        0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-        0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-        0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+    //     0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+    //     0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+    //     0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+    //     0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+    //     0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+    //     0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
 
-        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-        0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
-        0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-        0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+    //     -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+    //     0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
+    //     0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+    //     0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+    //     -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+    //     -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
 
-        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-        0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-        0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-        0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-        -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
-        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
-    };
+    //     -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+    //     0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+    //     0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+    //     0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+    //     -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
+    //     -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
+    // };
 
     helper.log(3, "generating beffer data and generating atributes...");
     glGenVertexArrays(1, &cube_VAO);

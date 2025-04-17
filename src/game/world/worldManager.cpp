@@ -6,16 +6,16 @@ WorldManager::WorldManager() {
     helper.log(3, "WorldManager constructor");
 }
 
-void WorldManager::addWorld(const World& world) {
+void WorldManager::addWorld(World* world) {
     worlds.push_back(world);
 }
 
-void WorldManager::addWorld(std::string name, int size, int seed)
+void WorldManager::addCustomWorld(std::string name, int size, int seed)
 {
     helper.log(3, "WorldMananger: Adding world: " + name);
 }
 
-World& WorldManager::getWorld(int index) {
+World* WorldManager::getWorld(int index) {
     if (index < 0 || index >= worlds.size()) {
         throw std::out_of_range("Index out of range");
     }
@@ -33,7 +33,7 @@ int WorldManager::getWorldCount() const {
     return worlds.size();
 }
 
-void WorldManager::updateWorld(World world)
+void WorldManager::updateWorld(World* world)
 {
-    world.update();
+    world->update();
 }

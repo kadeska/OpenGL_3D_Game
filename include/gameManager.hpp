@@ -32,7 +32,7 @@ private:
     WorldManager* worldManager;
     RenderManager* renderManager;
     
-    // World world;
+    World* current_world;
     
     // FileManager fileManager;
 

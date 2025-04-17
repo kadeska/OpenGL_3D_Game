@@ -29,20 +29,20 @@ public:
      * @brief Add a new world to the manager
      * @param world The world to add
      */
-    void addWorld(const World& world);
+    void addWorld(World* world);
 
     /**
      * @brief Create and Add a new world with a given nam, size, and seed
      * @param name The name of the world
      */
-    void addWorld(std::string name = "default name", int size = 50, int seed = 1);
+    void addCustomWorld(std::string name, int size, int seed);
 
     /**
      * @brief Get a reference to a world by index
      * @param index The index of the world
      * @return A reference to the world
      */
-    World& getWorld(int index);
+    World* getWorld(int index);
 
     /**
      * @brief Remove a world by index
@@ -61,8 +61,8 @@ public:
      * @brief Update the world
      * @param world The world to update
      */
-    void updateWorld(World world);
+    void updateWorld(World* world);
 
 private:
-    std::vector<World> worlds; // Vector containing all the worlds
+    std::vector<World*> worlds; // Vector containing all the worlds
 };

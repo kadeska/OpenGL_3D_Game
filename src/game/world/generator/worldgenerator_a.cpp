@@ -3,7 +3,7 @@
 #include "../include/helper.hpp"
 
 
-World* world;
+// World* world;
 
 WorldGenerator_A::WorldGenerator_A() {
     helper.log(3, "World Generator_A constructor");
@@ -21,7 +21,7 @@ World* WorldGenerator_A::generateWorld(int world_size) {
         for (int y = 0; y < WORLD_SIZE; ++y) {
             for (int x = 0; x < WORLD_SIZE; ++x) {  // -----------world generation-----------------
                 // debug log of indexing
-                helper.log(3, std::string("indexing ( " + std::to_string(x) + ", " + std::to_string(y) + ", " + std::to_string(x)));
+                helper.log(4, std::string("indexing ( " + std::to_string(x) + ", " + std::to_string(y) + ", " + std::to_string(x)));
                 // Calculate the index for the current coordinates
                 int idx = WorldGenerator::index(x, y, z);
 
@@ -47,4 +47,13 @@ World* WorldGenerator_A::generateWorld(int world_size) {
     }
     fileManager.saveAsBinary(world->getWorld(), "world.save"); 
     return world;
+}
+
+World *WorldGenerator_A::generateWorld(std::string name, int size, int seed)
+{
+    // placeholder
+    // need to have a new generate function that I can use to generate a world with a name, size, and seed.
+    // The function should use default values if no values are given.
+    // The function should also take a bool if it should generate a world based off of the config file.
+    return generateWorld(size); // Call the other overload with the size
 }

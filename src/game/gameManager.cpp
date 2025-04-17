@@ -20,7 +20,8 @@ void GameManager::init()
     helper.log(3, "GameManager init");
     // load config and initialize game resources
     // If
-    worldManager->addWorld("default name", 50, 1);
+    current_world = worldGenerator->generateWorld("default name", 4, 1); // Generate a default world
+    worldManager->addWorld(current_world); // Add the generated world to the world manager
     
 }
 

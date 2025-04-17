@@ -97,14 +97,7 @@ void start() {
     // The game manager will initialize the game, and then start the game loop.
     // The game loop will handle events, update the game, and render the game.
 
-    myCore = new MyCore("./config.text"); 
-    // game manager
-    // gameManager = new GameManager();
-    // helper.log(3, "Initializing compleated.");
-    // helper.log(3, "Generating world... ");
-    // WorldGenerator_A generator;
-    // GameManager gameManager(generator);
-    // gameManager.init();
+    myCore = new MyCore("./config.text");
 }
 
 } // end of anonymous namespace
