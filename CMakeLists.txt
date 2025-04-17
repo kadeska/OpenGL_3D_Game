@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 3.16)
 cmake_policy(SET CMP0054 NEW) # Suppress warnings about compatibility with CMake < 3.5
 
+# Set the compilers before the project() command
+set(CMAKE_C_COMPILER "/usr/bin/clang-20")
+set(CMAKE_CXX_COMPILER "/usr/bin/clang++-20")
+
 # Patch glm CMakeLists.txt
 file(WRITE ${CMAKE_BINARY_DIR}/_deps/glm-src/CMakeLists.txt "
 cmake_minimum_required(VERSION 3.16 FATAL_ERROR)
@@ -18,11 +22,12 @@ if(\${CMAKE_SOURCE_DIR} STREQUAL \${CMAKE_CURRENT_SOURCE_DIR})
 endif()
 ")
 
-
 project(OpenGLgame LANGUAGES CXX)
 
-set(CMAKE_CXX_STANDARD 17)
+# Set C++20 as the standard
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
 # Define the program name
 set(PROGRAM_NAME OpenGLgame)
@@ -79,15 +84,11 @@ file(GLOB_RECURSE PROJECT_SOURCES
     "${CMAKE_SOURCE_DIR}/include/*.hpp"
 )
 
-# Print the collected files for debugging (optional)
-message(STATUS "Collected source files:")
-foreach(SOURCE_FILE ${PROJECT_SOURCES})
-    message(STATUS "  ${SOURCE_FILE}")
-endforeach()
-
-# set(CMAKE_AUTOMOC ON)
-# set(CMAKE_AUTOUIC ON)
-# set(CMAKE_AUTORCC ON)
+# # Print the collected files for debugging (optional)
+# message(STATUS "Collected source files:")
+# foreach(SOURCE_FILE ${PROJECT_SOURCES})
+#     message(STATUS "  ${SOURCE_FILE}")
+# endforeach()
 
 # Define the Executable
 add_executable(${PROGRAM_NAME} ${PROJECT_SOURCES})

@@ -27,6 +27,12 @@ MyCore::MyCore(std::string config_file_name) {
     // start the game  render loop
     // gameManager->start();
 
+    // RenderManager* renderManager = myWindowManager.getRenderManager();
+
+    // WorldGenerator_A worldGenerator;
+    // gameManager = new GameManager(worldGenerator, renderManager);           // This block of code has been moved into myGLwindow.
+    // gameManager->init();
+
 }
 
 void MyCore::initWindow(const char* title, int width, int height){

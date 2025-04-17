@@ -26,6 +26,7 @@ public:
     ~MyWindowManager(); // Destructor
 
     bool createWindow(const char* title, int width, int height);
+    RenderManager* getRenderManager();
 };
 
 #endif // MYWINDOWMANAGER_HPP

@@ -16,6 +16,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+
 #include <iostream>
 // #include <cmath>
 
@@ -37,16 +38,23 @@ bool firstMouse = true;
 float deltaTime = 0.0f;	// time between current frame and last frame
 float lastFrame = 0.0f;
 
-// initialize the window
+
+// create the window
 myGLwindow::myGLwindow(const char *title, int width, int height)
 {
     helper.log(3, "myGLwindow constructor");
 
     initWindow(title, width, height);
+
+    renderManager = new RenderManager(ourShader);
+
+    gameManager = new GameManager(worldGenerator, renderManager);
+
+    gameManager->init();
 }
 
 
-
+// initialize the window
 int myGLwindow::initWindow(const char* title, int width, int height)
 {
     // Initialize GL window
@@ -114,7 +122,7 @@ int myGLwindow::initWindow(const char* title, int width, int height)
     //Shader modelShader(helper.model_vertex_shader_path, helper.model_fragment_shader_path);
 
     // set up the render manager now that we have the shader program
-    renderManager = new RenderManager(ourShader);
+    // renderManager = new RenderManager(ourShader);
 
    
     //

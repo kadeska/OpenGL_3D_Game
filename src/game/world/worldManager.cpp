@@ -12,6 +12,7 @@ void WorldManager::addWorld(const World& world) {
 
 void WorldManager::addWorld(std::string name, int size, int seed)
 {
+    helper.log(3, "WorldMananger: Adding world: " + name);
 }
 
 World& WorldManager::getWorld(int index) {

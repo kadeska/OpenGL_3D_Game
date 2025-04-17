@@ -11,11 +11,7 @@
 class GameManager
 {
 public:
-    GameManager(WorldGenerator_A& worldGenerator)
-        : worldGenerator(worldGenerator) {
-        // Initialize other members if needed
-        helper.log(3, "GameManager constructor");
-    };
+    GameManager(WorldGenerator_A& worldGenerator, RenderManager* renderManager);
 
     void generateWorld(int size) {
         worldGenerator.generateWorld(size); // Use the injected instance
@@ -35,10 +31,11 @@ public:
 
 private:
     WorldGenerator_A& worldGenerator;
-    
-    // World world;
     WorldManager worldManager;
     RenderManager* renderManager;
+    
+    // World world;
+    
     // FileManager fileManager;
 
     void update();

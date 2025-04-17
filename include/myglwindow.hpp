@@ -4,7 +4,9 @@
 #include <GLFW/glfw3.h>
 #include <string>
 
-#include "../include/rendermanager.hpp"
+#include "rendermanager.hpp"
+#include "gameManager.hpp"
+#include "worldgenerator_a.hpp"
 
 /**
  * @brief The myGLwindow class
@@ -12,6 +14,7 @@
 class myGLwindow
 {
 public:
+
     /**
      * @brief myGLwindow
      * This creates a OpenGl window
@@ -44,8 +47,12 @@ public:
      */
     void renderloop();
 
+    RenderManager* getRenderManager() { return renderManager; }
+
 private:
     RenderManager* renderManager;
     Shader* ourShader;
     GLFWwindow* window;
+    GameManager* gameManager;
+    WorldGenerator_A worldGenerator_a;
 };

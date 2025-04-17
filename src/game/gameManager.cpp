@@ -5,6 +5,13 @@
 #include "../include/worldManager.hpp"
 
 
+GameManager::GameManager(WorldGenerator_A& worldGenerator, RenderManager* renderManager)
+        : worldGenerator(worldGenerator), renderManager(renderManager) {
+        // Initialize other members if needed
+        helper.log(3, "GameManager constructor");
+    };
+
+
 GameManager::~GameManager()
 {
 }
@@ -26,6 +33,7 @@ void GameManager::start()
 void GameManager::update()
 {
     // update tick for game logic
+    worldManager.updateWorld(worldManager.getWorld(0));
 }
 
 void GameManager::render()
@@ -34,7 +42,7 @@ void GameManager::render()
     // in the future i could only pass what needs to be rendered, 
     // so then i dont waste resources passing the large array every 
     // render call. 
-    //renderManager.renderScene(world);
+    renderManager->renderScene(worldManager.getWorld(0));
 }
 
 void GameManager::cleanup()

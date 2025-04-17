@@ -2,7 +2,8 @@
 #include "helper.hpp"
 
 // Constructor
-MyWindowManager::MyWindowManager(){}
+MyWindowManager::MyWindowManager() // : glWindow(nullptr)
+{}
 
 // Destructor: Ensure cleanup
 MyWindowManager::~MyWindowManager(){}
@@ -22,6 +23,10 @@ bool MyWindowManager::createWindow(const char* title, int width, int height)
 
     // new myGLwindow("test", 300, 300);
     // new myVulkanWindow("test", 300, 300);
-    return true;
+    return glWindow != nullptr;
+}
+
+RenderManager* MyWindowManager::getRenderManager() {
+    return glWindow ? glWindow->getRenderManager() : nullptr;
 }
 
