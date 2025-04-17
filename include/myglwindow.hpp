@@ -54,5 +54,5 @@ private:
     Shader* ourShader;
     GLFWwindow* window;
     GameManager* gameManager;
-    WorldGenerator_A worldGenerator_a;
+    WorldGenerator_A* worldGenerator_a;
 };

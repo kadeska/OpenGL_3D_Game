@@ -18,21 +18,6 @@ MyCore::MyCore(std::string config_file_name) {
 
     // config file has been loaded succesfully, now initialize the window.
     initWindow("window", helper.getScreen_width(), helper.getScreen_height());
-    // after the window is finished initializing then start the game manager which 
-    // will contain that game render loop and game managment.
-
-    // initialize the game now that we have a valid window to render in
-    // gameManager = new GameManager();
-    // gameManager->init();
-    // start the game  render loop
-    // gameManager->start();
-
-    // RenderManager* renderManager = myWindowManager.getRenderManager();
-
-    // WorldGenerator_A worldGenerator;
-    // gameManager = new GameManager(worldGenerator, renderManager);           // This block of code has been moved into myGLwindow.
-    // gameManager->init();
-
 }
 
 void MyCore::initWindow(const char* title, int width, int height){

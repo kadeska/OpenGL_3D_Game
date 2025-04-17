@@ -3,22 +3,20 @@
 #include "filemanager.hpp"
 #include "worldManager.hpp"
 #include "rendermanager.hpp"
-
-// #include "worldgenerator_a.hpp"
-#include "../src/game/world/generator/worldgenerator_a.hpp"
+#include "worldgenerator_a.hpp"
 
 
 class GameManager
 {
 public:
-    GameManager(WorldGenerator_A& worldGenerator, RenderManager* renderManager);
+    GameManager(WorldGenerator_A* worldGenerator, RenderManager* renderManager);
 
     void generateWorld(int size) {
-        worldGenerator.generateWorld(size); // Use the injected instance
+        worldGenerator->generateWorld(size); // Use the injected instance
     }
 
     void generateCustomWorld(std::string name, int size, int seed) {
-        worldGenerator.generateWorld(name, size, seed); // Use the injected instance
+        worldGenerator->generateWorld(name, size, seed); // Use the injected instance
     }
 
     ~GameManager();
@@ -30,8 +28,8 @@ public:
     
 
 private:
-    WorldGenerator_A& worldGenerator;
-    WorldManager worldManager;
+    WorldGenerator_A* worldGenerator;
+    WorldManager* worldManager;
     RenderManager* renderManager;
     
     // World world;

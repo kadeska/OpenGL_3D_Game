@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../src/game/world/world.hpp"
-#include "../src/game/world/generator/worldgenerator_a.hpp"
+#include "world.hpp"
+#include "worldgenerator_a.hpp"
 #include <vector>
 #include <string>
 

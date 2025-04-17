@@ -9,7 +9,7 @@
 #include "../include/cube.hpp"
 
 // #include some movement handler
-#include "../src/game/player.hpp"
+#include "../include/player.hpp"
 //Player player;
 
 #include <glm/glm.hpp>
@@ -46,9 +46,12 @@ myGLwindow::myGLwindow(const char *title, int width, int height)
 
     initWindow(title, width, height);
 
-    renderManager = new RenderManager(ourShader);
+    // render manager is initialized inside of the initialize window function
+    // renderManager = new RenderManager(ourShader); 
 
-    gameManager = new GameManager(worldGenerator, renderManager);
+    worldGenerator_a = new WorldGenerator_A();
+
+    gameManager = new GameManager(worldGenerator_a, renderManager);
 
     gameManager->init();
 }
@@ -122,7 +125,7 @@ int myGLwindow::initWindow(const char* title, int width, int height)
     //Shader modelShader(helper.model_vertex_shader_path, helper.model_fragment_shader_path);
 
     // set up the render manager now that we have the shader program
-    // renderManager = new RenderManager(ourShader);
+    renderManager = new RenderManager(ourShader);
 
    
     //
@@ -161,6 +164,7 @@ int myGLwindow::initWindow(const char* title, int width, int height)
     // render loop
     // ------------------------------------------------------------------------
     // renderloop();
+    renderManager->renderScene();
 
 
     // optional: de-allocate all resources once they've outlived their purpose:
@@ -171,7 +175,10 @@ int myGLwindow::initWindow(const char* title, int width, int height)
     // window was closed, end program.
     // glfw: terminate, clearing all previously allocated GLFW resources.
     // ------------------------------------------------------------------
+    
+    
     glfwTerminate();
+    
     return 0;
 }
 

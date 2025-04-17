@@ -3,7 +3,9 @@
 
 // Constructor
 MyWindowManager::MyWindowManager() // : glWindow(nullptr)
-{}
+{
+    helper.log(3, "MyWindowManager constructor");
+}
 
 // Destructor: Ensure cleanup
 MyWindowManager::~MyWindowManager(){}

@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include <iostream>
-#include "../world.hpp"
+#include "world.hpp"
 
 /**
  * @brief The WorldGenerator_A class
