@@ -164,7 +164,7 @@ int myGLwindow::initWindow(const char* title, int width, int height)
     // render loop
     // ------------------------------------------------------------------------
     // renderloop();
-    renderManager->renderScene();
+    renderManager->renderScene(renderManager->getCurrentWorld());
 
 
     // optional: de-allocate all resources once they've outlived their purpose:
@@ -244,7 +244,7 @@ void myGLwindow::renderloop(){
         // render
         // ------
         //cube->render();
-        renderManager->renderScene();
+        renderManager->renderScene(renderManager->getCurrentWorld());
 
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)

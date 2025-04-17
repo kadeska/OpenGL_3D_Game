@@ -15,6 +15,7 @@
 #include <random>
 
 #include <ctime>  // Include this for time()
+#include "rendermanager.hpp"
 
 
 
@@ -62,18 +63,15 @@
 // The cube positions array should be populated by world generator. It should not be in here.
 // The world generator should be passed to the render manager to generate the new shader 
 // object with the generated world.
-RenderManager::RenderManager(Shader* shader)
-    : myShader(shader)
+RenderManager::RenderManager(Shader* shader) : current_shader(shader)
 {
-    helper.log(3, "Hello from RenderManager");
-    // Dynamically allocate a Cube and push its pointer into the vector
-    // Cube* cube;// = new Cube(0, "");
-    //cubeArray.push_back(cube);
-    // calculate the model matrix for each object and pass it to shader before drawing
-    
-    
+    helper.log(3, "RenderManager constructor");
+    current_shader = shader;
+    world = nullptr;
 
-    init();
+    // wait to call this after the world is generated, because 
+    // this function generates the buffers.
+    // init();
 }
 
 // foobar(){
@@ -111,23 +109,23 @@ RenderManager::RenderManager(Shader* shader)
 // Remember to delete allocated Cubes when they are no longer needed.
 
 
-void RenderManager::renderScene()
-{
-    bindTextures();
-    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    // render boxes
-    // for every object/cube
-    for (Cube* cube : cubeArray)
-    {
-        myShader->setMat4("model", cube->cube_model);
-        glDrawArrays(GL_TRIANGLES, 0, 36);
-    }
+// void RenderManager::renderScene()
+// {
+//     bindTextures();
+//     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+//     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+//     // render boxes
+//     // for every object/cube
+//     for (Cube* cube : cubeArray)
+//     {
+//         myShader->setMat4("model", cube->cube_model);
+//         glDrawArrays(GL_TRIANGLES, 0, 36);
+//     }
 
-    // update world and render cubes
-    // WorldGenerator
+//     // update world and render cubes
+//     // WorldGenerator
 
-}
+// }
 
 void RenderManager::renderScene(World* world)
 {
@@ -139,55 +137,55 @@ void RenderManager::renderScene(World* world)
     // for every object/cube
     for (Cube cube : world->getWorld())
     {
-        myShader->setMat4("model", cube.cube_model);
+        current_shader->setMat4("model", cube.cube_model);
         glDrawArrays(GL_TRIANGLES, 0, 36);
     }
 }
 void RenderManager::init()
 {
-    // float vertices[] = {
-    //     -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-    //     0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
-    //     0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-    //     0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-    //     -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-    //     -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+    float vertices[] = {
+        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+        0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
+        0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+        0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
 
-    //     -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-    //     0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-    //     0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-    //     0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-    //     -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
-    //     -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+        0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+        0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+        0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+        -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
+        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
 
-    //     -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-    //     -0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-    //     -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-    //     -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-    //     -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-    //     -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+        -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+        -0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+        -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
 
-    //     0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-    //     0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-    //     0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-    //     0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-    //     0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-    //     0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+        0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+        0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+        0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+        0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+        0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+        0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
 
-    //     -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-    //     0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
-    //     0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-    //     0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-    //     -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-    //     -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+        0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
+        0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+        0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
 
-    //     -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-    //     0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-    //     0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-    //     0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-    //     -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
-    //     -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
-    // };
+        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+        0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+        0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+        0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+        -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
+        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
+    };
 
     helper.log(3, "generating beffer data and generating atributes...");
     glGenVertexArrays(1, &cube_VAO);
@@ -266,11 +264,15 @@ void RenderManager::init()
 
     // tell opengl for each sampler to which texture unit it belongs to (only has to be done once)
     // -------------------------------------------------------------------------------------------
-    myShader->use();
-    myShader->setInt("texture1", 0);
-    myShader->setInt("texture2", 1);
+    current_shader->use();
+    current_shader->setInt("texture1", 0);
+    current_shader->setInt("texture2", 1);
 
     // modelShader.use();
+}
+
+void RenderManager::updateShader(World * world)
+{
 }
 
 void RenderManager::bindTextures()
@@ -284,8 +286,13 @@ void RenderManager::bindTextures()
     // bind vertex array
     glBindVertexArray(cube_VAO);
 }
-RenderManager::~RenderManager() {
-    for (Cube* cube : cubeArray) {
-        delete cube;
-    }
+World* RenderManager::getCurrentWorld()
+{
+    return world;
+}
+RenderManager::~RenderManager()
+{
+    // for (Cube* cube : cubeArray) {
+    //     delete cube;
+    // }
 }
