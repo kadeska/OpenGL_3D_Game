@@ -288,6 +288,11 @@ void RenderManager::bindTextures()
 }
 World* RenderManager::getCurrentWorld()
 {
+    if (world == nullptr)
+    {
+        helper.log(1, "World is null");
+        return nullptr;
+    }
     return world;
 }
 RenderManager::~RenderManager()

@@ -164,7 +164,7 @@ int myGLwindow::initWindow(const char* title, int width, int height)
     // render loop
     // ------------------------------------------------------------------------
     // renderloop();
-    renderManager->renderScene(renderManager->getCurrentWorld());
+    // renderManager->renderScene(renderManager->getCurrentWorld());
 
 
     // optional: de-allocate all resources once they've outlived their purpose:
