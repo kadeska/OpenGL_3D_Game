@@ -58,6 +58,7 @@ else()
     find_package(OpenGL REQUIRED)
     find_package(glfw3 REQUIRED)
     find_package(GLEW REQUIRED)
+    find_package(assimp REQUIRED)
 
     include(FetchContent)
 
@@ -84,12 +85,6 @@ file(GLOB_RECURSE PROJECT_SOURCES
     "${CMAKE_SOURCE_DIR}/include/*.hpp"
 )
 
-# # Print the collected files for debugging (optional)
-# message(STATUS "Collected source files:")
-# foreach(SOURCE_FILE ${PROJECT_SOURCES})
-#     message(STATUS "  ${SOURCE_FILE}")
-# endforeach()
-
 # Define the Executable
 add_executable(${PROGRAM_NAME} ${PROJECT_SOURCES})
 
@@ -111,7 +106,14 @@ target_link_libraries(${PROGRAM_NAME} PRIVATE
     ${GLFW_TARGET}
     GLEW::GLEW
     glad
-    glm
+    glm::glm
+    assimp
+    -lGL
+    -lX11
+    -lpthread
+    -lXrandr
+    -lXi
+    -ldl
 )
 
 # Copy config.text to the build directory

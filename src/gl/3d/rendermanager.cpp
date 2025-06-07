@@ -132,14 +132,45 @@ void RenderManager::renderScene(World* world)
     bindTextures();
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    world->update();
+    // world->update();
     // render boxes
     // for every object/cube
+
+
+    init();
+
     for (Cube cube : world->getWorld())
     {
         current_shader->setMat4("model", cube.cube_model);
         glDrawArrays(GL_TRIANGLES, 0, 36);
+        // world->update();
     }
+
+    // unsigned int instanceVBO;
+    // glGenBuffers(1, &instanceVBO);
+    // glBindBuffer(GL_ARRAY_BUFFER, instanceVBO);
+    // glBufferData(GL_ARRAY_BUFFER, world->getWorld().size() * sizeof(glm::mat4), nullptr, GL_STATIC_DRAW);
+
+    // std::vector<glm::mat4> instanceMatrices;
+    // for (Cube& cube : world->getWorld()) {
+    //     instanceMatrices.push_back(cube.getCube_model());
+    // }
+    // glBindBuffer(GL_ARRAY_BUFFER, instanceVBO);
+    // glBufferSubData(GL_ARRAY_BUFFER, 0, instanceMatrices.size() * sizeof(glm::mat4), instanceMatrices.data());
+
+
+    // glBindVertexArray(cube_VAO);
+    // glBindBuffer(GL_ARRAY_BUFFER, instanceVBO);
+
+    // for (unsigned int i = 0; i < 4; i++) {
+    //     glVertexAttribPointer(3 + i, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (void*)(i * sizeof(glm::vec4)));
+    //     glEnableVertexAttribArray(3 + i);
+    //     glVertexAttribDivisor(3 + i, 1); // Tell OpenGL this is per-instance data
+    // }
+
+    // glDrawArraysInstanced(GL_TRIANGLES, 0, 36, world->getWorld().size());
+
+
 }
 void RenderManager::init()
 {

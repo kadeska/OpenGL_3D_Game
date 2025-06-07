@@ -23,12 +23,22 @@ void GameManager::init()
     worldManager = new WorldManager(); // Create a new world manager
     current_world = worldGenerator->generateWorld("default name", 4, 1); // Generate a default world
     worldManager->addWorld(current_world); // Add the generated world to the world manager
+    start(); // Start the game
     
 }
 
 void GameManager::start()
 {
     // start the game render loop
+    while (true) {
+        // handleEvents();
+        // update(); // Update game logic
+        render(); // Render the scene
+        // handleCollisions();
+        // handlePhysics();
+        // handleAI();
+        // handleAudio();
+    }
 }
 
 void GameManager::update()

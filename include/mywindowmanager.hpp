@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <string>
 
-#include <glad/glad.h>
+#include "glad.h"
 
 #include <GLFW/glfw3.h> // OpenGL wrapper
 
