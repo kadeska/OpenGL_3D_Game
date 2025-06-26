@@ -9,14 +9,14 @@
 #include <string>
 #include <unordered_map>
 
-#include "cube.hpp"
+// #include "cube.hpp"
 
 //#include "../include/helper.hpp"
 #include <cstdio>
 #include <algorithm>
 
 
-//#include "helper.hpp"
+#include "helper.hpp"
 
 
 
@@ -41,7 +41,7 @@ public:
 
     void saveAsBinary(const std::vector<GameEntity>* entities, const std::string& file_name);
 
-    void saveAsBinary(std::vector<Cube> world, std::string file_name);
+    // void saveAsBinary(std::vector<Cube> world, std::string file_name);
 
     void saveAsText(const std::string& data, const std::string& file_name);
 

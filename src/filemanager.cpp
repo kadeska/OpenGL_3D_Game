@@ -29,23 +29,23 @@ void FileManager::saveAsBinary(const std::vector<GameEntity>* entities, const st
     helper.log(3, std::string("File saved: " + file_name));
 }
 
-void FileManager::saveAsBinary(std::vector<Cube> world, std::string file_name)
-{
-    helper.log(3, std::string("Saving as Binary: " + file_name));
-    filename = file_name;
+// void FileManager::saveAsBinary(std::vector<Cube> world, std::string file_name)
+// {
+//     helper.log(3, std::string("Saving as Binary: " + file_name));
+//     filename = file_name;
 
-    // Save the world to a binary file.
-    std::ofstream out(filename, std::ios::binary);
-    if (!out) {
-        throw std::runtime_error("Could not open file for writing");
-    }
-    // Write the number of cubes first.
-    uint32_t count = static_cast<uint32_t>(world.size());
-    out.write(reinterpret_cast<const char*>(&count), sizeof(count));
-    // Write the actual world data.
-    out.write(reinterpret_cast<const char*>(world.data()), count * sizeof(Cube));
-    helper.log(3, std::string("File saved: " + file_name));
-}
+//     // Save the world to a binary file.
+//     std::ofstream out(filename, std::ios::binary);
+//     if (!out) {
+//         throw std::runtime_error("Could not open file for writing");
+//     }
+//     // Write the number of cubes first.
+//     uint32_t count = static_cast<uint32_t>(world.size());
+//     out.write(reinterpret_cast<const char*>(&count), sizeof(count));
+//     // Write the actual world data.
+//     out.write(reinterpret_cast<const char*>(world.data()), count * sizeof(Cube));
+//     helper.log(3, std::string("File saved: " + file_name));
+// }
 
 // Load a list of game entities from a binary file.
 std::vector<GameEntity> FileManager::loadBinaryData(const std::string& file_name) {
