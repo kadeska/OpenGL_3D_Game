@@ -1,10 +1,16 @@
 #include "world.hpp"
 #include <iostream>
 
-World::World()
+
+World::World(bool shouldMakeDefaultWorld, int width, int height, int depth)
 {
     std::cout << "Creating World" << std::endl;
-    data = createWorld();
+    if(shouldMakeDefaultWorld){
+        data = createWorld();
+    } else {
+        // initialize a world with custom values.
+        data = createWorld(width, height, depth);
+    }
 }
 
 World::~World()
@@ -25,6 +31,26 @@ World::worldData World::createWorld()
         }
     }
     return wd;
+}
+
+World::worldData World::createWorld(int width, int height, int depth)
+{
+     {
+        worldData wd;
+        wd.ID = 1;
+        wd.width = width;
+        wd.height = height;
+        wd.depth = depth;
+        // Fill a 2D grid of cubes at y=0
+        for (int x = 0; x < wd.width; ++x) {
+            for (int z = 0; z < wd.depth; ++z) {
+                for (int y = 0; y < wd.height; ++y) {
+                    wd.cubePositions.push_back(glm::vec3(x, y, z));
+                }
+            }
+        }
+        return wd;
+    }
 }
 
 void World::tick()

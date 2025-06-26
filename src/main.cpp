@@ -78,8 +78,13 @@ int main()
     // ------------------------------------
     Shader ourShader("src/shader.vs", "src/shader.fs");
 
-    // make world
-    World *myWorld = new World();
+    // make default world
+    // -------------------
+    // World *myWorld = new World();
+
+    // make custom world
+    // -------------------
+    World *myWorld = new World(false, 5, 1, 6);
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------

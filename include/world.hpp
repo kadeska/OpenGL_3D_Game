@@ -5,7 +5,7 @@
 
 class World {
 public:
-    World();
+    World(bool shouldMakeDefaultWorld = true, int width = 10, int height = 1, int depth = 10);
     ~World();
 
     struct worldData
@@ -21,6 +21,9 @@ public:
 
     /* Create a default world*/
     worldData createWorld();
+
+    /* Create a world with custom values */
+    worldData createWorld(int width, int height, int depth);
 
     /* get the world data */
     worldData getWorldData() const { return data; }
