@@ -76,7 +76,7 @@ int main()
     Shader ourShader("src/shader.vs", "src/shader.fs");
 
     // World
-    myWorld = new World(false, 5, 4, 6);
+    myWorld = new World(false, 20, 1, 20);
 
     // Cube VAO/VBO
     float vertices[] = {
@@ -309,11 +309,14 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
             if (hit)
             {
                 std::cout << "Block hit at: " << hit->x << ", " << hit->y << ", " << hit->z << std::endl;
-                for (size_t i = 0; i < myWorld->getWorldData().cubePositions.size(); ++i) {
+                for (size_t i = 0; i < myWorld->getWorldData().cubePositions.size(); ++i) 
+                {
                     const glm::vec3& pos = myWorld->getWorldData().cubePositions[i];
-                    if (glm::all(glm::epsilonEqual(pos, glm::vec3(*hit), glm::vec3(0.001f)))) {
+                    if (glm::all(glm::epsilonEqual(pos, glm::vec3(*hit), glm::vec3(0.001f)))) 
+                    {
                         auto& cubeData = myWorld->getWorldData().cubes[i];
                         std::cout << "Cube occupied: " << cubeData.occupied << std::endl;
+                        // manipulate the cube
                         break;
                     }
                 }
