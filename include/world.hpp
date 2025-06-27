@@ -3,20 +3,47 @@
 #include <vector>
 #include <glm/vec3.hpp>
 
+#include "cube.hpp"
+
 class World {
 public:
     World(bool shouldMakeDefaultWorld = true, int width = 10, int height = 1, int depth = 10);
     ~World();
 
+    /**
+     * Struct to hold world data.
+     * This struct contains all the data needed to represent a world.
+     */
     struct worldData
     {
-        /* data */
+        /**
+         * tickCount is how many ticks have passed since world creation.
+         * It is used to determine when to update the world logic.
+         */
         int tickCount = 0;
+
+        /**
+         * ID is the world ID, used to identify the world.
+         * It is not used for anything else right now.
+         * May be used in the future for saving/loading worlds.
+         */
         int ID;
-        int width;
-        int height;
-        int depth;
+
+        /**
+         * World width, height, depth are the dimensions of the world.
+         */
+        int width, height, depth;
+
+        /**
+         * cubePositions is a vector of glm::vec3 positions of the cubes in the world.
+         * This is used to render the cubes in the world. This is the array of positions of cube objects.
+         */
         std::vector<glm::vec3> cubePositions;
+
+        /**
+         * cubes is a vector of CubeInfo objects representing the cubes in the world. This is the array of cubeData.
+         */
+        std::vector<CubeInfo> cubes;
     };
 
     /* Create a default world*/
@@ -28,9 +55,31 @@ public:
     /* get the world data */
     worldData getWorldData() const { return data; }
 
+    /**
+     * Tick function gets called every frame right now, may change in the future to be called every X frames.
+     * Increments the tick count and calls the update function every X ticks. X is set inside the function.
+     * This function should not be used for logic updates, but rather for timing and scheduling updates.
+     */
     void tick();
 
+    /**
+     * Update world logic. This function is called every X ticks, set in the tick() function.
+     * It can be used to update the world state, such as moving cubes, spawning new cubes, etc.
+     */
     void update();
+
+    /**
+     * Push a cube into the array of cubes in the world data.
+     * @param cube The CubeInfo object to push.
+     * @param wd The worldData object to which the cube will be added.
+     * @param x The x-coordinate of the cube's position.
+     * @param y The y-coordinate of the cube's position.
+     * @param z The z-coordinate of the cube's position.
+     * @param occupied Whether the cube is occupied or not. Default is true. 
+     * This is like a flag to indicate if this cube should be rendered or not. 
+     * I may change the name of this later but for now this works. 
+     */
+    void pushCube(CubeInfo& cube, World::worldData& wd, float x, float y, float z, bool occupied = true);
 
 private:
     int someMember;

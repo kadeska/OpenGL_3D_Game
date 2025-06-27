@@ -79,12 +79,14 @@ int main()
     Shader ourShader("src/shader.vs", "src/shader.fs");
 
     // make default world
-    // -------------------
+    // ------------------------------------------------------------------------
     // World *myWorld = new World();
+    // ------------------------------------------------------------------------
 
     // make custom world
-    // -------------------
-    World *myWorld = new World(false, 5, 1, 6);
+    // -----------------------------------------------------------------------
+    World *myWorld = new World(false, 5, 4, 6);
+    // ------------------------------------------------------------------------
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
@@ -211,7 +213,7 @@ int main()
     // render loop
     // --------------------------------------------------------------------------------------------
     //---------------------------------------------------------------------------------------------
-    while (!glfwWindowShouldClose(window))
+    while (!glfwWindowShouldClose(window)) // -- render loop --
     {
         // per-frame time logic
         // --------------------
@@ -220,6 +222,7 @@ int main()
         lastFrame = currentFrame;
 
         // world tick
+        // -----------
         myWorld->tick();
 
         // input
@@ -250,9 +253,12 @@ int main()
 
         // render boxes
         glBindVertexArray(VAO);
-        for (unsigned int i = 0; i < myWorld->getWorldData().cubePositions.size(); i++)
+        for (unsigned int i = 0; i < myWorld->getWorldData().cubePositions.size(); i++) // -- render boxes --
         {
-            // calculate the model matrix for each object and pass it to shader before drawing
+            if(myWorld->getWorldData().cubes[i].occupied == true) 
+            {
+                //render only if block is ocupied, or has true in the 4th element of the array.
+                // calculate the model matrix for each object and pass it to shader before drawing
             glm::mat4 model = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
             model = glm::translate(model, myWorld->getWorldData().cubePositions[i]);
             float angle = 0; //20.0f * i;
@@ -260,6 +266,8 @@ int main()
             ourShader.setMat4("model", model);
 
             glDrawArrays(GL_TRIANGLES, 0, 36);
+            }
+            
         }
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)

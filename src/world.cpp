@@ -20,14 +20,18 @@ World::~World()
 World::worldData World::createWorld()
 {
     worldData wd;
+    CubeInfo cube;
     wd.ID = 1;
     wd.width = 10;
     wd.height = 1;
     wd.depth = 10;
-    // Fill a 2D grid of cubes at y=0
+    // Fill a 3D grid of cubes
     for (int x = 0; x < wd.width; ++x) {
         for (int z = 0; z < wd.depth; ++z) {
-            wd.cubePositions.push_back(glm::vec3(x, 0, z));
+            for (int y = 0; y < wd.height; ++y) {
+            wd.cubePositions.push_back(glm::vec3(x, y, z));
+            pushCube(cube, wd, x, y, z); // Push the cube to the world data
+            }
         }
     }
     return wd;
@@ -37,6 +41,7 @@ World::worldData World::createWorld(int width, int height, int depth)
 {
      {
         worldData wd;
+        CubeInfo cube;
         wd.ID = 1;
         wd.width = width;
         wd.height = height;
@@ -46,6 +51,12 @@ World::worldData World::createWorld(int width, int height, int depth)
             for (int z = 0; z < wd.depth; ++z) {
                 for (int y = 0; y < wd.height; ++y) {
                     wd.cubePositions.push_back(glm::vec3(x, y, z));
+                    if(y == 2) {
+                        pushCube(cube, wd, x, y, z, false); // Push the cube to the world data
+                    } else {
+                        pushCube(cube, wd, x, y, z); // Push the cube to the world data
+                    }
+                    
                 }
             }
         }
@@ -75,6 +86,18 @@ void World::update()
         int idx = rand() % data.cubePositions.size();
         // Move the selected cube up by 1 in the y direction
         data.cubePositions[idx].y += 1;
+        // data.cubes[idx].occupied = false;
         std::cout << "Moved cube at index " << idx << " up by 1 block." << std::endl;
     }
+}
+
+
+void World::pushCube(CubeInfo& cube, World::worldData& wd, float x, float y, float z, bool occupied) {
+            // Create a new cube at the specified position
+            // and add it to the world data.
+            std::cout << "Pushing cube at: " << x << ", " << y << ", " << z << std::endl;
+            cube.position = glm::vec3(x, y, z);
+            cube.occupied = occupied;
+            wd.cubes.push_back(cube);
+            std::cout << "Cube pushed at: " << cube.position.x << ", " << cube.position.y << ", " << cube.position.z << ", " << cube.occupied << std::endl;
 }
