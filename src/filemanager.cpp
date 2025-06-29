@@ -134,6 +134,8 @@ std::string FileManager::loadGameData(const std::string &file_name)
 
 bool FileManager::loadConfig(std::string file_path)
 {
+    // std::cout << "testing" << std::endl;
+    // helper.log(3, std::string("Loading config file: " + file_path));
     std::ifstream inFile(file_path, std::ios::in);
     if (!inFile.is_open()) {
         // error

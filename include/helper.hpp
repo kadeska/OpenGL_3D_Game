@@ -5,6 +5,24 @@
 #include <string>
 //#include "filemanager.hpp"
 
+// logLevel is used to set the programs log level.
+    // 0 = no logging
+
+    /**
+     * @brief logLevel
+     * Used as program log level
+     *
+     * logLevel = 0, 1, 2, 3, 4
+     * 0 = Critical errors only.
+     * 1 = Default, log all errors.
+     * 2 = All info, warnings and errors.
+     * 3 = Debug, everything is logged to output.
+     * 4 = Extensive logging, including tick updates, mouse movements, keyboard input, and anything/everything else.
+     */
+    static int progLogLevel = 4;
+    static int skippedLogCount;
+
+
 /**
  * @brief The Helper class
  * This class contains shared data and other functions that I may need.
@@ -31,22 +49,7 @@ public:
     //const char* model_fragment_shader_path = "../include/shaders/fragment_model.shader";
 
 
-    // logLevel is used to set the programs log level.
-    // 0 = no logging
-
-    /**
-     * @brief logLevel
-     * Used as program log level
-     *
-     * logLevel = 0, 1, 2, 3, 4
-     * 0 = Critical errors only.
-     * 1 = Default, log all errors.
-     * 2 = All info, warnings and errors.
-     * 3 = Debug, everything is logged to output.
-     * 4 = Extensive logging, including tick updates, mouse movements, keyboard input, and anything/everything else.
-     */
-    static int progLogLevel;
-    static int skippedLogCount;
+    
 
 
 

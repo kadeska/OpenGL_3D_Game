@@ -43,7 +43,7 @@ public:
         /**
          * cubes is a vector of CubeInfo objects representing the cubes in the world. This is the array of cubeData.
          */
-        std::vector<CubeInfo> cubes;
+        std::vector<CubeInfo> cubes = std::vector<CubeInfo>();
     };
 
     /* Create a default world*/
@@ -69,7 +69,13 @@ public:
     void update();
 
     /**
-     * Push a cube into the array of cubes in the world data.
+     * Push a cube into the array of cubes in the world data. The cube
+     * must be within the bounds of the world, otherwise it will not be
+     * pushed to the array of cubes or even be rendered. 
+     * It takes the cube struct, world object, cube location, 
+     * and an optional boolean flag to indicate if the cube is occupied.
+     * This function will initialize the cube's position, and change 
+     * the occupied status to true or false based on the given parameter.
      * @param cube The CubeInfo object to push.
      * @param wd The worldData object to which the cube will be added.
      * @param x The x-coordinate of the cube's position.
@@ -77,7 +83,12 @@ public:
      * @param z The z-coordinate of the cube's position.
      * @param occupied Whether the cube is occupied or not. Default is true. 
      * This is like a flag to indicate if this cube should be rendered or not. 
-     * I may change the name of this later but for now this works. 
+     * I may change the name of this later but for now this works.
+     *
+     * @note Tip: Will throw a warning if the cube is outside the world bounds. 
+     * make sure the given location data is within the world bounds.
+     * The world bounds are defined by the width, height, and depth of the world.
+     * 
      */
     void pushCube(CubeInfo& cube, World::worldData& wd, float x, float y, float z, bool occupied = true);
 

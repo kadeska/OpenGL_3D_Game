@@ -5,6 +5,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 add_executable(OpenGLExample3D
     src/main.cpp
+    src/filemanager.cpp
     include/glad/glad.c
     src/world.cpp
 )
@@ -35,4 +36,10 @@ add_custom_command(
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
         ${CMAKE_SOURCE_DIR}/src/shader.fs
         $<TARGET_FILE_DIR:OpenGLExample3D>/shader.fs
+)
+add_custom_command(
+    TARGET OpenGLExample3D POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        ${CMAKE_SOURCE_DIR}/game_config.txt
+        $<TARGET_FILE_DIR:OpenGLExample3D>/game_config.txt
 )

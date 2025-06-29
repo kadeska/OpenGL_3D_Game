@@ -3,6 +3,8 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.hpp"
 
+#include "filemanager.hpp"
+
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -41,6 +43,9 @@ float lastFrame = 0.0f;
 
 int main()
 {
+    // Before doing any graphics stuff lets do config file stuff
+    FileManager fm;
+    fm.loadConfig("game_config.txt");
     // GLFW setup
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -76,7 +81,8 @@ int main()
     Shader ourShader("src/shader.vs", "src/shader.fs");
 
     // World
-    myWorld = new World(false, 20, 1, 20);
+    myWorld = new World(false, 1, 1, 1);
+    // myWorld = new World();
 
     // Cube VAO/VBO
     float vertices[] = {
@@ -230,9 +236,9 @@ int main()
             start.x, start.y, start.z, 0.0f, 0.0f,
             end.x,   end.y,   end.z,   0.0f, 0.0f
         };
-        glBindVertexArray(lineVAO);
-        glBindBuffer(GL_ARRAY_BUFFER, lineVBO);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(lineVertices), lineVertices, GL_DYNAMIC_DRAW);
+        // glBindVertexArray(lineVAO);
+        // glBindBuffer(GL_ARRAY_BUFFER, lineVBO);
+        // glBufferData(GL_ARRAY_BUFFER, sizeof(lineVertices), lineVertices, GL_DYNAMIC_DRAW);
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
         glEnableVertexAttribArray(0);
         glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
@@ -245,6 +251,9 @@ int main()
         glBindVertexArray(VAO);
         for (unsigned int i = 0; i < myWorld->getWorldData().cubePositions.size(); i++)
         {
+            // if the cubes array is null or empty, skip rendering
+            // if(myWorld->getWorldData().cubes.empty()) continue;
+
             if(myWorld->getWorldData().cubes[i].occupied)
             {
                 glm::mat4 model = glm::mat4(1.0f);
