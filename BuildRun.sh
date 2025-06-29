@@ -33,7 +33,7 @@ cd "$BUILD_DIR"
 
 # Configure the project
 echo "Configuring the project with CMake..."
-cmake -G "Ninja" -DCMAKE_C_COMPILER=/usr/bin/clang-20 -DCMAKE_CXX_COMPILER=/usr/bin/clang++-20 -DCMAKE_CXX_STANDARD=20 ../OpenGL_3D_Game
+cmake -G "Ninja" -DCMAKE_C_COMPILER=/usr/bin/clang-20 -DCMAKE_CXX_COMPILER=/usr/bin/clang++-20 -DCMAKE_CXX_STANDARD=20 ../OpenGLExample3D
 if [ $? -ne 0 ]; then
     echo "CMake configuration failed. Exiting."
     exit 1
@@ -48,7 +48,7 @@ if [ $? -ne 0 ]; then
 fi
 
 # Run the executable
-EXECUTABLE="./OpenGLgame"
+EXECUTABLE="./OpenGLExample3D"
 if [ -f "$EXECUTABLE" ]; then
     echo "Build successful. Running the program..."
     $EXECUTABLE
