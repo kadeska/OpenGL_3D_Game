@@ -68,23 +68,23 @@ World::worldData World::createWorld(int width, int height, int depth)
             }
         }
 
-        // I want to create a small house-like structure
-        // Create a 3x3x3 house structure at position (5, 5, 5)
-        int baseX = 5, baseY = 5, baseZ = 5;
-        // Walls and roof
-        for (int x = 0; x < 5; ++x) {
-            for (int y = 0; y < 5; ++y) {
-            for (int z = 0; z < 5; ++z) {
-                // Place cubes on the outer shell (walls, floor, roof)
-                if (x == 0 || x == 4 || y == 0 || y == 4 || z == 0 || z == 4) {
-                // Leave a door opening at (baseX+1, baseY, baseZ)
-                if (!(x == 1 && y == 0 && z == 1)) {
-                    pushCube(cube, wd, baseX + x, baseY + y, baseZ + z);
-                }
-                }
-            }
-            }
-        }
+        // // I want to create a small house-like structure
+        // // Create a 3x3x3 house structure at position (5, 5, 5)
+        // int baseX = 5, baseY = 5, baseZ = 5;
+        // // Walls and roof
+        // for (int x = 0; x < 5; ++x) {
+        //     for (int y = 0; y < 5; ++y) {
+        //     for (int z = 0; z < 5; ++z) {
+        //         // Place cubes on the outer shell (walls, floor, roof)
+        //         if (x == 0 || x == 4 || y == 0 || y == 4 || z == 0 || z == 4) {
+        //         // Leave a door opening at (baseX+1, baseY, baseZ)
+        //         if (!(x == 1 && y == 0 && z == 1)) {
+        //             pushCube(cube, wd, baseX + x, baseY + y, baseZ + z);
+        //         }
+        //         }
+        //     }
+        //     }
+        // }
 
         return wd;
     }

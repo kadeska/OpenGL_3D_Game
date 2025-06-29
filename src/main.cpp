@@ -4,6 +4,7 @@
 #include "stb_image.hpp"
 
 #include "filemanager.hpp"
+#include "inventory.hpp"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -41,11 +42,19 @@ bool firstMouse = true;
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 
+
 int main()
 {
     // Before doing any graphics stuff lets do config file stuff
     FileManager fm;
     fm.loadConfig("game_config.txt");
+
+    // testing inventory
+    // Inventory inv; // default constructor
+    Inventory inv = Inventory(10); // custom constructor with max size
+
+
+
     // GLFW setup
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
