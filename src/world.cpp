@@ -20,7 +20,7 @@ World::~World()
 World::worldData World::createWorld()
 {
     worldData wd;
-    CubeInfo cube;
+    Cube cube;
     wd.ID       = 1;
     wd.width    = 10;
     wd.height   = 10;
@@ -29,7 +29,8 @@ World::worldData World::createWorld()
     for (int x = 0; x < wd.width; ++x) {
         for (int z = 0; z < wd.depth; ++z) {
             for (int y = 0; y < wd.height; ++y) {
-            wd.cubePositions.push_back(glm::vec3(x, y, z));
+            // wd.cubePositions.push_back(glm::vec3(x, y, z)); // dont use pushback
+            // wd.cubes.push_back(glm::vec3(x, y, z)); // dont use push_back, as we rely on a index to access the cubes
             pushCube(cube, wd, x, y, z, true); // Push the cube to the world data
             }
         }
@@ -41,7 +42,7 @@ World::worldData World::createWorld(int width, int height, int depth)
 {
      {
         worldData wd;
-        CubeInfo cube;
+        Cube cube;
         wd.ID = 1;
         wd.width = width;
         wd.height = height;
@@ -52,7 +53,7 @@ World::worldData World::createWorld(int width, int height, int depth)
                 for (int y = 0; y < wd.height; ++y) {
                     // for each position
                     // add the position to the cubePositions vector
-                    wd.cubePositions.push_back(glm::vec3(x, y, z));
+                    // wd.cubes.push_back(glm::vec3(x, y, z));
                     if(y == 2) {
                         // this is just an example of how to use the 
                         // occupied flag to indicate this cube should not
@@ -90,8 +91,11 @@ World::worldData World::createWorld(int width, int height, int depth)
     }
 }
 
-void World::tick()
+void World::tick(float _deltaTime)
 {
+    deltaTime = _deltaTime;
+    std::cout << "World tick: " << data.tickCount << ", Delta Time: " << deltaTime << std::endl;
+
     // std::cout << "World tick: " << data.tickCount << std::endl;
     // Increment the tick count and update the world every 100 ticks
     // This is where you would handle game logic, physics, etc.
@@ -107,24 +111,35 @@ void World::update()
     // Here you can update the world state, e.g., move entities, spawn new ones, etc.
     // For now, we will just print the current tick count.
     // You can also modify cube positions or add new cubes here if needed.
-    if (!data.cubePositions.empty()) {
-        // Pick a random index
-        int idx = rand() % data.cubePositions.size();
-        // Move the selected cube up by 1 in the y direction
-        data.cubePositions[idx].y += 1;
-        // data.cubes[idx].occupied = false;
-        std::cout << "Moved cube at index " << idx << " up by 1 block." << std::endl;
+    // if (!data.cubePositions.empty()) {
+    //     // Pick a random index
+    //     int idx = rand() % data.cubePositions.size();
+    //     // Move the selected cube up by 1 in the y direction
+    //     data.cubePositions[idx].y += 1;
+    //     // data.cubes[idx].occupied = false;
+    //     std::cout << "Moved cube at index " << idx << " up by 1 block." << std::endl;
+    // }
+
+    Physics physics;
+    for (auto& cube : data.cubes) {
+        // Calculate physics for each cube
+        std::cout << "Calculating physics for cube at position " << cube.position.x << ", " << cube.position.y << ", " << cube.position.z << std::endl;
+        if (physics.calculatePhysics(cube, data)) {
+            std::cout << "Cube at position " << cube.position.x << ", " << cube.position.y << ", " << cube.position.z << " has been moved." << std::endl;
+        }
     }
+
+    // Physics::calculatePhysics(data.);
 }
 
 
-void World::pushCube(CubeInfo& cube, World::worldData& wd, float x, float y, float z, bool occupied) {
+void World::pushCube(Cube& cube, World::worldData& wd, float x, float y, float z, bool occupied) {
             // Create a new cube at the specified position
             // and add it to the world data.
             std::cout << "Pushing cube at: " << x << ", " << y << ", " << z << std::endl;
             cube.position = glm::vec3(x, y, z);
             cube.occupied = occupied;
-            wd.cubes.push_back(cube);
+            wd.cubes.push_back(cube); // dont use push_back, as we rely on a index to access the cubes
             std::cout << "Cube pushed at: " << cube.position.x << ", " << cube.position.y << ", " << cube.position.z << ", " << cube.occupied << std::endl;
 
             // if the given cube is outside of the world bounds, do not push 

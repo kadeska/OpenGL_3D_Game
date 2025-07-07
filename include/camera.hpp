@@ -6,6 +6,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <optional>
+#include <chrono>
 
 // Defines several possible options for camera movement. Used as abstraction to stay away from window-system specific input methods
 enum Camera_Movement {
@@ -66,9 +67,9 @@ public:
     }
 
     // processes input received from any keyboard-like input system. Accepts input parameter in the form of camera defined ENUM (to abstract it from windowing systems)
-    void ProcessKeyboard(Camera_Movement direction, float deltaTime)
+    void ProcessKeyboard(Camera_Movement direction, std::chrono::duration<float> deltaTime)
     {
-        float velocity = MovementSpeed * deltaTime;
+        float velocity = MovementSpeed * deltaTime.count();
         if (direction == FORWARD)
             Position += Front * velocity;
         if (direction == BACKWARD)
@@ -138,11 +139,11 @@ std::optional<glm::ivec3> pickBlock(const glm::vec3& camPos, const glm::vec3& ca
         glm::ivec3 blockPos = glm::floor(pos);
 
         // Check if this block is occupied in your world
-        for (size_t i = 0; i < world.getWorldData().cubePositions.size(); ++i)
+        for (size_t i = 0; i < world.getWorldData().cubes.size(); ++i)
         {
             if (world.getWorldData().cubes[i].occupied)
             {
-                glm::ivec3 cube = glm::floor(world.getWorldData().cubePositions[i]);
+                glm::ivec3 cube = glm::floor(world.getWorldData().cubes[i].position);
                 if (cube == blockPos)
                     return blockPos;
             }

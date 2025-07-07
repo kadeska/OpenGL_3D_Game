@@ -18,6 +18,9 @@
 #include <vector>
 #include <cmath>
 #include <iostream>
+#include <chrono>
+
+
 
 // Callbacks and input
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -38,13 +41,20 @@ float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
 
-// timing
-float deltaTime = 0.0f;
-float lastFrame = 0.0f;
+// // timing
+// float deltaTime = 0.0f;
+// float lastFrame = 0.0f;
+std::chrono::steady_clock::time_point lastFrameTime;
+std::chrono::duration<float> deltaTime;
 
 
 int main()
 {
+    // timing
+    // ---
+    lastFrameTime = std::chrono::steady_clock::now();
+    // ---
+
     // Before doing any graphics stuff lets do config file stuff
     FileManager fm;
     fm.loadConfig("game_config.txt");
@@ -215,11 +225,22 @@ int main()
     // Main render loop
     while (!glfwWindowShouldClose(window))
     {
-        float currentFrame = static_cast<float>(glfwGetTime());
-        deltaTime = currentFrame - lastFrame;
-        lastFrame = currentFrame;
+        // Timing
+        // Get the current time
+        auto currentTime = std::chrono::steady_clock::now();
 
-        myWorld->tick();
+        // Calculate the duration between the current time and the last frame time
+        deltaTime = currentTime - lastFrameTime;
+
+        // Update lastFrameTime for the next iteration
+        lastFrameTime = currentTime;
+        // --
+        
+        // float currentFrame = static_cast<float>(glfwGetTime());
+        // deltaTime = currentFrame - lastFrame;
+        // lastFrame = currentFrame;
+
+        myWorld->tick(deltaTime.count());
         processInput(window);
 
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
@@ -258,7 +279,7 @@ int main()
 
         // --- Render Cubes ---
         glBindVertexArray(VAO);
-        for (unsigned int i = 0; i < myWorld->getWorldData().cubePositions.size(); i++)
+        for (unsigned int i = 0; i < myWorld->getWorldData().cubes.size(); i++)
         {
             // if the cubes array is null or empty, skip rendering
             // if(myWorld->getWorldData().cubes.empty()) continue;
@@ -266,7 +287,7 @@ int main()
             if(myWorld->getWorldData().cubes[i].occupied)
             {
                 glm::mat4 model = glm::mat4(1.0f);
-                model = glm::translate(model, myWorld->getWorldData().cubePositions[i]);
+                model = glm::translate(model, myWorld->getWorldData().cubes[i].position);
                 float angle = 0;
                 model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
                 ourShader.setMat4("model", model);
@@ -327,13 +348,13 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
             if (hit)
             {
                 std::cout << "Block hit at: " << hit->x << ", " << hit->y << ", " << hit->z << std::endl;
-                for (size_t i = 0; i < myWorld->getWorldData().cubePositions.size(); ++i) 
+                for (size_t i = 0; i < myWorld->getWorldData().cubes.size(); ++i) 
                 {
-                    const glm::vec3& pos = myWorld->getWorldData().cubePositions[i];
+                    const glm::vec3& pos = myWorld->getWorldData().cubes[i].position;
                     if (glm::all(glm::epsilonEqual(pos, glm::vec3(*hit), glm::vec3(0.001f)))) 
                     {
-                        auto& cubeData = myWorld->getWorldData().cubes[i];
-                        std::cout << "Cube occupied: " << cubeData.occupied << std::endl;
+                        auto& cube = myWorld->getWorldData().cubes[i];
+                        std::cout << "Cube occupied: " << cube.occupied << std::endl;
                         // manipulate the cube
                         break;
                     }

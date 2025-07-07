@@ -4,11 +4,14 @@
 #include <glm/vec3.hpp>
 
 #include "cube.hpp"
+#include "physics.hpp"
 
 class World {
 public:
     World(bool shouldMakeDefaultWorld = true, int width = 10, int height = 1, int depth = 10);
     ~World();
+
+    float deltaTime;
 
     /**
      * Struct to hold world data.
@@ -38,12 +41,12 @@ public:
          * cubePositions is a vector of glm::vec3 positions of the cubes in the world.
          * This is used to render the cubes in the world. This is the array of positions of cube objects.
          */
-        std::vector<glm::vec3> cubePositions;
+        // std::vector<glm::vec3> cubePositions;
 
         /**
          * cubes is a vector of CubeInfo objects representing the cubes in the world. This is the array of cubeData.
          */
-        std::vector<CubeInfo> cubes = std::vector<CubeInfo>();
+        std::vector<Cube> cubes = std::vector<Cube>();
     };
 
     /* Create a default world*/
@@ -60,7 +63,7 @@ public:
      * Increments the tick count and calls the update function every X ticks. X is set inside the function.
      * This function should not be used for logic updates, but rather for timing and scheduling updates.
      */
-    void tick();
+    void tick(float deltaTime);
 
     /**
      * Update world logic. This function is called every X ticks, set in the tick() function.
@@ -90,7 +93,7 @@ public:
      * The world bounds are defined by the width, height, and depth of the world.
      * 
      */
-    void pushCube(CubeInfo& cube, World::worldData& wd, float x, float y, float z, bool occupied = true);
+    void pushCube(Cube& cube, World::worldData& wd, float x, float y, float z, bool occupied = true);
 
 private:
     int someMember;

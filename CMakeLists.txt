@@ -9,6 +9,7 @@ add_executable(OpenGLExample3D
     include/glad/glad.c
     src/world.cpp
     src/inventory.cpp
+    src/physics.cpp
 )
 
 cmake_policy(SET CMP0072 NEW)
