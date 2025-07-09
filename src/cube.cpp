@@ -2,7 +2,7 @@
 #include "worldData.hpp"
 #include <iostream>
 
-bool grounded(Cube& _cube, worldData& data) {
+bool grounded(Cube _cube, worldData data) {
     // Case 1: On the floor
     if (_cube.position.y <= -2) {
         std::cout << "Cube is on the floor at position: " 
@@ -14,7 +14,7 @@ bool grounded(Cube& _cube, worldData& data) {
     }
 
     // Case 2: Check if there's an occupied cube directly below
-    for (Cube& cube : data.cubes) {
+    for (Cube cube : data.cubes) {
         if (cube.position.x == _cube.position.x &&
             cube.position.z == _cube.position.z &&
             cube.position.y == _cube.position.y - 1 &&

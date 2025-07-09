@@ -1,6 +1,7 @@
 #include "world.hpp"
 #include <iostream>
 
+Physics physics;
 
 World::World(bool shouldMakeDefaultWorld, int width, int height, int depth)
 {
@@ -22,9 +23,9 @@ worldData World::createWorld()
     worldData wd;
     Cube cube;
     wd.ID       = 1;
-    wd.width    = 2;
+    wd.width    = 1;
     wd.height   = 2;
-    wd.depth    = 2;
+    wd.depth    = 1;
     // Fill a 3D grid of cubes
     for (int x = 0; x < wd.width; ++x) {
         for (int z = 0; z < wd.depth; ++z) {
@@ -40,55 +41,52 @@ worldData World::createWorld()
 
 worldData World::createWorld(int width, int height, int depth)
 {
-     {
-        worldData wd;
-        Cube cube;
-        wd.ID = 1;
-        wd.width = width;
-        wd.height = height;
-        wd.depth = depth;
-        // Fill a 2D grid of cubes at y=0
-        for (int x = 0; x < wd.width; ++x) {
-            for (int z = 0; z < wd.depth; ++z) {
-                for (int y = 0; y < wd.height; ++y) {
-                    // for each position
-                    // add the position to the cubePositions vector
-                    // wd.cubes.push_back(glm::vec3(x, y, z));
-                    if(y == 2) {
-                        // this is just an example of how to use the 
-                        // occupied flag to indicate this cube should not
-                        // be rendered, or is not occupied. 
-                        pushCube(cube, wd, x, y, z, false); // Push the cube to the world data
-                    } else {
-                        // this is the default case where the cube is occupied.
-                        // no need to set occupied to true, it is true by default.
-                        pushCube(cube, wd, x, y, z, true); // Push the cube to the world data
-                    }
-                    
+    worldData wd;
+    Cube cube;
+    wd.ID = 1;
+    wd.width = width;
+    wd.height = height;
+    wd.depth = depth;
+    // Fill a 2D grid of cubes at y=0
+    for (int x = 0; x < wd.width; ++x) {
+        for (int z = 0; z < wd.depth; ++z) {
+            for (int y = 0; y < wd.height; ++y) {
+                // for each position
+                // add the position to the cubePositions vector
+                // wd.cubes.push_back(glm::vec3(x, y, z));
+                if(y == 2) {
+                    // this is just an example of how to use the 
+                    // occupied flag to indicate this cube should not
+                    // be rendered, or is not occupied. 
+                    pushCube(cube, wd, x, y, z, false); // Push the cube to the world data
+                } else {
+                    // this is the default case where the cube is occupied.
+                    // no need to set occupied to true, it is true by default.
+                    pushCube(cube, wd, x, y, z, true); // Push the cube to the world data
                 }
+                
             }
         }
-
-        // // I want to create a small house-like structure
-        // // Create a 3x3x3 house structure at position (5, 5, 5)
-        // int baseX = 5, baseY = 5, baseZ = 5;
-        // // Walls and roof
-        // for (int x = 0; x < 5; ++x) {
-        //     for (int y = 0; y < 5; ++y) {
-        //     for (int z = 0; z < 5; ++z) {
-        //         // Place cubes on the outer shell (walls, floor, roof)
-        //         if (x == 0 || x == 4 || y == 0 || y == 4 || z == 0 || z == 4) {
-        //         // Leave a door opening at (baseX+1, baseY, baseZ)
-        //         if (!(x == 1 && y == 0 && z == 1)) {
-        //             pushCube(cube, wd, baseX + x, baseY + y, baseZ + z);
-        //         }
-        //         }
-        //     }
-        //     }
-        // }
-
-        return wd;
     }
+
+    // // I want to create a small house-like structure
+    // // Create a 3x3x3 house structure at position (5, 5, 5)
+    // int baseX = 5, baseY = 5, baseZ = 5;
+    // // Walls and roof
+    // for (int x = 0; x < 5; ++x) {
+    //     for (int y = 0; y < 5; ++y) {
+    //     for (int z = 0; z < 5; ++z) {
+    //         // Place cubes on the outer shell (walls, floor, roof)
+    //         if (x == 0 || x == 4 || y == 0 || y == 4 || z == 0 || z == 4) {
+    //         // Leave a door opening at (baseX+1, baseY, baseZ)
+    //         if (!(x == 1 && y == 0 && z == 1)) {
+    //             pushCube(cube, wd, baseX + x, baseY + y, baseZ + z);
+    //         }
+    //         }
+    //     }
+    //     }
+    // }
+    return wd;
 }
 
 void World::tick(float _deltaTime)
@@ -121,10 +119,9 @@ void World::update()
     //     std::cout << "Moved cube at index " << idx << " up by 1 block." << std::endl;
     // }
 
-    Physics physics;
-    for (auto& cube : data.cubes) {
+    
+    for (auto cube : data.cubes) {
         // Calculate physics for each cube
-        std::cout << "Calculating physics for cube at position " << cube.position.x << ", " << cube.position.y << ", " << cube.position.z << std::endl;
         if (physics.calculatePhysics(cube, data, deltaTime)) {
             std::cout << "Cube at position " << cube.position.x << ", " << cube.position.y << ", " << cube.position.z << " has been moved." << std::endl;
         }
