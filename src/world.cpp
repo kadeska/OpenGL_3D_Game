@@ -98,9 +98,22 @@ void World::tick(float _deltaTime)
     // Increment the tick count and update the world every 100 ticks
     // This is where you would handle game logic, physics, etc.
     data.tickCount++;
-    if (data.tickCount % 2 == 0) {
+    if (data.tickCount % 10 == 0) {
         update();
+        
     }
+
+    // if (data.tickCount % 100 == 0) {
+    //     if (!data.cubes.empty()) {
+    //     // Pick a random index
+    //     int idx = rand() % data.cubes.size();
+    //     // Move the selected cube up by 1 in the y direction
+    //     data.cubes[idx].position.y += 1;
+    //     // data.cubes[idx].occupied = false;
+    //     std::cout << "Moved cube at index " << idx << " up by 1 block." << std::endl;
+    //     }
+    // }
+    
     // update(); // Call update every tick for now, can be changed later
 }
 
@@ -110,17 +123,10 @@ void World::update()
     // Here you can update the world state, e.g., move entities, spawn new ones, etc.
     // For now, we will just print the current tick count.
     // You can also modify cube positions or add new cubes here if needed.
-    // if (!data.cubePositions.empty()) {
-    //     // Pick a random index
-    //     int idx = rand() % data.cubePositions.size();
-    //     // Move the selected cube up by 1 in the y direction
-    //     data.cubePositions[idx].y += 1;
-    //     // data.cubes[idx].occupied = false;
-    //     std::cout << "Moved cube at index " << idx << " up by 1 block." << std::endl;
-    // }
+    
 
     
-    for (auto cube : data.cubes) {
+    for (auto& cube : data.cubes) {
         // Calculate physics for each cube
         if (physics.calculatePhysics(cube, data, deltaTime)) {
             std::cout << "Cube at position " << cube.position.x << ", " << cube.position.y << ", " << cube.position.z << " has been moved." << std::endl;

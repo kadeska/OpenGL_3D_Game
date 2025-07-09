@@ -18,9 +18,9 @@
  */
 class Physics {
     public:
-        float gravity_multiplier = 0.2f;
+        float gravity_multiplier = 0.5f;
 
         // Will take in an object and calculate its physics such as gravity, collisions, etc.
-        bool calculatePhysics(Cube cube, worldData world_data, float deltaTime); 
+        bool calculatePhysics(Cube& cube, worldData& world_data, float deltaTime); 
 
 };
