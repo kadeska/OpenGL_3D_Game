@@ -17,14 +17,14 @@ World::~World()
 {
 }
 
-World::worldData World::createWorld()
+worldData World::createWorld()
 {
     worldData wd;
     Cube cube;
     wd.ID       = 1;
-    wd.width    = 10;
-    wd.height   = 10;
-    wd.depth    = 10;
+    wd.width    = 2;
+    wd.height   = 2;
+    wd.depth    = 2;
     // Fill a 3D grid of cubes
     for (int x = 0; x < wd.width; ++x) {
         for (int z = 0; z < wd.depth; ++z) {
@@ -38,7 +38,7 @@ World::worldData World::createWorld()
     return wd;
 }
 
-World::worldData World::createWorld(int width, int height, int depth)
+worldData World::createWorld(int width, int height, int depth)
 {
      {
         worldData wd;
@@ -94,15 +94,16 @@ World::worldData World::createWorld(int width, int height, int depth)
 void World::tick(float _deltaTime)
 {
     deltaTime = _deltaTime;
-    std::cout << "World tick: " << data.tickCount << ", Delta Time: " << deltaTime << std::endl;
+    // std::cout << "World tick: " << data.tickCount << ", Delta Time: " << deltaTime << std::endl;
 
     // std::cout << "World tick: " << data.tickCount << std::endl;
     // Increment the tick count and update the world every 100 ticks
     // This is where you would handle game logic, physics, etc.
     data.tickCount++;
-    if (data.tickCount % 100 == 0) {
+    if (data.tickCount % 2 == 0) {
         update();
     }
+    // update(); // Call update every tick for now, can be changed later
 }
 
 void World::update()
@@ -124,7 +125,7 @@ void World::update()
     for (auto& cube : data.cubes) {
         // Calculate physics for each cube
         std::cout << "Calculating physics for cube at position " << cube.position.x << ", " << cube.position.y << ", " << cube.position.z << std::endl;
-        if (physics.calculatePhysics(cube, data)) {
+        if (physics.calculatePhysics(cube, data, deltaTime)) {
             std::cout << "Cube at position " << cube.position.x << ", " << cube.position.y << ", " << cube.position.z << " has been moved." << std::endl;
         }
     }
@@ -133,7 +134,7 @@ void World::update()
 }
 
 
-void World::pushCube(Cube& cube, World::worldData& wd, float x, float y, float z, bool occupied) {
+void World::pushCube(Cube& cube, worldData& wd, float x, float y, float z, bool occupied) {
             // Create a new cube at the specified position
             // and add it to the world data.
             std::cout << "Pushing cube at: " << x << ", " << y << ", " << z << std::endl;

@@ -1,13 +1,9 @@
 #pragma once
 
-// #include <glm/glm.hpp>
-// #include "world.hpp"
-// class World;
-
-#include "cube.hpp"
 #include "world.hpp"
+#include "cube.hpp"
 
-// World::worldData worldData;
+#include "worldData.hpp"
 
 
 
@@ -22,7 +18,9 @@
  */
 class Physics {
     public:
+        float gravity_multiplier = 0.2f;
+
         // Will take in an object and calculate its physics such as gravity, collisions, etc.
-        bool calculatePhysics(Cube& cube, World::worldData world); 
+        bool calculatePhysics(Cube& cube, worldData& world_data, float deltaTime); 
 
 };

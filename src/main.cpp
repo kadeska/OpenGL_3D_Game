@@ -100,7 +100,7 @@ int main()
     Shader ourShader("src/shader.vs", "src/shader.fs");
 
     // World
-    myWorld = new World(false, 1, 1, 1);
+    myWorld = new World(true, 1, 1, 1);
     // myWorld = new World();
 
     // Cube VAO/VBO

@@ -2,15 +2,14 @@
 
 #include <glm/vec3.hpp>
 
-/**
- * CubeInfo struct holds information about a cube in the world. 
- * This struct can represent a cube and all the data related to it. 
- */
+// Forward declaration
+struct worldData;
+
 struct Cube {
     glm::vec3 position;
     bool occupied = false;
-    // Add more fields as needed, e.g.:
-    // int type;
-    // float health;
     bool isGrounded = false;
 };
+
+// Declaration only — implementation in .cpp
+bool grounded(Cube& _cube, worldData& data);

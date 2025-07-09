@@ -10,6 +10,7 @@ add_executable(OpenGLExample3D
     src/world.cpp
     src/inventory.cpp
     src/physics.cpp
+    src/cube.cpp
 )
 
 cmake_policy(SET CMP0072 NEW)

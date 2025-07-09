@@ -2,18 +2,21 @@
 
 
 float maxfloor = -2.0f; // Define a floor level for the physics simulation
-float gravity = 0.1f; // Gravity constant, not used in this simple example
+// float gravity = 0.1f; // Gravity constant, not used in this simple example
 
 
-bool Physics::calculatePhysics(Cube& cube, World::worldData& world) {
-    cube.position.y -= gravity; // Simulate gravity by moving the cube down
-    if (cube.position.y <= maxfloor){
-        cube.position.y = maxfloor;
+bool Physics::calculatePhysics(Cube& cube, worldData& world_data, float deltaTime) {
+    // do a check to see if the cube is grounded
+    if (cube.position.y <= maxfloor || grounded(cube, world_data)) {
         cube.isGrounded = true;
-        return false;
     } else {
-        cube.position.y -= gravity;
-        return true;
+        cube.isGrounded = false;
     }
+
+    // if the cube is not grounded, apply gravity
+    if(!cube.isGrounded){
+        cube.position.y -= gravity_multiplier * deltaTime;
+    }
+    
     return false;
 }

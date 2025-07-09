@@ -6,6 +6,10 @@
 #include "cube.hpp"
 #include "physics.hpp"
 
+#include "worldData.hpp"
+
+// class World;
+
 class World {
 public:
     World(bool shouldMakeDefaultWorld = true, int width = 10, int height = 1, int depth = 10);
@@ -13,41 +17,7 @@ public:
 
     float deltaTime;
 
-    /**
-     * Struct to hold world data.
-     * This struct contains all the data needed to represent a world.
-     */
-    struct worldData
-    {
-        /**
-         * tickCount is how many ticks have passed since world creation.
-         * It is used to determine when to update the world logic.
-         */
-        int tickCount = 0;
-
-        /**
-         * ID is the world ID, used to identify the world.
-         * It is not used for anything else right now.
-         * May be used in the future for saving/loading worlds.
-         */
-        int ID;
-
-        /**
-         * World width, height, depth are the dimensions of the world.
-         */
-        int width, height, depth;
-
-        /**
-         * cubePositions is a vector of glm::vec3 positions of the cubes in the world.
-         * This is used to render the cubes in the world. This is the array of positions of cube objects.
-         */
-        // std::vector<glm::vec3> cubePositions;
-
-        /**
-         * cubes is a vector of CubeInfo objects representing the cubes in the world. This is the array of cubeData.
-         */
-        std::vector<Cube> cubes = std::vector<Cube>();
-    };
+    
 
     /* Create a default world*/
     worldData createWorld();
@@ -93,7 +63,7 @@ public:
      * The world bounds are defined by the width, height, and depth of the world.
      * 
      */
-    void pushCube(Cube& cube, World::worldData& wd, float x, float y, float z, bool occupied = true);
+    void pushCube(Cube& cube, worldData& wd, float x, float y, float z, bool occupied = true);
 
 private:
     int someMember;
