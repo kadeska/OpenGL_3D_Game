@@ -7,16 +7,16 @@ float maxfloor = 0.0f; // Define a floor level for the physics simulation
 
 
 bool Physics::calculatePhysics(Cube& cube, worldData& world_data, float deltaTime) {
-    std::cout << "Calculating physics for cube at position " 
-    << cube.position.x << ", " 
-    << cube.position.y << ", " 
-    << cube.position.z << std::endl;
+    // std::cout << "Calculating physics for cube at position " 
+    // << cube.position.x << ", " 
+    // << cube.position.y << ", " 
+    // << cube.position.z << std::endl;
     // do a check to see if the cube is grounded
     if (cube.position.y <= maxfloor || grounded(cube, world_data)) {
-        std::cout << "Cube is grounded at position: " 
-                  << cube.position.x << ", " 
-                  << cube.position.y << ", " 
-                  << cube.position.z << std::endl;
+        // std::cout << "Cube is grounded at position: " 
+        //           << cube.position.x << ", " 
+        //           << cube.position.y << ", " 
+        //           << cube.position.z << std::endl;
         cube.isGrounded = true;
     } else {
         cube.isGrounded = false;

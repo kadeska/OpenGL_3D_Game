@@ -4,7 +4,7 @@ project(OpenGLExample3D)
 set(CMAKE_CXX_STANDARD 17)
 
 add_executable(OpenGLExample3D
-    src/main.cpp
+    main.cpp
     src/filemanager.cpp
     include/glad/glad.c
     src/world.cpp

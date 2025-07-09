@@ -89,19 +89,26 @@ worldData World::createWorld(int width, int height, int depth)
     return wd;
 }
 
-void World::tick(float _deltaTime)
+// this gets called every frame. I should have updae be called every frame 
+// then call tick after so many frames
+void World::tick() 
 {
-    deltaTime = _deltaTime;
+    
+    // update();
     // std::cout << "World tick: " << data.tickCount << ", Delta Time: " << deltaTime << std::endl;
 
     // std::cout << "World tick: " << data.tickCount << std::endl;
     // Increment the tick count and update the world every 100 ticks
     // This is where you would handle game logic, physics, etc.
     data.tickCount++;
-    if (data.tickCount % 10 == 0) {
-        update();
-        
-    }
+    std::cout << "World Tick: " << data.tickCount << std::endl;
+    
+
+    // if (data.tickCount % 100 == 0) {
+    //     Cube cube;
+    //     // cube.position = glm::vec3(0, 5, 0);
+    //     pushCube(cube, data, 0, 5, 0, true); // Push a cube at (0, 5, 0)
+    // }
 
     // if (data.tickCount % 100 == 0) {
     //     if (!data.cubes.empty()) {
@@ -114,26 +121,25 @@ void World::tick(float _deltaTime)
     //     }
     // }
     
-    // update(); // Call update every tick for now, can be changed later
 }
 
-void World::update()
+void World::update(float _deltaTime, int frameCount)
 {
-    std::cout << "Updating World at tick: " << data.tickCount << std::endl;
+    deltaTime = _deltaTime;
+    if (frameCount % 100 == 0) {
+        tick();
+        
+    }
+    // std::cout << "Updating World on frame # : " << frameCount << std::endl;
     // Here you can update the world state, e.g., move entities, spawn new ones, etc.
     // For now, we will just print the current tick count.
     // You can also modify cube positions or add new cubes here if needed.
-    
-
-    
     for (auto& cube : data.cubes) {
         // Calculate physics for each cube
         if (physics.calculatePhysics(cube, data, deltaTime)) {
-            std::cout << "Cube at position " << cube.position.x << ", " << cube.position.y << ", " << cube.position.z << " has been moved." << std::endl;
+            // std::cout << "Cube at position " << cube.position.x << ", " << cube.position.y << ", " << cube.position.z << " has been moved." << std::endl;
         }
     }
-
-    // Physics::calculatePhysics(data.);
 }
 
 

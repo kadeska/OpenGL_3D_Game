@@ -48,6 +48,9 @@ std::chrono::steady_clock::time_point lastFrameTime;
 std::chrono::duration<float> deltaTime;
 
 
+int frameCount = 0;
+
+
 int main()
 {
     // timing
@@ -226,6 +229,7 @@ int main()
     while (!glfwWindowShouldClose(window))
     {
         // Timing
+        frameCount++;
         // Get the current time
         auto currentTime = std::chrono::steady_clock::now();
 
@@ -240,7 +244,8 @@ int main()
         // deltaTime = currentFrame - lastFrame;
         // lastFrame = currentFrame;
 
-        myWorld->tick(deltaTime.count());
+        // myWorld->tick(deltaTime.count());
+        myWorld->update(deltaTime.count(), frameCount);
         processInput(window);
 
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);

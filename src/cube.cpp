@@ -5,10 +5,10 @@
 bool grounded(Cube _cube, worldData data) {
     // Case 1: On the floor
     if (_cube.position.y <= 0.0f) {
-        std::cout << "Cube is on the floor at position: " 
-                  << _cube.position.x << ", " 
-                  << _cube.position.y << ", " 
-                  << _cube.position.z << std::endl;
+        // std::cout << "Cube is on the floor at position: " 
+        //           << _cube.position.x << ", " 
+        //           << _cube.position.y << ", " 
+        //           << _cube.position.z << std::endl;
         // _cube.isGrounded = true; // Set the grounded status
         return true;
     }
@@ -19,10 +19,10 @@ bool grounded(Cube _cube, worldData data) {
             cube.position.z == _cube.position.z &&
             cube.position.y == _cube.position.y - 1 &&
             cube.occupied) {
-            std::cout << "Cube is grounded by another cube at position: " 
-                      << cube.position.x << ", " 
-                      << cube.position.y << ", " 
-                      << cube.position.z << std::endl;
+            // std::cout << "Cube is grounded by another cube at position: " 
+            //           << cube.position.x << ", " 
+            //           << cube.position.y << ", " 
+            //           << cube.position.z << std::endl;
             _cube.isGrounded = true; // Set the grounded status
             return true;
         }

@@ -33,13 +33,13 @@ public:
      * Increments the tick count and calls the update function every X ticks. X is set inside the function.
      * This function should not be used for logic updates, but rather for timing and scheduling updates.
      */
-    void tick(float deltaTime);
+    void tick();
 
     /**
      * Update world logic. This function is called every X ticks, set in the tick() function.
      * It can be used to update the world state, such as moving cubes, spawning new cubes, etc.
      */
-    void update();
+    void update(float _deltaTime, int frameCount);
 
     /**
      * Push a cube into the array of cubes in the world data. The cube
