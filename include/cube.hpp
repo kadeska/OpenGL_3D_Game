@@ -12,4 +12,6 @@ struct Cube {
 };
 
 // Declaration only — implementation in .cpp
-bool grounded(Cube _cube, worldData data);
+bool grounded(Cube& _cube, worldData& data);
+
+// void dosomething();

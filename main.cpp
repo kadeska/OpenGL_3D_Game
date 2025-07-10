@@ -49,7 +49,16 @@ std::chrono::duration<float> deltaTime;
 
 
 int frameCount = 0;
+float angle = 0;
 
+
+struct Collectible {
+    glm::vec3 position;
+    bool collected = false;
+    float scale = 0.3f; // smaller than normal cubes
+};
+
+std::vector<Collectible> collectibles;
 
 int main()
 {
@@ -62,13 +71,29 @@ int main()
     FileManager fm;
     fm.loadConfig("game_config.txt");
 
+    // World
+    myWorld = new World(true, 1, 1, 1); 
+    // myWorld = new World();
+
     // testing inventory
     // Inventory inv; // default constructor
     Inventory inv = Inventory(10); // custom constructor with max size
 
+    // collectibles
+    collectibles.push_back({ glm::vec3(2.0f, 1.0f, 5.0f), false, 0.3f });
+    collectibles.push_back({ glm::vec3(4.0f, 2.0f, -2.0f), false, 0.5f });
+    collectibles.push_back({ glm::vec3(1.0f, 0.0f, 2.0f), false, 0.5f });
+    collectibles.push_back({ glm::vec3(6.0f, 3.0f, -5.0f), false, 0.5f });
+    collectibles.push_back({ glm::vec3(3.0f, 2.0f, 4.0f), false, 0.5f });
+    collectibles.push_back({ glm::vec3(5.0f, 1.0f, -1.0f), false, 0.5f });
+    collectibles.push_back({ glm::vec3(2.0f, 5.0f, -3.0f), false, 0.5f });
 
+    // -----------------------------------------------------------------------------------------------------
+    // Initialization steps below. This stuff could be moved outside of the main function to 
+    // keep things cleaner, but its not needed at the moment. Maybe one day I will clean this up.
+    // -----------------------------------------------------------------------------------------------------
 
-    // GLFW setup
+    // GLFW setup 
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -77,7 +102,9 @@ int main()
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
 
+    // Window creation
     GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "OpenGL 3D Game", NULL, NULL);
+    
     if (window == NULL)
     {
         std::cout << "Failed to create GLFW window" << std::endl;
@@ -97,14 +124,15 @@ int main()
         return -1;
     }
 
-    glEnable(GL_DEPTH_TEST);
-
-    // Shader
+    // Shader. Must be loaded after initializing GLFW and window. 
+    // ---------------------------------------------------------
     Shader ourShader("src/shader.vs", "src/shader.fs");
+    // ---------------------------------------------------------
 
-    // World
-    myWorld = new World(true, 1, 1, 1);
-    // myWorld = new World();
+
+
+    // enable depth testing
+    glEnable(GL_DEPTH_TEST);
 
     // Cube VAO/VBO
     float vertices[] = {
@@ -225,9 +253,14 @@ int main()
 
     glLineWidth(2.0f);
 
+
+    // End of initialization steps. 
+    // ---------------------------------------------------------------------------------------------------
+
+
     // Main render loop
     while (!glfwWindowShouldClose(window))
-    {
+    { // render loop
         // Timing
         frameCount++;
         // Get the current time
@@ -285,20 +318,37 @@ int main()
         // --- Render Cubes ---
         glBindVertexArray(VAO);
         for (unsigned int i = 0; i < myWorld->getWorldData().cubes.size(); i++)
-        {
+        { // render cubes
             // if the cubes array is null or empty, skip rendering
             // if(myWorld->getWorldData().cubes.empty()) continue;
 
+
+            // if this cube should be rendered
             if(myWorld->getWorldData().cubes[i].occupied)
             {
-                glm::mat4 model = glm::mat4(1.0f);
-                model = glm::translate(model, myWorld->getWorldData().cubes[i].position);
-                float angle = 0;
-                model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
-                ourShader.setMat4("model", model);
-                glDrawArrays(GL_TRIANGLES, 0, 36);
+                glm::mat4 model = glm::mat4(1.0f); // this is like the identity model matrix. Like the starting point for the model/cube
+                model = glm::translate(model, myWorld->getWorldData().cubes[i].position); // This basicaly sets the location/position of the model
+                // angle += 0.1f;
+                // rotate if needed
+                // model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f)); // rotates the model by angle on the given axis
+                ourShader.setMat4("model", model);// This passes the model matrix to the shader, the vertex shader will use this matrix to transform the cube’s vertices from model space to world space.
+                glDrawArrays(GL_TRIANGLES, 0, 36); // this actually tells opengl to draw the cube/model
             }
         }
+
+        for (const auto& item : collectibles) 
+        {
+            if (item.collected)
+                continue; // don't render collected items
+
+            glm::mat4 model = glm::mat4(1.0f);
+            model = glm::translate(model, item.position);
+            model = glm::scale(model, glm::vec3(item.scale)); // scale the cube down
+
+            ourShader.setMat4("model", model);
+            glDrawArrays(GL_TRIANGLES, 0, 36);
+        }
+
 
         // --- Draw Crosshair in NDC ---
         glDisable(GL_DEPTH_TEST);

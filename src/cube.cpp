@@ -2,7 +2,7 @@
 #include "worldData.hpp"
 #include <iostream>
 
-bool grounded(Cube _cube, worldData data) {
+bool grounded(Cube& _cube, worldData& data) {
     // Case 1: On the floor
     if (_cube.position.y <= 0.0f) {
         // std::cout << "Cube is on the floor at position: " 
